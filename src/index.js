@@ -1,16 +1,16 @@
 'use strict'
 
-import * as preproc from './scripts/preprocess.js'
-import * as viz from './scripts/viz.js'
-import * as helper from './scripts/helper.js'
-import * as legend from './scripts/legend.js'
-import * as tooltip from './scripts/tooltip.js'
+// import * as preproc from './scripts/preprocess.js'
+// import * as viz from './scripts/viz.js'
+// import * as helper from './scripts/helper.js'
+// import * as legend from './scripts/legend.js'
+// import * as tooltip from './scripts/tooltip.js'
 
 import d3Tip from 'd3-tip'
 
 /**
- * @file This file is the entry-point for the the code for TP2 for the course INF8808.
- * @author Olivia Gélinas
+ * @file This file is the entry-point
+ * @author Nathan Ramsay-Vejlens
  * @version v1.0.0
  */
 
@@ -83,17 +83,17 @@ import d3Tip from 'd3-tip'
      *   This function builds the graph.
      */
     function build () {
-      helper.positionLabels(graphSize.width, graphSize.height)
+      // helper.positionLabels(graphSize.width, graphSize.height)
 
-      viz.updateGroupXScale(xScale, data, graphSize.width)
-      helper.updateXSubgroupScale(xSubgroupScale, topPlayers, xScale)
-      viz.updateYScale(yScale, data, graphSize.height)
+      // viz.updateGroupXScale(xScale, data, graphSize.width)
+      // helper.updateXSubgroupScale(xSubgroupScale, topPlayers, xScale)
+      // viz.updateYScale(yScale, data, graphSize.height)
 
-      helper.drawXAxis(xScale, graphSize.height)
-      helper.drawYAxis(yScale)
+      // helper.drawXAxis(xScale, graphSize.height)
+      // helper.drawYAxis(yScale)
 
-      viz.createGroups(data, xScale)
-      viz.drawBars(yScale, xSubgroupScale, topPlayers, graphSize.height, color, tip)
+      // viz.createGroups(data, xScale)
+      // viz.drawBars(yScale, xSubgroupScale, topPlayers, graphSize.height, color, tip)
     }
 
     window.addEventListener('resize', () => {
