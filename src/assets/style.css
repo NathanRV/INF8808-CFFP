@@ -1,5 +1,6 @@
 a:link{
         text-decoration: none;
+        color:cadetblue; 
 }
 
 a:visited{
@@ -8,5 +9,5 @@ a:visited{
 }
 
 a:hover{
-       color: cadetblue; 
+       opacity: 60%; 
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Description" content="Code pour le projet de INF8808.">
+        <title>CFFP - Visualisation bilan de fiscalité</title>
+
+        <link rel="stylesheet" href="assets/style.css">
+        <!-- <link rel="stylesheet" href="assets/tooltip.css">
+        <link rel="stylesheet" href="assets/typography.css"> -->
+        <script src="https://d3js.org/d3.v5.js"></script>
+        <script src="./scripts/treemap_script.js"></script>
+</head>
+
+<body>
+        <header>
+                <h1>
+                        Comparaison entre la fiscalité du Québec et de la Suède
+                </h1>
+        </header>
+        <main>
+                <div class="viz-container">
+                        <div class="graph" id="bar-chart">
+                                <svg class="main-svg"></svg>
+                        </div>
+                </div>
+                <div class='cfn-viz'>
+                        <div class="connected-dot" id="cfn-chart">
+                                <!-- <svg class="cfn-svg"></svg> -->
+                        </div>
+                </div>
+                <div class="viz-container">
+                        <div class="treemap" id="treeMap-vis">
+                        </div>
+                </div>
+        </main>
+        <footer>
+                <div class='panel'>
+                        Réalisé par : <a href='https://www.linkedin.com/in/laura98/' target="_blank">Laura Beaudoin</a>,
+                        <a href='https://www.linkedin.com/in/benjamin-boucher-charest/' target="_blank">Benjamin
+                                Boucher-Charest</a>, <a href='https://www.linkedin.com/in/justin-caisse/'
+                                target="_blank">Justin Caisse</a>, <a
+                                href='https://www.linkedin.com/in/nathan-ramsay-vejlens-155142149/'
+                                target="_blank">Nathan Ramsay-Vejlens</a>
+                </div>
+        </footer>
+</body>
+
+</html>
