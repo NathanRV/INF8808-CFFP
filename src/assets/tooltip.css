@@ -15,6 +15,7 @@ Credits : https://rawgit.com/Caged/d3-tip/master/examples/example-styles.css
     color: #fff;
     border-radius: 2px;
     pointer-events: none;
+    width: fit-content;
   }
   
   /* Creates a small triangle extender for the tooltip */

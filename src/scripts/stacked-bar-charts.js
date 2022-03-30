@@ -3,7 +3,7 @@ export function load() {
     // set the dimensions and margins of the graph
     var margin = {top: 10, right: 30, bottom: 20, left: 50},
         width = 1000 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+        height = 300 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     var svg = d3.select("#my_dataviz")
@@ -32,7 +32,7 @@ export function load() {
         var y = d3.scaleBand()
             .domain(groups)
             .range([0, height])
-            .padding([0.2])
+            .padding([0.6])
         svg.append("g")
             .call(d3.axisLeft(y))
 
@@ -62,38 +62,63 @@ export function load() {
             .html(subgroupName + ' : ' + subgroupValue + ' %')
             .style("opacity", 1)
         }
+
         var mousemove = function(d) {
-            console.log("mousemove called")
-        tooltip
-            .style("left", "90px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-            .style("top", "90px")
+            tooltip
+                .style("left", "90px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+                .style("top", "90px")
         }
+
         var mouseleave = function(d) {
         tooltip
             .style("opacity", 0)
         }
 
         // Show the bars
-        svg.append("g")
+        var categories = svg.append("g")
             .selectAll("g")
             // Enter in the stack data = loop key per key = group per group
             .data(stackedData)
-            .enter().append("g")
+            .enter()
+            .append("g")
             .attr("fill", function(d) { 
                 return color(d.key); 
             })
+
+        categories
             .selectAll("rect")
             // enter a second time = loop subgroup per subgroup to add all rectangles
-            .data(function(d) { return d; })
-            .enter().append("rect")
+            .data(function(d) {
+                return d; 
+            })
+            .enter()
+            .append("rect")
                 .attr("x", function(d) { return x(d[0]); })
                 .attr("y", function(d) { return y(d.data.État); })
                 .attr("height", y.bandwidth())
                 .attr("width", function(d) { return x(d[1]) - x(d[0]); })
-                .attr("stroke", "grey")
+                .attr("stroke", "white")
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave)
 
+        categories
+            .selectAll("text")
+            // enter a second time = loop subgroup per subgroup to add all rectangles
+            .data(function(d) {
+                return d; 
+            })
+            .enter()
+            .append("text")
+                .text(function(d) {
+                    if (d[1] - d[0] < 3) return ""
+                    return parseFloat(d[1] - d[0]).toFixed(2) + " %"
+                })
+                .attr('x', function(d) { return x(d[0]) + (x(d[1]) - x(d[0])) / 2; })
+                .attr('y', function(d) { return y(d.data.État) + y.bandwidth() / 2 + 6; })
+                .attr("text-anchor", "middle")
+                .style('fill', 'white')
+                .attr("pointer-events", "none")
     })
+
 }
