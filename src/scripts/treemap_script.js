@@ -1,9 +1,9 @@
+export function load() {
 var margin = {top: 10, right: 10, bottom: 10, left: 10},
   width = 445 - margin.left - margin.right,
   height = 445 - margin.top - margin.bottom;
-
 // append the svg object to the body of the page
-var svg = d3.select("#my_dataviz")
+var svg = d3.select("#treeMap-vis")
 .append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
@@ -11,9 +11,8 @@ var svg = d3.select("#my_dataviz")
   .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
 
-let csvFile = 'Tab3-Structure_fiscale_2020.csv';        
 // Read data
-d3.csv(csvFile, function(data) {
+d3.csv('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_hierarchy_1level.csv').then(function(data) {
 
   // stratify the data: reformatting for d3.js
   var root = d3.stratify()
@@ -40,7 +39,7 @@ console.log(root.leaves())
       .attr('y', function (d) { return d.y0; })
       .attr('width', function (d) { return d.x1 - d.x0; })
       .attr('height', function (d) { return d.y1 - d.y0; })
-      .style("stroke", "black")
+      .style("stroke", "white")
       .style("fill", "#69b3a2");
 
   // and to add the text labels
@@ -54,4 +53,5 @@ console.log(root.leaves())
       .text(function(d){ return d.data.name})
       .attr("font-size", "15px")
       .attr("fill", "white")
-})
+})    
+}

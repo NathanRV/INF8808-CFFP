@@ -2,6 +2,7 @@
 
 // import * as helper from './scripts/helper.js'
 import * as cfn from './scripts/cfn.js'
+import * as treemap from './scripts/treemap_script.js'
 
 import d3 from 'd3';
 
@@ -28,5 +29,6 @@ import d3 from 'd3';
 
   // d3.select('.main-svg').call(tip)
 
-  cfn.load();
+  //cfn.load();
+  treemap.load();
 })(d3)
