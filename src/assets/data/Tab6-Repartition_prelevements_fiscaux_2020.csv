@@ -1,61 +1,61 @@
-﻿État;Année;Indicateur;Valeur
-Canada;2020;Taux de prélèvements fiscaux pour l’administration fédérale;0.414
-Québec;2020;Taux de prélèvements fiscaux pour l’administration fédérale;0.529
-Nouv.-Brunswick;2020;Taux de prélèvements fiscaux pour l’administration fédérale;0.376
-Nouv.-Écosse;2020;Taux de prélèvements fiscaux pour l’administration fédérale;0.384
-Île-Prince-Éd.;2020;Taux de prélèvements fiscaux pour l’administration fédérale;0.373
-Terre-Neuve-L.;2020;Taux de prélèvements fiscaux pour l’administration fédérale;0.406
-Ontario;2020;Taux de prélèvements fiscaux pour l’administration fédérale;0.427
-Manitoba;2020;Taux de prélèvements fiscaux pour l’administration fédérale;0.403
-Saskatchewan;2020;Taux de prélèvements fiscaux pour l’administration fédérale;0.439
-Alberta;2020;Taux de prélèvements fiscaux pour l’administration fédérale;0.529
-C.-Britannique;2020;Taux de prélèvements fiscaux pour l’administration fédérale;0.448
-Suède;2020;Taux de prélèvements fiscaux pour l’administration fédérale;0.501
-Canada;2020;Taux de prélèvements fiscaux pour l’administration provinciale;0.391
-Québec;2020;Taux de prélèvements fiscaux pour l’administration provinciale;0.496
-Nouv.-Brunswick;2020;Taux de prélèvements fiscaux pour l’administration provinciale;0.455
-Nouv.-Écosse;2020;Taux de prélèvements fiscaux pour l’administration provinciale;0.428
-Île-Prince-Éd.;2020;Taux de prélèvements fiscaux pour l’administration provinciale;0.495
-Terre-Neuve-L.;2020;Taux de prélèvements fiscaux pour l’administration provinciale;0.444
-Ontario;2020;Taux de prélèvements fiscaux pour l’administration provinciale;0.366
-Manitoba;2020;Taux de prélèvements fiscaux pour l’administration provinciale;0.396
-Saskatchewan;2020;Taux de prélèvements fiscaux pour l’administration provinciale;0.396
-Alberta;2020;Taux de prélèvements fiscaux pour l’administration provinciale;0.266
-C.-Britannique;2020;Taux de prélèvements fiscaux pour l’administration provinciale;0.372
-Suède;2020;Taux de prélèvements fiscaux pour l’administration provinciale;0
-Canada;2020;Taux de prélèvements fiscaux pour l’administration locale et autochtones;0.101
-Québec;2020;Taux de prélèvements fiscaux pour l’administration locale et autochtones;0.091
-Nouv.-Brunswick;2020;Taux de prélèvements fiscaux pour l’administration locale et autochtones;0.065
-Nouv.-Écosse;2020;Taux de prélèvements fiscaux pour l’administration locale et autochtones;0.095
-Île-Prince-Éd.;2020;Taux de prélèvements fiscaux pour l’administration locale et autochtones;0.024
-Terre-Neuve-L.;2020;Taux de prélèvements fiscaux pour l’administration locale et autochtones;0.054
-Ontario;2020;Taux de prélèvements fiscaux pour l’administration locale et autochtones;0.117
-Manitoba;2020;Taux de prélèvements fiscaux pour l’administration locale et autochtones;0.10
-Saskatchewan;2020;Taux de prélèvements fiscaux pour l’administration locale et autochtones;0.077
-Alberta;2020;Taux de prélèvements fiscaux pour l’administration locale et autochtones;0.111
-C.-Britannique;2020;Taux de prélèvements fiscaux pour l’administration locale et autochtones;0.08
-Suède;2020;Taux de prélèvements fiscaux pour l’administration locale et autochtones;0.37
-Canada;2020;Taux de prélèvements fiscaux pour les régimes de pension;0.094
-Québec;2020;Taux de prélèvements fiscaux pour les régimes de pension;0.098
-Nouv.-Brunswick;2020;Taux de prélèvements fiscaux pour les régimes de pension;0.104
-Nouv.-Écosse;2020;Taux de prélèvements fiscaux pour les régimes de pension;0.093
-Île-Prince-Éd.;2020;Taux de prélèvements fiscaux pour les régimes de pension;0.109
-Terre-Neuve-L.;2020;Taux de prélèvements fiscaux pour les régimes de pension;0.096
-Ontario;2020;Taux de prélèvements fiscaux pour les régimes de pension;0.089
-Manitoba;2020;Taux de prélèvements fiscaux pour les régimes de pension;0.101
-Saskatchewan;2020;Taux de prélèvements fiscaux pour les régimes de pension;0.088
-Alberta;2020;Taux de prélèvements fiscaux pour les régimes de pension;0.093
-C.-Britannique;2020;Taux de prélèvements fiscaux pour les régimes de pension;0.101
-Suède;2020;Taux de prélèvements fiscaux pour les régimes de pension;0.126
-Canada;2020;Taux de prélèvements supranational;0
-Québec;2020;Taux de prélèvements supranational;0
-Nouv.-Brunswick;2020;Taux de prélèvements supranational;0
-Nouv.-Écosse;2020;Taux de prélèvements supranational;0
-Île-Prince-Éd.;2020;Taux de prélèvements supranational;0
-Terre-Neuve-L.;2020;Taux de prélèvements supranational;0
-Ontario;2020;Taux de prélèvements supranational;0
-Manitoba;2020;Taux de prélèvements supranational;0
-Saskatchewan;2020;Taux de prélèvements supranational;0
-Alberta;2020;Taux de prélèvements supranational;0
-C.-Britannique;2020;Taux de prélèvements supranational;0
-Suède;2020;Taux de prélèvements supranational;0.003
+﻿État,Année,Indicateur,Valeur
+Canada,2020,Taux de prélèvements fiscaux pour l’administration fédérale,0.414
+Québec,2020,Taux de prélèvements fiscaux pour l’administration fédérale,0.529
+Nouv.-Brunswick,2020,Taux de prélèvements fiscaux pour l’administration fédérale,0.376
+Nouv.-Écosse,2020,Taux de prélèvements fiscaux pour l’administration fédérale,0.384
+Île-Prince-Éd.,2020,Taux de prélèvements fiscaux pour l’administration fédérale,0.373
+Terre-Neuve-L.,2020,Taux de prélèvements fiscaux pour l’administration fédérale,0.406
+Ontario,2020,Taux de prélèvements fiscaux pour l’administration fédérale,0.427
+Manitoba,2020,Taux de prélèvements fiscaux pour l’administration fédérale,0.403
+Saskatchewan,2020,Taux de prélèvements fiscaux pour l’administration fédérale,0.439
+Alberta,2020,Taux de prélèvements fiscaux pour l’administration fédérale,0.529
+C.-Britannique,2020,Taux de prélèvements fiscaux pour l’administration fédérale,0.448
+Suède,2020,Taux de prélèvements fiscaux pour l’administration fédérale,0.501
+Canada,2020,Taux de prélèvements fiscaux pour l’administration provinciale,0.391
+Québec,2020,Taux de prélèvements fiscaux pour l’administration provinciale,0.496
+Nouv.-Brunswick,2020,Taux de prélèvements fiscaux pour l’administration provinciale,0.455
+Nouv.-Écosse,2020,Taux de prélèvements fiscaux pour l’administration provinciale,0.428
+Île-Prince-Éd.,2020,Taux de prélèvements fiscaux pour l’administration provinciale,0.495
+Terre-Neuve-L.,2020,Taux de prélèvements fiscaux pour l’administration provinciale,0.444
+Ontario,2020,Taux de prélèvements fiscaux pour l’administration provinciale,0.366
+Manitoba,2020,Taux de prélèvements fiscaux pour l’administration provinciale,0.396
+Saskatchewan,2020,Taux de prélèvements fiscaux pour l’administration provinciale,0.396
+Alberta,2020,Taux de prélèvements fiscaux pour l’administration provinciale,0.266
+C.-Britannique,2020,Taux de prélèvements fiscaux pour l’administration provinciale,0.372
+Suède,2020,Taux de prélèvements fiscaux pour l’administration provinciale,0
+Canada,2020,Taux de prélèvements fiscaux pour l’administration locale et autochtones,0.101
+Québec,2020,Taux de prélèvements fiscaux pour l’administration locale et autochtones,0.091
+Nouv.-Brunswick,2020,Taux de prélèvements fiscaux pour l’administration locale et autochtones,0.065
+Nouv.-Écosse,2020,Taux de prélèvements fiscaux pour l’administration locale et autochtones,0.095
+Île-Prince-Éd.,2020,Taux de prélèvements fiscaux pour l’administration locale et autochtones,0.024
+Terre-Neuve-L.,2020,Taux de prélèvements fiscaux pour l’administration locale et autochtones,0.054
+Ontario,2020,Taux de prélèvements fiscaux pour l’administration locale et autochtones,0.117
+Manitoba,2020,Taux de prélèvements fiscaux pour l’administration locale et autochtones,0.10
+Saskatchewan,2020,Taux de prélèvements fiscaux pour l’administration locale et autochtones,0.077
+Alberta,2020,Taux de prélèvements fiscaux pour l’administration locale et autochtones,0.111
+C.-Britannique,2020,Taux de prélèvements fiscaux pour l’administration locale et autochtones,0.08
+Suède,2020,Taux de prélèvements fiscaux pour l’administration locale et autochtones,0.37
+Canada,2020,Taux de prélèvements fiscaux pour les régimes de pension,0.094
+Québec,2020,Taux de prélèvements fiscaux pour les régimes de pension,0.098
+Nouv.-Brunswick,2020,Taux de prélèvements fiscaux pour les régimes de pension,0.104
+Nouv.-Écosse,2020,Taux de prélèvements fiscaux pour les régimes de pension,0.093
+Île-Prince-Éd.,2020,Taux de prélèvements fiscaux pour les régimes de pension,0.109
+Terre-Neuve-L.,2020,Taux de prélèvements fiscaux pour les régimes de pension,0.096
+Ontario,2020,Taux de prélèvements fiscaux pour les régimes de pension,0.089
+Manitoba,2020,Taux de prélèvements fiscaux pour les régimes de pension,0.101
+Saskatchewan,2020,Taux de prélèvements fiscaux pour les régimes de pension,0.088
+Alberta,2020,Taux de prélèvements fiscaux pour les régimes de pension,0.093
+C.-Britannique,2020,Taux de prélèvements fiscaux pour les régimes de pension,0.101
+Suède,2020,Taux de prélèvements fiscaux pour les régimes de pension,0.126
+Canada,2020,Taux de prélèvements supranational,0
+Québec,2020,Taux de prélèvements supranational,0
+Nouv.-Brunswick,2020,Taux de prélèvements supranational,0
+Nouv.-Écosse,2020,Taux de prélèvements supranational,0
+Île-Prince-Éd.,2020,Taux de prélèvements supranational,0
+Terre-Neuve-L.,2020,Taux de prélèvements supranational,0
+Ontario,2020,Taux de prélèvements supranational,0
+Manitoba,2020,Taux de prélèvements supranational,0
+Saskatchewan,2020,Taux de prélèvements supranational,0
+Alberta,2020,Taux de prélèvements supranational,0
+C.-Britannique,2020,Taux de prélèvements supranational,0
+Suède,2020,Taux de prélèvements supranational,0.003

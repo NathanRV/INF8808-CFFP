@@ -21,7 +21,7 @@ export function generateG (margin) {
  * @param {number} height The desired height
  */
 export function setCanvasSize (width, height) {
-  d3.select('#bubble-chart')
+  d3.select('#bar-chart')
     .attr('width', width)
     .attr('height', height)
 }
