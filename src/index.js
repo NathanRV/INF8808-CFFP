@@ -3,6 +3,8 @@
 // import * as helper from './scripts/helper.js'
 import * as cfn from './scripts/cfn.js'
 
+import * as stackedBarCharts from './scripts/stacked-bar-charts.js'
+
 import d3 from 'd3';
 
 /**
@@ -18,5 +20,6 @@ import d3 from 'd3';
   let svgSize;
   let graphSize;
 
-  cfn.load();
+  // cfn.load();
+  stackedBarCharts.load();
 })(d3)
