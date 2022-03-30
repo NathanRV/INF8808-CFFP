@@ -18,15 +18,5 @@ import d3 from 'd3';
   let svgSize;
   let graphSize;
 
-  // const xScale = d3.scaleBand().padding(0.15)
-  // const xSubgroupScale = d3.scaleBand().padding([0.015])
-  // const yScale = d3.scaleLinear()
-
-  // const tip = d3Tip().attr('class', 'd3-tip').html(function (d) {    
-  //   return 'not implemented yet'; //tooltip.getContents(d);
-  // });
-
-  // d3.select('.main-svg').call(tip)
-
   cfn.load();
 })(d3)
