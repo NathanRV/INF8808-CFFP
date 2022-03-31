@@ -2,7 +2,7 @@ export function load() {
 
     // set the dimensions and margins of the graph
     var margin = {top: 10, right: 30, bottom: 20, left: 50},
-        width = 1000 - margin.left - margin.right,
+        width = 1200 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
@@ -33,8 +33,12 @@ export function load() {
             .domain(groups)
             .range([0, height])
             .padding([0.6])
-        svg.append("g")
+        yAxis = svg.append("g")
             .call(d3.axisLeft(y))
+
+        yAxis.select('.domain')
+        .attr('stroke-width', 0);
+
 
         // color palette = one color per subgroup
         var color = d3.scaleOrdinal()
@@ -59,7 +63,7 @@ export function load() {
         var subgroupName = d3.select(this.parentNode).datum().key;
         var subgroupValue = d.data[subgroupName];
         tooltip
-            .html(subgroupName + ' : ' + subgroupValue + ' %')
+            .html(subgroupName + ' : ' + subgroupValue + ' % <br>' + 999 + ' G $')
             .style("opacity", 1)
         }
 
@@ -70,8 +74,8 @@ export function load() {
         }
 
         var mouseleave = function(d) {
-        tooltip
-            .style("opacity", 0)
+            tooltip
+                .style("opacity", 0)
         }
 
         // Show the bars
@@ -104,7 +108,7 @@ export function load() {
 
         categories
             .selectAll("text")
-            // enter a second time = loop subgroup per subgroup to add all rectangles
+            // enter a second time = loop subgroup per subgroup to add all text
             .data(function(d) {
                 return d; 
             })
@@ -119,6 +123,29 @@ export function load() {
                 .attr("text-anchor", "middle")
                 .style('fill', 'white')
                 .attr("pointer-events", "none")
+
+
+        // Show legend
+        var legend = svg.append("g")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 10)
+            .selectAll("g")
+            .data(subgroups.slice())
+            .enter().append("g")
+            .attr("transform", function(d, i) { return "translate(" + i * 240 + ", " + height + ")"; });
+        
+        legend.append("rect")
+            .attr("x", 0)
+            .attr("width", 19)
+            .attr("height", 19)
+            .attr("fill", color);
+        
+        legend.append("text")
+            .attr("x", 25)
+            .attr("y", 10)
+            .attr("dy", "0.32em")
+            .style("font-size", "12px")
+            .text(function(d) { return d; })
     })
 
 }
