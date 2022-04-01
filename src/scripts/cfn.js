@@ -15,7 +15,7 @@ export function load(){
 
     d3.select("#cfn-chart")
         .append("h2")
-        .attr("class","cfn-title")
+        .attr("id","cfn-title")
         .text("Comparaison charge fiscale nette selon situation familiale");
 
         
