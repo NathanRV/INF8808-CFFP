@@ -9,9 +9,9 @@ import d3Legend from 'd3-svg-legend';
 let radius = 10
 
 export function load(){
-    let margin = {top: 10, right: 30, bottom: 30, left: 250};
+    let margin = {top: 10, right: 150, bottom: 30, left: 250};
     let width = 1200 - margin.left - margin.right;
-    let height = 500 - margin.top - margin.bottom;
+    let height = 600 - margin.top - margin.bottom;
 
     d3.select("#cfn-chart")
         .append("h2")
@@ -49,7 +49,7 @@ export function load(){
 
         createLines(groups, xScale);
         createCircles(groups, xScale, colorScale);
-        drawLegend(colorScale, svg, width)
+        drawLegend(colorScale, width + margin.left)
     })
 }
 
@@ -438,22 +438,22 @@ function hideTips(tips){
 
 
 /**
- * Draws the legend.
+ * Draws the legend. Using d3-svg-legend library
+ * https://d3-legend.susielu.com/
  *
  * @param {*} colorScale The color scale to use
  * @param {*} g The d3 Selection of the graph's g SVG element
  */
-function drawLegend (colorScale, g) {
-    // For help, see : https://d3-legend.susielu.com/
-  
+function drawLegend (colorScale, offset) {  
     let legend = d3Legend.legendColor()
                     .orient("vertical")
                     .title("Légende")
                     .shape("circle")
                     .scale(colorScale)
   
-    g.append("g")
-      .attr("class","cfn-legend")
-      .attr("transform",'translate(0,10)')
-      .call(legend)
+    d3.select("#cfn-svg")
+        .append("g")
+        .attr("class","cfn-legend")
+        .attr("transform",'translate(' + offset + ',20)')
+        .call(legend)
 }
