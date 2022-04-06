@@ -131,18 +131,18 @@ function regroupBySituation(data){
     let groupedData = {}
 
     // Group by family situation
-    for (entry in data){
-        let situation = data[entry].Situation_familiale;
+    data.forEach((entry,index)=>{
+        let situation = data[index].Situation_familiale;
 
         if (!groupedData[situation]){
             groupedData[situation] = [];
         }
-        groupedData[situation].push(data[entry]);
-    }
+        groupedData[situation].push(data[index]);
+    })
 
-    formattedData = []
+    let formattedData = []
     // Format into array of data (easier to use)
-    for (situation in groupedData){
+    for (const situation in groupedData){
         let group = groupedData[situation]
 
         let tmp = group[0]

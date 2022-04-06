@@ -3,8 +3,6 @@
 // import * as helper from './scripts/helper.js'
 import * as cfn from './scripts/cfn.js'
 
-import d3 from 'd3';
-
 /**
  * @file This file is the entry-point
  * @author Nathan Ramsay-Vejlens
