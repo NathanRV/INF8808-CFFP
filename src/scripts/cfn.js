@@ -8,7 +8,7 @@ import d3Legend from 'd3-svg-legend';
 // Global variables used in many functions
 let radius = 10
 
-export function load(){
+export function load() {
     let margin = {top: 10, right: 150, bottom: 30, left: 250};
     let width = 1200 - margin.left - margin.right;
     let height = 600 - margin.top - margin.bottom;
@@ -442,7 +442,7 @@ function hideTips(tips){
  * https://d3-legend.susielu.com/
  *
  * @param {*} colorScale The color scale to use
- * @param {*} g The d3 Selection of the graph's g SVG element
+ * @param {*} offset The x value of the legend box
  */
 function drawLegend (colorScale, offset) {  
     let legend = d3Legend.legendColor()

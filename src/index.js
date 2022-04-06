@@ -3,7 +3,7 @@
 // import * as helper from './scripts/helper.js'
 import * as cfn from './scripts/cfn.js'
 
-import * as stackedBarCharts from './scripts/stacked-bar-charts.js'
+import * as rpf from './scripts/rpf.js'
 
 import d3 from 'd3';
 
@@ -16,10 +16,6 @@ import d3 from 'd3';
 (function (d3) {
   const margin = { top: 80, right: 0, bottom: 80, left: 55 };
 
-  let bounds;
-  let svgSize;
-  let graphSize;
-
   // cfn.load();
-  stackedBarCharts.load();
+  rpf.load();
 })(d3)
