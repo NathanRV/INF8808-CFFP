@@ -99,7 +99,7 @@ function createColorScale(){
  */
 function removeOtherStates(data){
     var filtered = data.filter(function(d){
-        if (d.Pays == 'Suede' || d.Pays =='Quebec' || d.pays == ''){
+        if (d.Pays == 'Suede' || d.Pays =='Quebec' || d.Pays == ''){
             return true;
         }
       return false;

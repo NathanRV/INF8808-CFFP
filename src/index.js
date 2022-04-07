@@ -5,6 +5,8 @@ import * as cfn from './scripts/cfn.js'
 
 import * as rpf from './scripts/rpf.js'
 
+import * as caca from './scripts/treemap_script.js'
+
 import d3 from 'd3';
 
 /**
@@ -17,5 +19,6 @@ import d3 from 'd3';
   const margin = { top: 80, right: 0, bottom: 80, left: 55 };
 
   // cfn.load();
-  rpf.load();
+  //rpf.load();
+  caca.load();
 })(d3)
