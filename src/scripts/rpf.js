@@ -2,8 +2,8 @@
 * Functions used to draw the viz related to RPF (Répartition prélèvements fiscaux)
 *
 */
-import d3Tip from 'd3-tip';
-import d3Legend from 'd3-svg-legend';
+import d3Tip from "d3-tip";
+import d3Legend from "d3-svg-legend";
 
 export function load() {
 
@@ -11,6 +11,12 @@ export function load() {
     let margin = {top: 10, right: 100, bottom: 20, left: 100},
         width = 1300 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
+
+    d3.select("#rpf-chart")
+        .append("h2")
+        .attr("id","rpf-title")
+        .text("Comparaison de la répartition des prélèvements fiscaux")
+        .style("font-family", "sans-serif")
 
     // append the svg object to the body of the page
     let svg = d3.select("#rpf-chart")
@@ -115,8 +121,8 @@ function createYScale(groups, height, svg){
         .style("font-size", 14)
         .call(d3.axisLeft(y))
 
-    yAxis.select('.domain')
-        .attr('stroke-width', 0)
+    yAxis.select(".domain")
+        .attr("stroke-width", 0)
 
     return y;
 }
@@ -129,7 +135,7 @@ function createYScale(groups, height, svg){
  function createColorScale(subgroups){
     return d3.scaleOrdinal()
         .domain(subgroups)
-        .range(['#031F4B','#265889','#5598C6', '#95C1D8', '#95C71B'])
+        .range(["#031F4B","#265889","#5598C6", "#95C1D8", "#95C71B"])
 }
 
 /**
@@ -221,11 +227,11 @@ function showRectanglesText(categories, xScale, yScale) {
                     if (d[1] - d[0] < 3) return ""
                     return Math.round((d[1] - d[0] + Number.EPSILON) * 100) / 100 + " %"
                 })
-                .attr('x', function(d) { return xScale(d[0]) + (xScale(d[1]) - xScale(d[0])) / 2; })
-                .attr('y', function(d) { return yScale(d.data.État) + yScale.bandwidth() / 2 + 6; })
+                .attr("x", function(d) { return xScale(d[0]) + (xScale(d[1]) - xScale(d[0])) / 2; })
+                .attr("y", function(d) { return yScale(d.data.État) + yScale.bandwidth() / 2 + 6; })
                 .attr("text-anchor", "middle")
                 .attr("font-family", "sans-serif")
-                .style('fill', 'white')
+                .style("fill", "white")
                 .attr("pointer-events", "none")
 }
 
@@ -252,10 +258,10 @@ function showRectanglesText(categories, xScale, yScale) {
     else tips[1].offset([0, 0])
 
     if(firstTipValue != 0.0) {
-        tips[0].show(data.key + ' : ' + firstTipValue + ' %', object)
+        tips[0].show(data.key + " : " + firstTipValue + " %", object)
     }
     if(secondTipValue != 0.0) {
-        tips[1].show(data.key + ' : ' + secondTipValue + ' %', object)
+        tips[1].show(data.key + " : " + secondTipValue + " %", object)
     }
 }
 
@@ -276,15 +282,15 @@ function showRectanglesText(categories, xScale, yScale) {
  * @param {*} subgroupName group element key to highlight.
  */
  function selectGroup(subgroupName) {
-    d3.selectAll('g.category')
-        .style('opacity', function(d) {
+    d3.selectAll("g.category")
+        .style("opacity", function(d) {
             if(d.key == subgroupName) {
                 return 1
             }
             return 0.5;
         })
-    d3.selectAll('.cell')
-        .style('opacity', function(d) {
+    d3.selectAll(".cell")
+        .style("opacity", function(d) {
             if(d == subgroupName) {
                 return 1
             }
@@ -297,11 +303,11 @@ function showRectanglesText(categories, xScale, yScale) {
  * Removes highlights.
  */
  function unselectGroup() {
-    d3.selectAll('g.category')
-        .style('opacity', 1)
+    d3.selectAll("g.category")
+        .style("opacity", 1)
 
-    d3.selectAll('.cell')
-        .style('opacity', 1);
+    d3.selectAll(".cell")
+        .style("opacity", 1);
 }
     
 /**
@@ -314,14 +320,14 @@ function showRectanglesText(categories, xScale, yScale) {
 function showLegend (colorScale, legendSVG) {  
     let legend = d3Legend.legendColor()
                     .orient("horizontal")
-                    .shapePadding('220')
-                    .labelAlign('start')
-                    .labelWrap('200')
+                    .shapePadding("220")
+                    .labelAlign("start")
+                    .labelWrap("200")
                     .scale(colorScale)
   
     legendSVG.call(legend)
 
-    legendSVG.selectAll('.label')
+    legendSVG.selectAll(".label")
         .attr("font-family", "sans-serif")
         .attr("transform", "translate(20, 13)")
         .attr("font-size", 16)
