@@ -1,4 +1,16 @@
 /*
+* Categories used in the csv file associated with their display text
+*
+*/
+const CATEGORIES = {
+    'Taux de prélèvements supranational': 'Supranational',
+    'Taux de prélèvements fiscaux pour l’administration fédérale': 'Administration fédérale',
+    'Taux de prélèvements fiscaux pour l’administration provinciale': 'Administration provinciale',
+    'Taux de prélèvements fiscaux pour l’administration locale et autochtones': 'Administration locale et autochtone',
+    'Taux de prélèvements fiscaux pour les régimes de pension': 'Sécurité sociale'
+  }
+
+/*
 * Functions used to draw the viz related to RPF (Répartition prélèvements fiscaux)
 *
 */
@@ -38,12 +50,20 @@ export function load() {
     let tips = createTips(svg);
 
     // Parse the Data
-    d3.csv("./stacked-bar-chart-data.csv").then( function(data) {
+    d3.csv("./Tab6-Repartition_prelevements_fiscaux_2020.csv").then( function(data) {
 
-        // Header of the csv file (X axis)
-        let subgroups = data.columns.slice(1)
+        data = removeOtherStates(data);
 
-        // First column of the csv file (Y axis)
+        data = formatData(data)
+
+        // X axis
+        let subgroups = d3.map(data, function(d) {
+            return(d.Indicateur)
+        }).keys()
+
+        data = regroupByState(data)
+
+        // Y axis
         let groups = d3.map(data, function(d) {
             return(d.État)
         }).keys()
@@ -53,10 +73,9 @@ export function load() {
             .keys(subgroups)
             (data)
 
-        // Creating scales
+        // // Creating scales
         let xScale = createXScale(width)
         let yScale = createYScale(groups, height, svgGraph)
-
         let colorScale = createColorScale(subgroups)
 
         showBars(svgGraph, stackedData, xScale, yScale, colorScale, tips)
@@ -90,6 +109,69 @@ export function load() {
     tips.forEach((tip) => svg.call(tip));
 
     return tips;
+}
+
+/**
+ * Removes the other states not used in this dataset.
+ *
+ * @param {object[]} data The data to be used
+ */
+ function removeOtherStates(data){
+    var filtered = data.filter(function(d){
+        if (d.État == 'Suède' || d.État =='Québec' || d.État == ''){
+            return true;
+        }
+      return false;
+    })
+  
+    return filtered;
+}
+
+/**
+ * Change indicator text value and puts value in percentage
+ *
+ * @param {object[]} data The data to be used
+ */
+ function formatData(data) {
+
+    data.forEach(value => {
+        value.Indicateur = CATEGORIES[value.Indicateur]
+        value.Valeur = (value.Valeur * 100)
+      });
+  
+    return data;
+}
+
+/**
+ * Regroups the data by state
+ *
+ * @param {object[]} data The data to be used
+ */
+ function regroupByState(data) {
+    let groupedData = {}
+
+    // Group by state
+    for (entry in data){
+        let state = data[entry].État;
+
+        if (!groupedData[state]) {
+            groupedData[state] = [];
+        }
+        groupedData[state].push(data[entry]);
+    }
+
+    formattedData = []
+    // Format into array of data (easier to use)
+    for (state in groupedData) {
+        let tmp = []
+        groupedData[state].forEach(indicator => {
+            tmp["État"] = indicator["État"]
+            tmp[indicator["Indicateur"]] = indicator["Valeur"]
+        })
+        formattedData.push(tmp)
+    }
+
+    return formattedData;
 }
 
 /**
