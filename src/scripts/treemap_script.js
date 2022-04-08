@@ -22,12 +22,13 @@ var svg = d3.select("#treemap")
     let swedenData = getSweden(data);
     swedenData = createHierarchy(swedenData);
     let root = d3.stratify().id(function(d){return d.Name}).parentId(function(d){return d.parentId})(swedenData);
-
-    console.log(root);
+    root.sum(function (d) { return d.Value; })
+    console.log(root)
     // Then d3.treemap computes the position of each element of the hierarchy
     // The coordinates are added to the root object above
-    d3.treemap(root)
+    d3.treemap()
       .size([width, height])
+    (root)
     console.log(root);
     const color = d3.scaleOrdinal()
       .domain(["Impôts sur le revenu des particuliers",
