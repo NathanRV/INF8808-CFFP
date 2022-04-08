@@ -11,3 +11,25 @@ a:visited {
 a:hover {
        opacity: 60%; 
 }
+
+.treemapContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+}
+
+.treemap {
+        height: fit-content;
+        width: fit-content;
+}
+
+.treemapLabel {
+        align-self: center;
+        font-weight: bold;
+        font-size: 40px;
+}
+
+.mapContainer {
+        align-items: center;
+        float: center;
+}
