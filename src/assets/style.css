@@ -24,12 +24,9 @@ a:hover {
 }
 
 .treemapLabel {
-        align-self: center;
         font-weight: bold;
+        width: 100%;
         font-size: 40px;
+        margin: auto;
 }
 
-.mapContainer {
-        align-items: center;
-        float: center;
-}
