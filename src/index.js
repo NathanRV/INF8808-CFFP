@@ -4,6 +4,10 @@
 import * as cfn from './scripts/cfn.js'
 import * as treemap from './scripts/treemap_script.js'
 
+import * as rpf from './scripts/rpf.js'
+
+import * as caca from './scripts/treemap_script.js'
+
 import d3 from 'd3';
 
 /**
@@ -15,20 +19,7 @@ import d3 from 'd3';
 (function (d3) {
   const margin = { top: 80, right: 0, bottom: 80, left: 55 };
 
-  let bounds;
-  let svgSize;
-  let graphSize;
-
-  // const xScale = d3.scaleBand().padding(0.15)
-  // const xSubgroupScale = d3.scaleBand().padding([0.015])
-  // const yScale = d3.scaleLinear()
-
-  // const tip = d3Tip().attr('class', 'd3-tip').html(function (d) {    
-  //   return 'not implemented yet'; //tooltip.getContents(d);
-  // });
-
-  // d3.select('.main-svg').call(tip)
-
-  //cfn.load();
-  treemap.load();
+  // cfn.load();
+  //rpf.load();
+  caca.load();
 })(d3)
