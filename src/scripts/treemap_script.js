@@ -1,9 +1,12 @@
+import d3Tip from 'd3-tip';
+
+
 export function load(){
   
 // set the dimensions and margins of the graph
-const margin = {top: 10, right: 10, bottom: 10, left: 10},
-  width = 700 - margin.left - margin.right,
-  height = 700 - margin.top - margin.bottom;
+const margin = {top: 10, right: 20, bottom: 10, left: 10},
+  width = 550 - margin.left - margin.right,
+  height = 500 - margin.top - margin.bottom;
 
 
 // append the svg object to the body of the page
@@ -24,10 +27,16 @@ var swedenSVG = d3.select("#swedenTreeMap")
 
   // Read data
   d3.csv('./Tab3-Structure_fiscale_2020.csv').then(function(data) {
-    let swedenData = getSweden(data);
+    let swedenData = getFilteredData(data, 'Suede');
     swedenData = createHierarchy(swedenData,'Sweden');
-    let quebecData = getQuebec(data);
-    quebecData = createHierarchy(quebecData, 'Quebec')
+    let quebecData = getFilteredData(data, 'Quebec');
+    quebecData = createHierarchy(quebecData, 'Quebec');
+
+    var tooltip = d3.select("#swedenTreeMap")
+    .append("div")
+    .style("opacity", 0)
+    .attr("class", "d3-tip")
+
 
     let quebecRoot = d3.stratify().id(function (d) { return d.Name }).parentId(function (d) { return d.parentId })(quebecData);
     quebecRoot.sum(function (d) { return d.Value; });
@@ -35,17 +44,31 @@ var swedenSVG = d3.select("#swedenTreeMap")
     let root = d3.stratify().id(function(d){return d.Name}).parentId(function(d){return d.parentId})(swedenData);
     root.sum(function (d) { return d.Value; })
 
+     // Three function that change the tooltip when user hover / move / leave a cell
+    var mouseover = function(d) {
+        tooltip
+        .html(d.id + ' : ' + d.value + ' % <br>' + 999 + ' G $')
+        .style("opacity", 1)
+    }
+
+    var mousemove = function(d) {
+        tooltip
+            .style("left", "90px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+            .style("top", "90px")
+    }
+
+    var mouseleave = function(d) {
+        tooltip
+            .style("opacity", 0)
+    }
+
     d3.treemap()
       .size([width, height])
-      .paddingTop(28)
-      .paddingRight(7)
       .paddingInner(3)
       (root)
     
     d3.treemap()
       .size([width, height])
-      .paddingTop(28)
-      .paddingRight(7)
       .paddingInner(3)
       (quebecRoot)
     
@@ -72,6 +95,9 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .attr('height', function (d) { return d.y1 - d.y0; })
         .style("stroke", "black")
         .style("fill", function (d) { return color(d.id)})
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave)
 
 
       // and to add the text labels
@@ -85,7 +111,7 @@ var swedenSVG = d3.select("#swedenTreeMap")
           .text(function(d){ return d.id})
           .attr("font-size", "14px")
         .attr("fill", "white")
-      
+       
       swedenSVG
       .selectAll("vals")
       .data(root.leaves())
@@ -137,8 +163,6 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .attr("font-size", "16px")
       .attr("fill", "white")
   });
-
-  
 }
 
 
@@ -147,9 +171,9 @@ var swedenSVG = d3.select("#swedenTreeMap")
  *
  * @param {object[]} data The data to be used
  */
- function getSweden(data){
+ function getFilteredData(data, country){
   var filtered = data.filter(function(d){
-      if (d.Country === 'Suede')
+      if (d.Country === country)
           return true;
       return false;
   });
@@ -162,19 +186,5 @@ function createHierarchy(data, countryName) {
     hierarchyData.push({Name: data[i].Indicator, Value: data[i].Value, parentId: countryName});
   }
   return hierarchyData;
-}
-
-/**
- * Removes the other states not used in this dataset.
- *
- * @param {object[]} data The data to be used
- */
- function getQuebec(data){
-  var filtered = data.filter(function(d){
-      if (d.Country === 'Quebec')
-          return true;
-      return false;
-  });
-  return filtered;
 }
 
