@@ -2,11 +2,12 @@
 
 // import * as helper from './scripts/helper.js'
 import * as cfn from './scripts/cfn.js'
-import * as treemap from './scripts/treemap_script.js'
 
 import * as rpf from './scripts/rpf.js'
 
 import * as caca from './scripts/treemap_script.js'
+
+import * as justin from './scripts/linechart_script'
 
 import d3 from 'd3';
 
@@ -21,5 +22,6 @@ import d3 from 'd3';
 
   // cfn.load();
   //rpf.load();
-  caca.load();
+  //caca.load();
+  justin.load();
 })(d3)
