@@ -32,7 +32,12 @@ var swedenSVG = d3.select("#swedenTreeMap")
     let quebecData = getFilteredData(data, 'Quebec');
     quebecData = createHierarchy(quebecData, 'Quebec');
 
-    var tooltip = d3.select("#swedenTreeMap")
+    var tooltipSweden = d3.select("#swedenTreeMap")
+    .append("div")
+    .style("opacity", 0)
+    .attr("class", "d3-tip")
+
+    var tooltipQuebec = d3.select("#quebecTreeMap")
     .append("div")
     .style("opacity", 0)
     .attr("class", "d3-tip")
@@ -46,20 +51,52 @@ var swedenSVG = d3.select("#swedenTreeMap")
 
      // Three function that change the tooltip when user hover / move / leave a cell
     var mouseover = function(d) {
-        tooltip
-        .html(d.id + ' : ' + d.value + ' % <br>' + 999 + ' G $')
+      console.log(d); 
+      if(d.parent.id === 'Sweden'){
+        tooltipSweden
+        .html(d.id + ' : ' + Math.round(100 * d.value) + ' % <br>' + 999 + ' G $')
         .style("opacity", 1)
+        .style("left", d3.mouse(this)[0]+70 + "px")
+        .style("top", d3.mouse(this)[1]+"px")
+        let data = quebecData.filter((element)=>{return d.id === element.Name});
+        tooltipQuebec
+        .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % <br>' + 999 + ' G $')
+        .style("opacity", 1)
+        .style("left", d3.mouse(this)[0]+70 + "px")
+        .style("top", d3.mouse(this)[1]+"px")
+      }
+        
+      if(d.parent.id === 'Quebec'){
+        tooltipQuebec
+        .html(d.id + ' : ' + Math.round(100 * d.value) + ' % <br>' + 999 + ' G $')
+        .style("opacity", 1)
+        .style("left", d3.mouse(this)[0]+70 + "px")
+        .style("top", d3.mouse(this)[1]+"px") 
+        let data = swedenData.filter((element)=>{return d.id === element.Name});
+        tooltipSweden
+        .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % <br>' + 999 + ' G $')
+        .style("opacity", 1)
+        .style("left", d3.mouse(this)[0]+70 + "px")
+        .style("top", d3.mouse(this)[1]+"px")
+      }
     }
 
     var mousemove = function(d) {
-        tooltip
-            .style("left", "90px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-            .style("top", "90px")
+      if(d.parent.id === 'Sweden')
+        tooltipSweden
+              .style("left", d3.mouse(this)[0]+70 + "px")
+              .style("top", d3.mouse(this)[1]+"px")
+      if(d.parent.id === 'Quebec')
+        tooltipQuebec
+        .style("left", d3.mouse(this)[0]+70 + "px")
+        .style("top", d3.mouse(this)[1]+"px")
     }
 
     var mouseleave = function(d) {
-        tooltip
+        tooltipSweden
             .style("opacity", 0)
+        tooltipQuebec
+          .style("opacity", 0)
     }
 
     d3.treemap()
@@ -136,7 +173,9 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .attr('height', function (d) { return d.y1 - d.y0; })
         .style("stroke", "black")
         .style("fill", function (d) { return color(d.id)})
-
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave)
 
       // and to add the text labels
       quebecSVG
