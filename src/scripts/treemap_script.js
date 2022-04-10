@@ -28,82 +28,74 @@ var swedenSVG = d3.select("#swedenTreeMap")
   // Read data
   d3.csv('./Tab3-Structure_fiscale_2020.csv').then(function(data) {
     let swedenData = getFilteredData(data, 'Suede');
-    swedenData = createHierarchy(swedenData,'Sweden');
     let quebecData = getFilteredData(data, 'Quebec');
-    quebecData = createHierarchy(quebecData, 'Quebec');
 
-    var tooltipSweden = d3.select("#swedenTreeMap")
-    .append("div")
-    .style("opacity", 0)
-    .attr("class", "d3-tip")
-
-    var tooltipQuebec = d3.select("#quebecTreeMap")
-    .append("div")
-    .style("opacity", 0)
-    .attr("class", "d3-tip")
+    var tooltipSweden = createTooltip("#swedenTreeMap")
+    var tooltipQuebec = createTooltip("#quebecTreeMap")
+ 
 
 
     let quebecRoot = d3.stratify().id(function (d) { return d.Name }).parentId(function (d) { return d.parentId })(quebecData);
     quebecRoot.sum(function (d) { return d.Value; });
 
-    let root = d3.stratify().id(function(d){return d.Name}).parentId(function(d){return d.parentId})(swedenData);
-    root.sum(function (d) { return d.Value; })
+    let swedenRoot = d3.stratify().id(function(d){return d.Name}).parentId(function(d){return d.parentId})(swedenData);
+    swedenRoot.sum(function (d) { return d.Value; })
 
      // Three function that change the tooltip when user hover / move / leave a cell
     var mouseover = function(d) {
-      if(d.parent.id === 'Sweden'){
+      if(d.parent.id === 'Suede'){
         tooltipSweden
-        .html(d.id + ' : ' + Math.round(100 * d.value) + ' % <br>' + 999 + ' G $')
-        .style("opacity", 1)
-        .style("left", d3.mouse(this)[0]+70 + "px")
-        .style("top", d3.mouse(this)[1]+"px")
+          .html(d.id + ' : ' + Math.round(100 * d.value) + ' % <br>' + 999 + ' G $')
+          .style("opacity", 1)
+          .style("left", d3.mouse(this)[0]+70 + "px")
+          .style("top", d3.mouse(this)[1]+"px")
         let data = quebecData.filter((element)=>{return d.id === element.Name});
         tooltipQuebec
-        .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % <br>' + 999 + ' G $')
-        .style("opacity", 1)
-        .style("left", d3.mouse(this)[0]+70 + "px")
-        .style("top", d3.mouse(this)[1]+"px")
+          .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % <br>' + 999 + ' G $')
+          .style("opacity", 1)
+          .style("left", d3.mouse(this)[0]+70 + "px")
+          .style("top", d3.mouse(this)[1]+"px")
       }  
       if(d.parent.id === 'Quebec'){
         tooltipQuebec
-        .html(d.id + ' : ' + Math.round(100 * d.value) + ' % <br>' + 999 + ' G $')
-        .style("opacity", 1)
-        .style("left", d3.mouse(this)[0]+70 + "px")
-        .style("top", d3.mouse(this)[1]+"px") 
+          .html(d.id + ' : ' + Math.round(100 * d.value) + ' % <br>' + 999 + ' G $')
+          .style("opacity", 1)
+          .style("left", d3.mouse(this)[0]+70 + "px")
+          .style("top", d3.mouse(this)[1]+"px") 
         let data = swedenData.filter((element)=>{return d.id === element.Name});
         tooltipSweden
-        .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % <br>' + 999 + ' G $')
-        .style("opacity", 1)
-        .style("left", d3.mouse(this)[0]+70 + "px")
-        .style("top", d3.mouse(this)[1]+"px")
+          .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % <br>' + 999 + ' G $')
+          .style("opacity", 1)
+          .style("left", d3.mouse(this)[0]+70 + "px")
+          .style("top", d3.mouse(this)[1]+"px")
       }
       d3.selectAll("rect").style('opacity', function(data) {return d.id === data.id ? 1 : 0.5});
     }
-
     var mousemove = function(d) {
       if(d.parent.id === 'Sweden')
         tooltipSweden
-              .style("left", d3.mouse(this)[0]+70 + "px")
-              .style("top", d3.mouse(this)[1]+"px")
+            .style("left", d3.mouse(this)[0]+70 + "px")
+            .style("top", d3.mouse(this)[1]+"px")
       if(d.parent.id === 'Quebec')
         tooltipQuebec
-        .style("left", d3.mouse(this)[0]+70 + "px")
-        .style("top", d3.mouse(this)[1]+"px")
+          .style("left", d3.mouse(this)[0]+70 + "px")
+          .style("top", d3.mouse(this)[1]+"px")
     }
 
     var mouseleave = function(d) {
-        tooltipSweden
-            .style("opacity", 0)
-        tooltipQuebec
-          .style("opacity", 0)
-        d3.selectAll("rect").style('opacity', 1);
+      tooltipSweden
+        .style("opacity", 0)
+      tooltipQuebec
+        .style("opacity", 0)
+      d3.selectAll("rect")
+        .style('opacity', 1);
     }
 
     d3.treemap()
       .tile(d3.treemapSquarify)
       .size([width, height])
       .paddingInner(3)
-      (root)
+      (swedenRoot)
     
     d3.treemap()
       .tile(d3.treemapSquarify.ratio(0.9))
@@ -111,21 +103,11 @@ var swedenSVG = d3.select("#swedenTreeMap")
       .paddingInner(3)
       (quebecRoot)
     
-    const color = d3.scaleOrdinal()
-      .domain([
-      "Impôts sur le revenu des particuliers",
-      "Impôts sur les bénéfices des sociétés", 
-      "Cotisations sociales",
-      "Impôts sur les salaires",
-      "Impôts sur le patrimoine",
-      "Impôts sur la consommation",
-      "Autres impôts"
-      ])
-      .range(["#F8B195","#F67280","#C06C84","#6C5B7B","#355C7D","#99B898", "#2A363B"])
+    const color = createColorScale();
     // use this information to add rectangles:
     swedenSVG
       .selectAll("rect")
-      .data(root.children)
+      .data(swedenRoot.children)
       .enter()
       .append("rect")
         .attr('x', function (d) { return d.x0; })
@@ -140,44 +122,39 @@ var swedenSVG = d3.select("#swedenTreeMap")
 
 
       // and to add the text labels
-      swedenSVG
-        .selectAll("text")
-        .data(root.leaves())
-        .enter()
-        .append("text")
+    swedenSVG
+      .selectAll("text")
+      .data(swedenRoot.leaves())
+      .enter()
+      .append("text")
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
-          .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-          .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-          .text(function(d){   
-            if(getTextWidth(d.id,d.x1 - d.x0, d.y1 - d.y0 ) )
-              return d.id
-            else 
-              return '';})
-          .attr("font-size", "14px")
+        .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+        .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+        .text(function(d){   
+          return outputText(d.id,d.x1 - d.x0, d.y1 - d.y0 )
+        })
+        .attr("font-size", "14px")
         .attr("fill", "white")
-       
-      swedenSVG
+      
+    swedenSVG
       .selectAll("vals")
-      .data(root.leaves())
+      .data(swedenRoot.leaves())
       .enter()
       .append("text")
-      .on("mouseover", mouseover)
-      .on("mousemove", mousemove)
-      .on("mouseleave", mouseleave)
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave)
         .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+35})    // +20 to adjust position (lower)
         .text(function (d) {
-          if(getTextWidth(Math.round(d.value * 100) + '%',d.x1 - d.x0, d.y1 - d.y0 ) )
-            return Math.round(d.value * 100) + '%'
-          else 
-            return '';
+          return outputText(Math.round(d.value * 100) + '%',d.x1 - d.x0, d.y1 - d.y0 )
         })
         .attr("font-size", "16px")
-      .attr("fill", "white")
-    
-      quebecSVG
+        .attr("fill", "white")
+      
+    quebecSVG
       .selectAll("rect")
       .data(quebecRoot.children)
       .enter()
@@ -193,43 +170,37 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .on("mouseleave", mouseleave)
 
       // and to add the text labels
-      quebecSVG
-        .selectAll("text")
-        .data(quebecRoot.leaves())
-        .enter()
-        .append("text")
+    quebecSVG
+      .selectAll("text")
+      .data(quebecRoot.leaves())
+      .enter()
+      .append("text")
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
-          .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-          .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-          .text(function(d){ 
-            if(getTextWidth(d.id,d.x1 - d.x0, d.y1 - d.y0 ) )
-              return d.id
-            else 
-              return '';
-          })
-          .attr("font-size", "14px")
+        .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+        .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+        .text(function(d){ 
+          return outputText(d.id,d.x1 - d.x0, d.y1 - d.y0 );
+        })
+        .attr("font-size", "14px")
         .attr("fill", "white")
-      
-      quebecSVG
+    
+    quebecSVG
       .selectAll("vals")
       .data(quebecRoot.leaves())
       .enter()
       .append("text")
-      .on("mouseover", mouseover)
-      .on("mousemove", mousemove)
-      .on("mouseleave", mouseleave)
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave)
         .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+35})    // +20 to adjust position (lower)
         .text(function (d) {
-          if(getTextWidth(Math.round(d.value * 100) + '%',d.x1 - d.x0, d.y1 - d.y0 ) )
-            return Math.round(d.value * 100) + '%'
-          else 
-          return '';
+            return outputText(Math.round(d.value * 100) + '%',d.x1 - d.x0, d.y1 - d.y0 ); 
         })
         .attr("font-size", "16px")
-      .attr("fill", "white")
+        .attr("fill", "white")
   });
 }
 
@@ -245,6 +216,7 @@ var swedenSVG = d3.select("#swedenTreeMap")
           return true;
       return false;
   });
+  filtered = createHierarchy(filtered, country);
   return filtered;
 }
 
@@ -257,14 +229,35 @@ function createHierarchy(data, countryName) {
 }
 
 
-function getTextWidth(text, width, height) {
+function outputText(text, width, height) {
   // re-use canvas object for better performance
-  const canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+  const canvas = outputText.canvas || (outputText.canvas = document.createElement("canvas"));
   const context = canvas.getContext("2d");
   const metrics = context.measureText(text);
   let actualHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
-  return width > metrics.width && height > actualHeight;
+  if(width > metrics.width && height > actualHeight)
+    return text;
+  return '';
 }
 
 
+function createColorScale(){
+  return d3.scaleOrdinal()
+      .domain([
+      "Impôts sur le revenu des particuliers",
+      "Impôts sur les bénéfices des sociétés", 
+      "Cotisations sociales",
+      "Impôts sur les salaires",
+      "Impôts sur le patrimoine",
+      "Impôts sur la consommation",
+      "Autres impôts"
+      ])
+      .range(["#F8B195","#F67280","#C06C84","#6C5B7B","#355C7D","#99B898", "#2A363B"])
+}
 
+function createTooltip(elementId){
+  return d3.select(elementId)
+  .append("div")
+  .style("opacity", 0)
+  .attr("class", "d3-tip")
+}
