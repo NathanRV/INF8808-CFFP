@@ -63,8 +63,7 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .style("opacity", 1)
         .style("left", d3.mouse(this)[0]+70 + "px")
         .style("top", d3.mouse(this)[1]+"px")
-      }
-        
+      }  
       if(d.parent.id === 'Quebec'){
         tooltipQuebec
         .html(d.id + ' : ' + Math.round(100 * d.value) + ' % <br>' + 999 + ' G $')
@@ -78,6 +77,8 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .style("left", d3.mouse(this)[0]+70 + "px")
         .style("top", d3.mouse(this)[1]+"px")
       }
+      d3.selectAll("rect").style('opacity', function(data) {return d.id === data.id ? 1 : 0.5});
+
     }
 
     var mousemove = function(d) {
@@ -96,6 +97,7 @@ var swedenSVG = d3.select("#swedenTreeMap")
             .style("opacity", 0)
         tooltipQuebec
           .style("opacity", 0)
+        d3.selectAll("rect").style('opacity', 1);
     }
 
     d3.treemap()
