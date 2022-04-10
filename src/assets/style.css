@@ -1,13 +1,18 @@
-a:link{
+a:link {
         text-decoration: none;
         color:cadetblue; 
 }
 
-a:visited{
+a:visited {
         text-decoration: none;
         color:black;
 }
 
-a:hover{
+a:hover {
        opacity: 60%; 
+}
+
+h2 {
+        margin: 0px auto;
+        width: fit-content;
 }
