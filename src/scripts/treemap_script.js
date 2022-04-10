@@ -1,6 +1,3 @@
-import d3Tip from 'd3-tip';
-
-
 export function load(){
   
 // set the dimensions and margins of the graph
@@ -104,7 +101,7 @@ var swedenSVG = d3.select("#swedenTreeMap")
       (quebecRoot)
     
     const color = createColorScale();
-    // use this information to add rectangles:
+
     swedenSVG
       .selectAll("rect")
       .data(swedenRoot.children)
@@ -120,8 +117,6 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
 
-
-      // and to add the text labels
     swedenSVG
       .selectAll("text")
       .data(swedenRoot.leaves())
@@ -130,8 +125,8 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
-        .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-        .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+        .attr("x", function(d){ return d.x0+5})
+        .attr("y", function(d){ return d.y0+20})
         .text(function(d){   
           return outputText(d.id,d.x1 - d.x0, d.y1 - d.y0 )
         })
@@ -146,8 +141,8 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
-        .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-        .attr("y", function(d){ return d.y0+35})    // +20 to adjust position (lower)
+        .attr("x", function(d){ return d.x0+5})
+        .attr("y", function(d){ return d.y0+35}) 
         .text(function (d) {
           return outputText(Math.round(d.value * 100) + '%',d.x1 - d.x0, d.y1 - d.y0 )
         })
@@ -169,7 +164,6 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
 
-      // and to add the text labels
     quebecSVG
       .selectAll("text")
       .data(quebecRoot.leaves())
@@ -178,8 +172,8 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
-        .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-        .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+        .attr("x", function(d){ return d.x0+5})  
+        .attr("y", function(d){ return d.y0+20})    
         .text(function(d){ 
           return outputText(d.id,d.x1 - d.x0, d.y1 - d.y0 );
         })
@@ -220,6 +214,12 @@ var swedenSVG = d3.select("#swedenTreeMap")
   return filtered;
 }
 
+/** Creating treemap hierarchy
+ * 
+ * @param {*} data The data to be used to create hierarchy
+ * @param {*} countryName The country that the data belongs to
+ * @returns Data structure with proper hierarchy for treemap.
+ */
 function createHierarchy(data, countryName) {
   let hierarchyData = [{Name: countryName , Value: null, parentId:null}]
   for(let i = 0; i < data.length; i++){
@@ -228,9 +228,14 @@ function createHierarchy(data, countryName) {
   return hierarchyData;
 }
 
-
+/** Determine whether the text will fit inside the treemap element.
+ * 
+ * @param {*} text The text that will be contained inside the treemap element
+ * @param {*} width The width of the treemap element
+ * @param {*} height The height of the treemap element
+ * @returns The output text for the treemap element
+ */
 function outputText(text, width, height) {
-  // re-use canvas object for better performance
   const canvas = outputText.canvas || (outputText.canvas = document.createElement("canvas"));
   const context = canvas.getContext("2d");
   const metrics = context.measureText(text);
@@ -240,7 +245,10 @@ function outputText(text, width, height) {
   return '';
 }
 
-
+/** Create a color scale to be used to create treemap elements.
+ * 
+ * @returns a D3 color scale.
+ */
 function createColorScale(){
   return d3.scaleOrdinal()
       .domain([
@@ -255,6 +263,12 @@ function createColorScale(){
       .range(["#F8B195","#F67280","#C06C84","#6C5B7B","#355C7D","#99B898", "#2A363B"])
 }
 
+
+/** Create the D3 Tooltip element.
+ * 
+ * @param {*} elementId The HTML id for the tooltip creation.
+ * @returns A D3 tooltip
+ */
 function createTooltip(elementId){
   return d3.select(elementId)
   .append("div")
