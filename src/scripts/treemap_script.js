@@ -78,7 +78,6 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .style("top", d3.mouse(this)[1]+"px")
       }
       d3.selectAll("rect").style('opacity', function(data) {return d.id === data.id ? 1 : 0.5});
-
     }
 
     var mousemove = function(d) {
@@ -146,6 +145,9 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .data(root.leaves())
         .enter()
         .append("text")
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave)
           .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
           .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
           .text(function(d){   
@@ -161,6 +163,9 @@ var swedenSVG = d3.select("#swedenTreeMap")
       .data(root.leaves())
       .enter()
       .append("text")
+      .on("mouseover", mouseover)
+      .on("mousemove", mousemove)
+      .on("mouseleave", mouseleave)
         .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+35})    // +20 to adjust position (lower)
         .text(function (d) {
@@ -193,6 +198,9 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .data(quebecRoot.leaves())
         .enter()
         .append("text")
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave)
           .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
           .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
           .text(function(d){ 
@@ -209,6 +217,9 @@ var swedenSVG = d3.select("#swedenTreeMap")
       .data(quebecRoot.leaves())
       .enter()
       .append("text")
+      .on("mouseover", mouseover)
+      .on("mousemove", mousemove)
+      .on("mouseleave", mouseleave)
         .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+35})    // +20 to adjust position (lower)
         .text(function (d) {
