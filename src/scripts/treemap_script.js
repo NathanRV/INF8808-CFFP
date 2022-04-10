@@ -4,7 +4,7 @@ import d3Tip from 'd3-tip';
 export function load(){
   
 // set the dimensions and margins of the graph
-const margin = {top: 10, right: 20, bottom: 10, left: 10},
+const margin = {top: 10, right: 10, bottom: 10, left: 10},
   width = 550 - margin.left - margin.right,
   height = 500 - margin.top - margin.bottom;
 
@@ -51,7 +51,6 @@ var swedenSVG = d3.select("#swedenTreeMap")
 
      // Three function that change the tooltip when user hover / move / leave a cell
     var mouseover = function(d) {
-      console.log(d); 
       if(d.parent.id === 'Sweden'){
         tooltipSweden
         .html(d.id + ' : ' + Math.round(100 * d.value) + ' % <br>' + 999 + ' G $')
@@ -100,11 +99,13 @@ var swedenSVG = d3.select("#swedenTreeMap")
     }
 
     d3.treemap()
+      .tile(d3.treemapSquarify)
       .size([width, height])
       .paddingInner(3)
       (root)
     
     d3.treemap()
+      .tile(d3.treemapSquarify.ratio(0.9))
       .size([width, height])
       .paddingInner(3)
       (quebecRoot)
@@ -145,7 +146,11 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .append("text")
           .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
           .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-          .text(function(d){ return d.id})
+          .text(function(d){   
+            if(getTextWidth(d.id,d.x1 - d.x0, d.y1 - d.y0 ) )
+              return d.id
+            else 
+              return '';})
           .attr("font-size", "14px")
         .attr("fill", "white")
        
@@ -157,7 +162,10 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+35})    // +20 to adjust position (lower)
         .text(function (d) {
-          return Math.round(d.value * 100) + '%'
+          if(getTextWidth(Math.round(d.value * 100) + '%',d.x1 - d.x0, d.y1 - d.y0 ) )
+            return Math.round(d.value * 100) + '%'
+          else 
+            return '';
         })
         .attr("font-size", "16px")
       .attr("fill", "white")
@@ -185,7 +193,12 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .append("text")
           .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
           .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-          .text(function(d){ return d.id})
+          .text(function(d){ 
+            if(getTextWidth(d.id,d.x1 - d.x0, d.y1 - d.y0 ) )
+              return d.id
+            else 
+              return '';
+          })
           .attr("font-size", "14px")
         .attr("fill", "white")
       
@@ -197,7 +210,10 @@ var swedenSVG = d3.select("#swedenTreeMap")
         .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+35})    // +20 to adjust position (lower)
         .text(function (d) {
-          return Math.round(d.value * 100) + '%'
+          if(getTextWidth(Math.round(d.value * 100) + '%',d.x1 - d.x0, d.y1 - d.y0 ) )
+            return Math.round(d.value * 100) + '%'
+          else 
+          return '';
         })
         .attr("font-size", "16px")
       .attr("fill", "white")
@@ -226,4 +242,16 @@ function createHierarchy(data, countryName) {
   }
   return hierarchyData;
 }
+
+
+function getTextWidth(text, width, height) {
+  // re-use canvas object for better performance
+  const canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+  const context = canvas.getContext("2d");
+  const metrics = context.measureText(text);
+  let actualHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+  return width > metrics.width && height > actualHeight;
+}
+
+
 
