@@ -2,15 +2,15 @@ import { geoPath } from "d3-geo"
 import { geoMercator } from "d3-geo"
 
 const coordLineQuebec1 = {
-    x1: 0,
-    x2: 30,
+    x1: 100,
+    x2: 130,
     y1: 370,
     y2: 370
 }
 
 const coordLineQuebec2 = {
-    x1: 30,
-    x2: 40,
+    x1: 130,
+    x2: 140,
     y1: 370,
     y2: 310
 }
@@ -18,34 +18,44 @@ const coordLineQuebec2 = {
 const coordLineSweden1 = {
     x1: 140,
     x2: 160,
-    y1: 50,
-    y2: 0
+    y1: 60,
+    y2: 10
 }
 
 const coordLineSweden2 = {
     x1: 160,
     x2: 180,
-    y1: 0,
-    y2: 0
+    y1: 10,
+    y2: 10
 }
 
 const dimensionQuebec = {
-    width: 295,
+    width: 395,
     height: 380
 }
 
 const dimensionSweden = {
-    width: 180,
-    height: 372
+    width: 272,
+    height: 385
+}
+
+const textCoordQuebec = {
+    x: 0,
+    y: 375
+}
+
+const textCoordSweden = {
+    x: 185,
+    y: 15
 }
 
 export function load() {
 
 
-    drawMap(require('./quebec.json'), "#001F97", [-41.708879, 51.75], "quebec", dimensionQuebec, coordLineQuebec1, coordLineQuebec2)
-    drawMap(require('./sweden.json'), "#FFCD00", [50, 60.5], "sweden", dimensionSweden, coordLineSweden1, coordLineSweden2)
+    drawMap(require('./quebec.json'), "#001F97", [-49.708879, 51.75], "quebec", dimensionQuebec, coordLineQuebec1, coordLineQuebec2, textCoordQuebec, "1 542 056 km2")
+    drawMap(require('./sweden.json'), "#FFCD00", [50, 61.0], "sweden", dimensionSweden, coordLineSweden1, coordLineSweden2, textCoordSweden, "450 295 km2")
 
-    function drawMap(data, color, coordinate, place, dimension, coordLine1, coordLine2) {
+    function drawMap(data, color, coordinate, place, dimension, coordLine1, coordLine2, textCoord, size) {
 
         d3.select("#" + place + "-map")
             .select("." + place + "-map-svg")
@@ -59,6 +69,13 @@ export function load() {
 
         drawLine("." + place + "-graph", coordLine1)
         drawLine("." + place + "-graph", coordLine2)
+
+        d3.select("." + place + "-graph")
+            .select('svg')
+            .append("text")
+            .attr("x", textCoord.x)
+            .attr("y", textCoord.y)
+            .text(size)
 
         var projection = geoMercator()
             .center(coordinate)
