@@ -17,3 +17,7 @@ a:hover {
     flex-direction: row;
     justify-content: center;
 }
+
+#flag {
+    width: 20px;
+}
