@@ -1,3 +1,4 @@
+import { transform } from "d3"
 import { geoPath } from "d3-geo"
 import { geoMercator } from "d3-geo"
 
@@ -68,13 +69,13 @@ const coordPictoQuebec = {
 }
 
 const dimensionQuebec = {
-    width: 435,
-    height: 380
+    width: 460,
+    height: 420
 }
 
 const dimensionSweden = {
-    width: 312,
-    height: 385
+    width: 340,
+    height: 420
 }
 
 const textCoordQuebec = {
@@ -97,31 +98,72 @@ const textCoordPictoSweden = {
     y: 415
 }
 
+const textCoordLegend = {
+    x: 20,
+    y: 17.5
+}
+
 const populationQuebec = 8.485
 const populationSweden = 10.35
 
+const personIconPath = "M3.5,2H2.7C3,1.8,3.3,1.5,3.3,1.1c0-0.6-0.4-1-1-1c-0.6,0-1,0.4-1,1c0,0.4,0.2,0.7,0.6,0.9H1.1C0.7,2,0.4,2.3,0.4,2.6v1.9c0,0.3,0.3,0.6,0.6,0.6h0.2c0,0,0,0.1,0,0.1v1.9c0,0.3,0.2,0.6,0.3,0.6h1.3c0.2,0,0.3-0.3,0.3-0.6V5.3c0,0,0-0.1,0-0.1h0.2c0.3,0,0.6-0.3,0.6-0.6V2.6C4.1,2.3,3.8,2,3.5,2z"
+
 export function load() {
 
-    var svgQuebec = d3.select(".quebec-object")
-        .append('svg')
-        .attr("class", ".quebec-map-svg")
-        .attr("width", 1000)
-        .attr("height", 1000)
-
-    var svgSweden = d3.select(".sweden-object")
-        .append('svg')
-        .attr("class", ".sweden-map-svg")
-        .attr("width", 1000)
-        .attr("height", 1000)
+    var svgQuebec = createCountrySvg("quebec", dimensionQuebec)
+    var svgSweden = createCountrySvg("sweden", dimensionSweden)
 
     drawPictogram(svgQuebec, populationQuebec, coordPictoQuebec, "quebec", coordLineQuebecPicto1, coordLineQuebecPicto2, "8,485 millions habitants", textCoordPictoQuebec)
-    drawMap(svgQuebec, "quebec", "1 542 056 km2", textCoordQuebec, [-49.708879, 53.75], require('./quebec.json'), "#001F97", coordLineQuebec1, coordLineQuebec2)
+    drawMap(svgQuebec, "quebec", "1 542 056 km2", textCoordQuebec, [-49.708879, 53.75], require('./quebec.json'), "#001F97", coordLineQuebec1, coordLineQuebec2, dimensionQuebec.width)
 
 
     drawPictogram(svgSweden, populationSweden, coordPictoSweden, "sweden", coordLineSwedenPicto1, coordLineSwedenPicto2, "10,35 millions habitants", textCoordPictoSweden)
-    drawMap(svgSweden, "sweden", "450 295 km2", textCoordSweden, [45, 61.0], require('./sweden.json'), "#FFCD00", coordLineSweden1, coordLineSweden2)
+    drawMap(svgSweden, "sweden", "450 295 km2", textCoordSweden, [45, 61.0], require('./sweden.json'), "#FFCD00", coordLineSweden1, coordLineSweden2, dimensionSweden.width)
 
-    function drawMap(svg, place, size, textCoord, coordMap, data, color, coordLine1, coordLine2) {
+    drawLegend()
+
+    function createCountrySvg(place, dimension) {
+        const svg = d3.select("." + place + "-object")
+            .append('svg')
+            .attr("class", "." + place + "-map-svg")
+            .attr("width", dimension.width)
+            .attr("height", dimension.height)
+        return svg
+    }
+
+    function drawLegend() {
+        var svg = d3.select(".legend-picto")
+            .append("svg")
+            .attr("width", 165)
+            .attr("height", 25)
+
+        var person = svg.append("defs")
+            .append("g")
+            .attr("id", "personIconLegend")
+
+        person.append("path")
+            .attr("d", personIconPath)
+            .attr("transform", "translate(0, 0) scale(3)")
+
+        data = d3.range(1)
+
+        var container = svg.append("g")
+
+        container.selectAll("use")
+            .data(data)
+            .enter()
+            .append("use")
+            .attr("xlink:href", "#personIconLegend")
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('fill', "black")
+
+        var g = svg.append("g")
+
+        drawText(g, textCoordLegend, "= 1 million d'habitants")
+    }
+
+    function drawMap(svg, place, size, textCoord, coordMap, data, color, coordLine1, coordLine2, width) {
 
         var g = svg.append('g')
             .attr('id', place + '-map-g')
@@ -144,7 +186,7 @@ export function load() {
             .style("stroke", color)
 
         d3.select("#" + place + "-title")
-            .style("width", String(1000) + "px")
+            .style("width", String(width) + "px")
 
         drawLine(svg, coordLine1)
         drawLine(svg, coordLine2)
@@ -160,7 +202,7 @@ export function load() {
 
 
         person.append("path")
-            .attr("d", "M3.5,2H2.7C3,1.8,3.3,1.5,3.3,1.1c0-0.6-0.4-1-1-1c-0.6,0-1,0.4-1,1c0,0.4,0.2,0.7,0.6,0.9H1.1C0.7,2,0.4,2.3,0.4,2.6v1.9c0,0.3,0.3,0.6,0.6,0.6h0.2c0,0,0,0.1,0,0.1v1.9c0,0.3,0.2,0.6,0.3,0.6h1.3c0.2,0,0.3-0.3,0.3-0.6V5.3c0,0,0-0.1,0-0.1h0.2c0.3,0,0.6-0.3,0.6-0.6V2.6C4.1,2.3,3.8,2,3.5,2z")
+            .attr("d", personIconPath)
             .attr("transform", "translate(" + String(coordPicto.x) + ", " + String(coordPicto.y) + ") scale(3)")
 
         var y = d3.scaleBand()
@@ -177,7 +219,8 @@ export function load() {
 
         container.selectAll("use")
             .data(data)
-            .enter().append("use")
+            .enter()
+            .append("use")
             .attr("xlink:href", "#" + place + "personIcon")
             .attr("id", function(d) { return "id" + d; })
             .attr('x', function(d) { return x(d % 2); })
