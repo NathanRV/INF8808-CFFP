@@ -1,4 +1,3 @@
-import { transform } from "d3"
 import { geoPath } from "d3-geo"
 import { geoMercator } from "d3-geo"
 
@@ -16,14 +15,28 @@ const coordLineQuebec2 = {
     y2: 350
 }
 
-const coordLineSweden1 = {
+const coordLineSwedenInit1 = {
+    x1: 145,
+    x2: 165,
+    y1: 60,
+    y2: 10
+}
+
+const coordLineSwedenInit2 = {
+    x1: 165,
+    x2: 185,
+    y1: 10,
+    y2: 10
+}
+
+const coordLineSwedenFinal1 = {
     x1: 200,
     x2: 220,
     y1: 60,
     y2: 10
 }
 
-const coordLineSweden2 = {
+const coordLineSwedenFinal2 = {
     x1: 220,
     x2: 240,
     y1: 10,
@@ -68,12 +81,22 @@ const coordPictoQuebec = {
     y: 90,
 }
 
-const dimensionQuebec = {
+const dimensionQuebecInit = {
+    width: 395,
+    height: 420
+}
+
+const dimensionQuebecFinal = {
     width: 460,
     height: 420
 }
 
-const dimensionSweden = {
+const dimensionSwedenInit = {
+    width: 280,
+    height: 420
+}
+
+const dimensionSwedenFinal = {
     width: 340,
     height: 420
 }
@@ -83,7 +106,12 @@ const textCoordQuebec = {
     y: 415
 }
 
-const textCoordSweden = {
+const textCoordSwedenInit = {
+    x: 192.5,
+    y: 15.5
+}
+
+const textCoordSwedenFinal = {
     x: 247.5,
     y: 15.5
 }
@@ -103,6 +131,9 @@ const textCoordLegend = {
     y: 17.5
 }
 
+const coordSwedenInit = [50, 61.0]
+const coordSwedenFinal = [45, 61.0]
+
 const populationQuebec = 8.485
 const populationSweden = 10.35
 
@@ -110,17 +141,59 @@ const personIconPath = "M3.5,2H2.7C3,1.8,3.3,1.5,3.3,1.1c0-0.6-0.4-1-1-1c-0.6,0-
 
 export function load() {
 
-    var svgQuebec = createCountrySvg("quebec", dimensionQuebec)
-    var svgSweden = createCountrySvg("sweden", dimensionSweden)
+    var svgQuebec = createCountrySvg("quebec", dimensionQuebecInit)
+    var svgSweden = createCountrySvg("sweden", dimensionSwedenInit)
+
+    d3.select(".quebec-graph").style("margin-left", String(-dimensionQuebecInit.width / 2) + "px")
+    d3.select(".sweden-graph").style("margin-right", String(-dimensionSwedenInit.width / 2) + "px")
 
     drawPictogram(svgQuebec, populationQuebec, coordPictoQuebec, "quebec", coordLineQuebecPicto1, coordLineQuebecPicto2, "8,485 millions habitants", textCoordPictoQuebec)
-    drawMap(svgQuebec, "quebec", "1 542 056 km2", textCoordQuebec, [-49.708879, 53.75], require('./quebec.json'), "#001F97", coordLineQuebec1, coordLineQuebec2, dimensionQuebec.width)
+    drawMap(svgQuebec, "quebec", "1 542 056 km2", textCoordQuebec, [-49.708879, 53.75], require('./quebec.json'), "#001F97", coordLineQuebec1, coordLineQuebec2, dimensionQuebecInit.width)
 
 
     drawPictogram(svgSweden, populationSweden, coordPictoSweden, "sweden", coordLineSwedenPicto1, coordLineSwedenPicto2, "10,35 millions habitants", textCoordPictoSweden)
-    drawMap(svgSweden, "sweden", "450 295 km2", textCoordSweden, [45, 61.0], require('./sweden.json'), "#FFCD00", coordLineSweden1, coordLineSweden2, dimensionSweden.width)
+    drawMap(svgSweden, "sweden", "450 295 km2", textCoordSwedenInit, coordSwedenInit, require('./sweden.json'), "#FFCD00", coordLineSwedenInit1, coordLineSwedenInit2, dimensionSwedenInit.width)
 
     drawLegend()
+
+    var ticking = false
+
+    window.addEventListener('scroll', function(e) {
+
+        console.log(this.document.documentElement.scrollTop)
+        const posScroll = this.document.documentElement.scrollTop
+
+        if (posScroll > 0 && posScroll < 875) {
+
+            d3.select(".sweden-graph")
+                .style("display", "block")
+                .style("position", "fixed")
+                .style("right", String(50 - 15 * posScroll / 875) + "%")
+                .style("top", String(950 - posScroll) + "px")
+
+            d3.select(".quebec-graph")
+                .style("left", String(50 - 15 * posScroll / 875) + "%")
+
+        } else if (posScroll >= 875) {
+
+            d3.select(".sweden-graph")
+                .style("right", "35%")
+                .style("top", "80px")
+
+        } else {
+
+            d3.select(".sweden-graph").style("display", "none")
+
+        }
+
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                ticking = false;
+            });
+        }
+
+        ticking = true;
+    });
 
     function createCountrySvg(place, dimension) {
         const svg = d3.select("." + place + "-object")
@@ -188,8 +261,8 @@ export function load() {
         d3.select("#" + place + "-title")
             .style("width", String(width) + "px")
 
-        drawLine(svg, coordLine1)
-        drawLine(svg, coordLine2)
+        drawLine(svg, coordLine1, "")
+        drawLine(svg, coordLine2, "")
     }
 
     function drawPictogram(svg, population, coordPicto, place, coordLine1, coordLine2, size, textCoord) {
@@ -216,6 +289,7 @@ export function load() {
         data = d3.range(nbPerson);
 
         var container = svg.append("g")
+            .attr("class", "picto-country")
 
         container.selectAll("use")
             .data(data)
@@ -227,10 +301,12 @@ export function load() {
             .attr('y', function(d) { return y(Math.floor(d / 2)); })
             .attr('fill', "black")
 
-        drawLine(svg, coordLine1)
-        drawLine(svg, coordLine2)
+        drawLine(svg, coordLine1, "picto-country")
+        drawLine(svg, coordLine2, "picto-country")
 
         var g = svg.append('g')
+            .attr("class", "picto-country")
+
 
         drawText(g, textCoord, size)
     }
@@ -242,12 +318,13 @@ export function load() {
             .text(text)
     }
 
-    function drawLine(svg, coord) {
-        svg.append('line')
+    function drawLine(svg, coord, className) {
+        var line = svg.append('line')
             .attr("x1", coord.x1)
             .attr("y1", coord.y1)
             .attr("x2", coord.x2)
             .attr("y2", coord.y2)
             .attr("style", "stroke:black")
+        if (className != "") line.attr("class", className)
     }
 }

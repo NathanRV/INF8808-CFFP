@@ -21,3 +21,24 @@ a:hover {
 #flag {
     width: 20px;
 }
+
+.sweden-graph {
+    display: none;
+}
+
+.quebec-graph {
+    position: fixed;
+    left: 50%;
+}
+
+.legend-picto {
+    display: none;
+}
+
+.picto-country {
+    display: none;
+}
+
+body {
+    height: 5000px;
+}
