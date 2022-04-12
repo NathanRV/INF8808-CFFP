@@ -260,7 +260,7 @@ function createColorScale(){
       "Impôts sur la consommation",
       "Autres impôts"
       ])
-      .range(["#F8B195","#F67280","#C06C84","#6C5B7B","#355C7D","#99B898", "#2A363B"])
+      .range(["#e17c05","#5f4690","#38a6a5","#1d6996","#1d6996","#0f8554", "#cc503e"])
 }
 
 
