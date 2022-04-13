@@ -179,6 +179,9 @@ export function load() {
 
             d3.select(".quebec-graph").style("left", String(leftQuebec) + "px")
 
+            d3.select(".quebec-graph").style("position", "fixed")
+            d3.select(".quebec-graph").style("top", "80px")
+
             replaceElementScrolly(0, coordLineSwedenInit1.x1, coordLineSwedenInit1.x2, coordLineSwedenInit2.x1, coordLineSwedenInit2.x2, textCoordSwedenInit.x, dimensionQuebecInit.width, dimensionSwedenInit.width)
 
         } else if (posScroll >= 875 && posScroll < 1200) {
@@ -194,6 +197,8 @@ export function load() {
                 .style("top", "80px")
 
             d3.select(".quebec-graph").style("left", String(sideCountryInit - sideCountryFactor * factor) + "px")
+            transitionViz("fixed", 0)
+
 
             replaceElementScrolly(55 * factor,
                 coordLineSwedenInit1.x1 + (coordLineSwedenFinal1.x1 - coordLineSwedenInit1.x1) * factor,
@@ -218,11 +223,12 @@ export function load() {
 
             d3.selectAll(".picto-country").style("opacity", "0%")
 
+            transitionViz("fixed", 0)
             d3.select(".legend-picto")
-                .style("position", "fixed")
                 .style("left", "47%")
-                .style("top", "575px")
                 .style("opacity", "0%")
+
+
 
         } else if (posScroll >= 1800 && posScroll < 2400) {
 
@@ -230,21 +236,12 @@ export function load() {
             d3.select(".legend-picto").style("opacity", String(100 * factor) + "%")
             d3.selectAll(".picto-country").style("opacity", String(100 * factor) + "%")
 
-            d3.select(".quebec-graph").style("position", "fixed")
-            d3.select(".quebec-graph").style("top", "80px")
-            d3.select(".sweden-graph").style("position", "fixed")
-            d3.select(".sweden-graph").style("top", "80px")
-            d3.select(".legend-picto").style("position", "fixed")
-            d3.select(".legend-picto").style("top", "575px")
+            transitionViz("fixed", 0)
+
 
         } else if (posScroll >= 2400) {
 
-            d3.select(".quebec-graph").style("position", "absolute")
-            d3.select(".quebec-graph").style("top", "2480px")
-            d3.select(".sweden-graph").style("position", "absolute")
-            d3.select(".sweden-graph").style("top", "2480px")
-            d3.select(".legend-picto").style("position", "absolute")
-            d3.select(".legend-picto").style("top", "2975px")
+            transitionViz("absolute", 2400)
 
 
         } else {
@@ -265,6 +262,15 @@ export function load() {
 
         ticking = true;
     });
+
+    function transitionViz(position, adjustment) {
+        d3.select(".quebec-graph").style("position", position)
+        d3.select(".quebec-graph").style("top", String(adjustment + 80) + "px")
+        d3.select(".sweden-graph").style("position", position)
+        d3.select(".sweden-graph").style("top", String(adjustment + 80) + "px")
+        d3.select(".legend-picto").style("position", position)
+        d3.select(".legend-picto").style("top", String(adjustment + 575) + "px")
+    }
 
     function statePicto(state) {
         d3.selectAll(".picto-country").style("display", state)
