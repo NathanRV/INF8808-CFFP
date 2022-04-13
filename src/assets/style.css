@@ -1,44 +1,43 @@
-a:link {
-    text-decoration: none;
-    color: cadetblue;
-}
-
-a:visited {
-    text-decoration: none;
-    color: black;
-}
-
-a:hover {
-    opacity: 60%;
-}
-
-.title {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-#flag {
-    width: 20px;
-}
-
-.sweden-graph {
-    display: none;
-}
-
-.quebec-graph {
-    position: fixed;
-    left: 50%;
-}
-
-.legend-picto {
-    display: none;
-}
-
-.picto-country {
-    display: none;
-}
-
-body {
-    height: 5000px;
-}
+    a:link {
+        text-decoration: none;
+        color: cadetblue;
+    }
+    
+    a:visited {
+        text-decoration: none;
+        color: black;
+    }
+    
+    a:hover {
+        opacity: 60%;
+    }
+    
+    .title {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    #flag {
+        width: 20px;
+    }
+    
+    .sweden-graph {
+        display: none;
+    }
+    
+    .quebec-graph {
+        position: fixed;
+    }
+    
+    .legend-picto {
+        display: none;
+    }
+    
+    .picto-country {
+        display: none;
+    }
+    
+    body {
+        height: 10000px;
+    }
