@@ -231,7 +231,8 @@ export function load() {
             d3.selectAll(".picto-country").style("opacity", String(100 * factor) + "%")
 
         } else if (posScroll >= 2800) {
-            //d3.select("#map")
+            d3.select(".graph-map").selectAll("div").style("top", "0px")
+
         } else {
 
             statePicto("none")
