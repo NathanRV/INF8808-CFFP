@@ -158,7 +158,7 @@ export function load() {
 
     var ticking = false
 
-    window.addEventListener('scroll', function(e) {
+    window.addEventListener('scroll', function (e) {
 
         const windowWidth = this.window.innerWidth
         const posScroll = this.document.documentElement.scrollTop
@@ -224,14 +224,28 @@ export function load() {
                 .style("top", "575px")
                 .style("opacity", "0%")
 
-        } else if (posScroll >= 1800 && posScroll < 2800) {
+        } else if (posScroll >= 1800 && posScroll < 2400) {
 
             const factor = (posScroll - 1800) / 600
             d3.select(".legend-picto").style("opacity", String(100 * factor) + "%")
             d3.selectAll(".picto-country").style("opacity", String(100 * factor) + "%")
 
-        } else if (posScroll >= 2800) {
-            d3.select(".graph-map").selectAll("div").style("top", "0px")
+            d3.select(".quebec-graph").style("position", "fixed")
+            d3.select(".quebec-graph").style("top", "80px")
+            d3.select(".sweden-graph").style("position", "fixed")
+            d3.select(".sweden-graph").style("top", "80px")
+            d3.select(".legend-picto").style("position", "fixed")
+            d3.select(".legend-picto").style("top", "575px")
+
+        } else if (posScroll >= 2400) {
+
+            d3.select(".quebec-graph").style("position", "absolute")
+            d3.select(".quebec-graph").style("top", "2480px")
+            d3.select(".sweden-graph").style("position", "absolute")
+            d3.select(".sweden-graph").style("top", "2480px")
+            d3.select(".legend-picto").style("position", "absolute")
+            d3.select(".legend-picto").style("top", "2975px")
+
 
         } else {
 
@@ -244,7 +258,7 @@ export function load() {
         }
 
         if (!ticking) {
-            window.requestAnimationFrame(function() {
+            window.requestAnimationFrame(function () {
                 ticking = false;
             });
         }
@@ -381,9 +395,9 @@ export function load() {
             .enter()
             .append("use")
             .attr("xlink:href", "#" + place + "personIcon")
-            .attr("id", function(d) { return "id" + d; })
-            .attr('x', function(d) { return x(d % 2); })
-            .attr('y', function(d) { return y(Math.floor(d / 2)); })
+            .attr("id", function (d) { return "id" + d; })
+            .attr('x', function (d) { return x(d % 2); })
+            .attr('y', function (d) { return y(Math.floor(d / 2)); })
             .attr('fill', "black")
 
         drawLine(svg, coordLine1, "picto-country", "")
