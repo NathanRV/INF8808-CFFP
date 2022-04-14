@@ -15,7 +15,6 @@ export function load() {
   
   d3.csv('./PIB_habitant_1980-2021_sw_can_ocde.csv').then(function (data) {
     const bisectDate = d3.bisector(function(d) { 
-      console.log(d);
       return d.time; }).left;
     swedenData = getFilteredData(data, 'SWE');
     quebecData = getFilteredData(data, 'CAN');
@@ -70,7 +69,9 @@ export function load() {
         .x(function (d) {
           return xScale(d.time)
         })
-        .y(function(d) { return yScale(Math.round(d.value)) })
+        .y(function(d) { 
+          return yScale(Math.round(d.value)) 
+        })
     )
 
     graph.append("path")
@@ -83,7 +84,9 @@ export function load() {
         .x(function (d) {
           return xScale(d.time)
         })
-        .y(function(d) { return yScale(Math.round(d.value)) })
+        .y(function(d) { 
+          return yScale(Math.round(d.value))
+        })
       )
     
     graph.append("path")
@@ -97,7 +100,9 @@ export function load() {
         .x(function (d) {
           return xScale(d.time)
         })
-        .y(function(d) { return yScale(Math.round(d.value)) })
+        .y(function(d) { 
+          return yScale(Math.round(d.value)) 
+        })
     )
     
     let mouseG = graph.append("g")
@@ -110,7 +115,7 @@ export function load() {
       .style("opacity", "0");
       
     let lines = document.getElementsByClassName('line');
-
+    console.log("LINES",lines);
     var mousePerLine = graph.selectAll('.mouse-per-line')
       .data(data)
       .enter()
@@ -163,9 +168,9 @@ export function load() {
           .attr("transform", function(d, i) {
             let mouseDate = xScale.invert(mouse[0]);
             idx = bisectDate(swedenData, mouseDate);
-            var beginning = 0,
-              end = lines[i].getTotalLength(),
-              target = null;
+            let beginning = 0;
+            let end = lines[i].getTotalLength();
+            let target = null;
 
             while (true){
               target = Math.floor((beginning + end) / 2);
@@ -173,12 +178,14 @@ export function load() {
               if ((target === end || target === beginning) && pos.x !== mouse[0]) {
                   break;
               }
-              if (pos.x > mouse[0])      end = target;
+              if (pos.x > mouse[0]) end = target;
               else if (pos.x < mouse[0]) beginning = target;
               else break;
             }
             d3.select(this).select('text')
-              .text(yScale.invert(pos.y).toFixed(2));
+            .text(function(){
+              return yScale.invert(pos.y).toFixed(2)
+            });
             return "translate(" + mouse[0] + "," + pos.y +")";
           });
       });
