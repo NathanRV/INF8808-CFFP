@@ -1,4 +1,4 @@
-﻿État,Année réelle,Année,Comparaison,Indicateur,Valeur,mesure,Type de comparaison
+﻿Country,ActualYear,Year,Comparison,Indicator,Value,Mesure,TypeOfComparison
 Moyenne OCDE,2020,2020,Structure fiscale,Impôts sur le revenu des particuliers,0.25,en % du total des recettes fiscales,internationale
 Moyenne OCDE,2020,2020,Structure fiscale,Impôts sur les bénéfices des sociétés,0.08,en % du total des recettes fiscales,internationale
 Moyenne OCDE,2020,2020,Structure fiscale,Cotisations sociales,0.28,en % du total des recettes fiscales,internationale
@@ -6,13 +6,13 @@ Moyenne OCDE,2020,2020,Structure fiscale,Impôts sur les salaires,0.01,en % du t
 Moyenne OCDE,2020,2020,Structure fiscale,Impôts sur le patrimoine,0.06,en % du total des recettes fiscales,internationale
 Moyenne OCDE,2020,2020,Structure fiscale,Impôts sur la consommation,0.32,en % du total des recettes fiscales,internationale
 Moyenne OCDE,2020,2020,Structure fiscale,Autres impôts,0.01,en % du total des recettes fiscales,internationale
-Québec,2020,2020,Structure fiscale,Impôts sur le revenu des particuliers,0.36,en % du total des recettes fiscales,internationale
-Québec,2020,2020,Structure fiscale,Impôts sur les bénéfices des sociétés,0.11,en % du total des recettes fiscales,internationale
-Québec,2020,2020,Structure fiscale,Cotisations sociales,0.16,en % du total des recettes fiscales,internationale
-Québec,2020,2020,Structure fiscale,Impôts sur les salaires,0.05,en % du total des recettes fiscales,internationale
-Québec,2020,2020,Structure fiscale,Impôts sur le patrimoine,0.09,en % du total des recettes fiscales,internationale
-Québec,2020,2020,Structure fiscale,Impôts sur la consommation,0.23,en % du total des recettes fiscales,internationale
-Québec,2020,2020,Structure fiscale,Autres impôts,0.01,en % du total des recettes fiscales,internationale
+Quebec,2020,2020,Structure fiscale,Impôts sur le revenu des particuliers,0.36,en % du total des recettes fiscales,internationale
+Quebec,2020,2020,Structure fiscale,Impôts sur les bénéfices des sociétés,0.11,en % du total des recettes fiscales,internationale
+Quebec,2020,2020,Structure fiscale,Cotisations sociales,0.16,en % du total des recettes fiscales,internationale
+Quebec,2020,2020,Structure fiscale,Impôts sur les salaires,0.05,en % du total des recettes fiscales,internationale
+Quebec,2020,2020,Structure fiscale,Impôts sur le patrimoine,0.09,en % du total des recettes fiscales,internationale
+Quebec,2020,2020,Structure fiscale,Impôts sur la consommation,0.23,en % du total des recettes fiscales,internationale
+Quebec,2020,2020,Structure fiscale,Autres impôts,0.01,en % du total des recettes fiscales,internationale
 Canada sans Qc,2020,2020,Structure fiscale,Impôts sur le revenu des particuliers,0.37,en % du total des recettes fiscales,internationale
 Canada sans Qc,2020,2020,Structure fiscale,Impôts sur les bénéfices des sociétés,0.12,en % du total des recettes fiscales,internationale
 Canada sans Qc,2020,2020,Structure fiscale,Cotisations sociales,0.14,en % du total des recettes fiscales,internationale
@@ -27,13 +27,6 @@ Canada,2020,2020,Structure fiscale,Impôts sur les salaires,0.02,en % du total d
 Canada,2020,2020,Structure fiscale,Impôts sur le patrimoine,0.12,en % du total des recettes fiscales,interprovinciale
 Canada,2020,2020,Structure fiscale,Impôts sur la consommation,0.22,en % du total des recettes fiscales,interprovinciale
 Canada,2020,2020,Structure fiscale,Autres impôts,0.01,en % du total des recettes fiscales,interprovinciale
-Québec,2020,2020,Structure fiscale,Impôts sur le revenu des particuliers,0.36,en % du total des recettes fiscales,interprovinciale
-Québec,2020,2020,Structure fiscale,Impôts sur les bénéfices des sociétés,0.11,en % du total des recettes fiscales,interprovinciale
-Québec,2020,2020,Structure fiscale,Cotisations sociales,0.16,en % du total des recettes fiscales,interprovinciale
-Québec,2020,2020,Structure fiscale,Impôts sur les salaires,0.05,en % du total des recettes fiscales,interprovinciale
-Québec,2020,2020,Structure fiscale,Impôts sur le patrimoine,0.09,en % du total des recettes fiscales,interprovinciale
-Québec,2020,2020,Structure fiscale,Impôts sur la consommation,0.23,en % du total des recettes fiscales,interprovinciale
-Québec,2020,2020,Structure fiscale,Autres impôts,0.01,en % du total des recettes fiscales,interprovinciale
 Nouv.-Brunswick,2020,2020,Structure fiscale,Impôts sur le revenu des particuliers,0.35,en % du total des recettes fiscales,interprovinciale
 Nouv.-Brunswick,2020,2020,Structure fiscale,Impôts sur les bénéfices des sociétés,0.08,en % du total des recettes fiscales,interprovinciale
 Nouv.-Brunswick,2020,2020,Structure fiscale,Cotisations sociales,0.16,en % du total des recettes fiscales,interprovinciale
@@ -97,10 +90,10 @@ C.-Britannique,2020,2020,Structure fiscale,Impôts sur les salaires,0.02,en % du
 C.-Britannique,2020,2020,Structure fiscale,Impôts sur le patrimoine,0.12,en % du total des recettes fiscales,interprovinciale
 C.-Britannique,2020,2020,Structure fiscale,Impôts sur la consommation,0.23,en % du total des recettes fiscales,interprovinciale
 C.-Britannique,2020,2020,Structure fiscale,Autres impôts,0.01,en % du total des recettes fiscales,interprovinciale
-Suède,2020,2020,Structure fiscale,Impôts sur le revenu des particuliers,0.29,en % du total des recettes fiscales,internationale
-Suède,2020,2020,Structure fiscale,Impôts sur les bénéfices des sociétés,0.07,en % du total des recettes fiscales,internationale
-Suède,2020,2020,Structure fiscale,Cotisations sociales,0.21,en % du total des recettes fiscales,internationale
-Suède,2020,2020,Structure fiscale,Impôts sur les salaires,0.12,en % du total des recettes fiscales,internationale
-Suède,2020,2020,Structure fiscale,Impôts sur le patrimoine,0.02,en % du total des recettes fiscales,internationale
-Suède,2020,2020,Structure fiscale,Impôts sur la consommation,0.29,en % du total des recettes fiscales,internationale
-Suède,2020,2020,Structure fiscale,Autres impôts,0.01,en % du total des recettes fiscales,internationale
+Suede,2020,2020,Structure fiscale,Impôts sur le revenu des particuliers,0.29,en % du total des recettes fiscales,internationale
+Suede,2020,2020,Structure fiscale,Impôts sur les bénéfices des sociétés,0.07,en % du total des recettes fiscales,internationale
+Suede,2020,2020,Structure fiscale,Cotisations sociales,0.21,en % du total des recettes fiscales,internationale
+Suede,2020,2020,Structure fiscale,Impôts sur les salaires,0.12,en % du total des recettes fiscales,internationale
+Suede,2020,2020,Structure fiscale,Impôts sur le patrimoine,0.02,en % du total des recettes fiscales,internationale
+Suede,2020,2020,Structure fiscale,Impôts sur la consommation,0.29,en % du total des recettes fiscales,internationale
+Suede,2020,2020,Structure fiscale,Autres impôts,0.01,en % du total des recettes fiscales,internationale

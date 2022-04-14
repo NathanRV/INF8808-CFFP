@@ -45,3 +45,26 @@ h2 {
 body {
     height: 10000px;
 }
+.treemapContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+}
+
+.treemap {
+        height: fit-content;
+        width: fit-content;
+}
+
+.treemapLabel {
+        font-weight: bold;
+        width: fit-content;
+        font-size: 40px;
+        margin: 0px auto;
+        }
+        
+        #labelDiv {
+                align-items: center;
+                display: flex;
+}
+
