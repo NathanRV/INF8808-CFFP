@@ -129,12 +129,12 @@ export function load() {
     mousePerLine.append("text")
       .attr("transform", "translate(10,3)");
 
-    mouseG.append('svg:rect') // append a rect to catch mouse movements on canvas
-      .attr('width', width) // can't catch mouse events on a g element
+    mouseG.append('svg:rect')
+      .attr('width', width)
       .attr('height', height)
       .attr('fill', 'none')
       .attr('pointer-events', 'all')
-      .on('mouseout', function() { // on mouse out hide line, circles and text
+      .on('mouseout', function() { 
         d3.select(".mouse-line")
           .style("opacity", "0");
         d3.selectAll(".mouse-per-line circle")
@@ -142,7 +142,7 @@ export function load() {
         d3.selectAll(".mouse-per-line text")
           .style("opacity", "0");
       })
-      .on('mouseover', function() { // on mouse in show line, circles and text
+      .on('mouseover', function() {
         d3.select(".mouse-line")
           .style("opacity", "1");
         d3.selectAll(".mouse-per-line circle")
@@ -150,7 +150,7 @@ export function load() {
         d3.selectAll(".mouse-per-line text")
           .style("opacity", "1");
       })
-      .on('mousemove', function() { // mouse moving over canvas
+      .on('mousemove', function() {
         var mouse = d3.mouse(this);
         d3.select(".mouse-line")
           .attr("d", function() {
@@ -163,10 +163,6 @@ export function load() {
           .attr("transform", function(d, i) {
             let mouseDate = xScale.invert(mouse[0]);
             idx = bisectDate(swedenData, mouseDate);
-            let d0 = swedenData[idx - 1]
-            let d1 = swedenData[idx];
-            // work out which date value is closest to the mouse
-            var d = mouseDate - d0[0] > d1[0] - mouseDate ? d1 : d0;
             var beginning = 0,
               end = lines[i].getTotalLength(),
               target = null;
@@ -179,7 +175,7 @@ export function load() {
               }
               if (pos.x > mouse[0])      end = target;
               else if (pos.x < mouse[0]) beginning = target;
-              else break; //position found
+              else break;
             }
             d3.select(this).select('text')
               .text(yScale.invert(pos.y).toFixed(2));
