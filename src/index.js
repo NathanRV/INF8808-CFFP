@@ -6,6 +6,7 @@ import * as cfn from './scripts/cfn.js'
 import * as rpf from './scripts/rpf.js'
 
 import d3 from 'd3';
+import * as map from './scripts/map.js'
 
 /**
  * @file This file is the entry-point
@@ -18,4 +19,5 @@ import d3 from 'd3';
 
   // cfn.load();
   rpf.load();
+  map.load();
 })(d3)

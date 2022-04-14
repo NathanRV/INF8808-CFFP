@@ -1,18 +1,48 @@
 a:link {
-        text-decoration: none;
-        color:cadetblue; 
+    text-decoration: none;
+    color: cadetblue;
 }
 
 a:visited {
-        text-decoration: none;
-        color:black;
+    text-decoration: none;
+    color: black;
 }
 
 a:hover {
-       opacity: 60%; 
+    opacity: 60%;
 }
 
 h2 {
-        margin: 0px auto;
-        width: fit-content;
+    margin: 0px auto;
+    width: fit-content;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#flag {
+    width: 20px;
+}
+
+.sweden-graph {
+    display: none;
+}
+
+.quebec-graph {
+    position: fixed;
+}
+
+.legend-picto {
+    display: none;
+}
+
+.picto-country {
+    display: none;
+}
+
+body {
+    height: 10000px;
 }

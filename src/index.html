@@ -1,44 +1,69 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="Description" content="Code pour le projet de INF8808.">
-        <title>CFFP - Visualisation bilan de fiscalité</title>
 
-        <link rel="stylesheet" href="assets/style.css">
-        <link rel="stylesheet" href="assets/tooltip.css">
-        <link rel="stylesheet" href="assets/cfn.css">
-        <!-- <link rel="stylesheet" href="assets/typography.css"> -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Description" content="Code pour le projet de INF8808.">
+    <title>CFFP - Visualisation bilan de fiscalité</title>
 
-      </head>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/tooltip.css">
+    <link rel="stylesheet" href="assets/cfn.css">
+    <!--<link rel="stylesheet" href="assets/typography.css"> -->
 
-      <body>
-        <header>
-          <h1>
+</head>
+
+<body>
+    <header>
+        <h1>
             Comparaison entre la fiscalité du Québec et de la Suède
-          </h1>
-        </header>
-        <main>
-          <div class="viz-container">
+        </h1>
+    </header>
+    <main>
+        <div class="viz-container">
+            <div class="graph-map" id="map">
+                <div class="quebec-graph" , id="quebec-graph">
+                    <div class="title" id="quebec-title">
+                        <h2 class="quebec-text">Québec&nbsp&nbsp</h2>
+                        <img class="quebec-flag-svg" id="flag" src="./assets/Image_svg/Quebec.svg" />
+                    </div>
+                    <div class="quebec-object"></div>
+                </div>
+                <div class="sweden-graph">
+                    <div class="title" id="sweden-title">
+                        <h2 class="sweden-text">Suède&nbsp&nbsp</h2>
+                        <img class="sweden-flag-svg" id="flag" src="./assets/Image_svg/Sweden.svg" />
+                    </div>
+                    <div class="sweden-object"></div>
+                </div>
+                <div class="legend-picto"></div>
+            </div>
             <div class="graph" id="bar-chart">
-              <svg class="main-svg"></svg>
+                <svg class="main-svg"></svg>
             </div>
-            <div class="graph" id="cfn-chart">
+            <<<<<<< HEAD <div class="graph" id="cfn-chart">
+        </div>
+        <div id="rpf-chart">
+            =======
+        </div>
+        <div class='cfn-viz'>
+            <div class="connected-dot" id="cowboys-fringants">
+                >>>>>>> scrollytelling
             </div>
-            <div id="rpf-chart">
-            </div>
-          </div>
-        </main>
-        <footer>
-          <div class='panel'>
+        </div>
+    </main>
+    <footer>
+        <div class='panel'>
             Réalisé par : <a href='https://www.linkedin.com/in/laura98/' target="_blank">Laura Beaudoin</a>, <a
-              href='https://www.linkedin.com/in/benjamin-boucher-charest/' target="_blank">Benjamin
-              Boucher-Charest</a>, <a href='https://www.linkedin.com/in/justin-caisse/' target="_blank">Justin Caisse</a>, <a
-              href='https://www.linkedin.com/in/nathan-ramsay-vejlens-155142149/' target="_blank">Nathan Ramsay-Vejlens</a>
-          </div>
-        </footer>
-        <script src="https://d3js.org/d3.v5.js"></script>
-        <script type="module" src="./index.js"></script>
-      </body>
+                href='https://www.linkedin.com/in/benjamin-boucher-charest/' target="_blank">Benjamin
+                Boucher-Charest</a>, <a href='https://www.linkedin.com/in/justin-caisse/' target="_blank">Justin
+                Caisse</a>, <a href='https://www.linkedin.com/in/nathan-ramsay-vejlens-155142149/'
+                target="_blank">Nathan Ramsay-Vejlens</a>
+        </div>
+    </footer>
+    <script src="https://d3js.org/d3.v5.js"></script>
+    <script type="module" src="./index.js"></script>
+</body>
+
 </html>
