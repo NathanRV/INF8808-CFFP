@@ -17,7 +17,7 @@ import * as map from './scripts/map.js'
 (function (d3) {
   const margin = { top: 80, right: 0, bottom: 80, left: 55 };
 
-  // cfn.load();
-  rpf.load();
   map.load();
+  rpf.load();
+  cfn.load();
 })(d3)
