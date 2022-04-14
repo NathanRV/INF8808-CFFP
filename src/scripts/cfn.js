@@ -9,48 +9,54 @@ import d3Legend from 'd3-svg-legend';
 let radius = 10
 
 export function load() {
-    let margin = {top: 10, right: 150, bottom: 30, left: 250};
+    let margin = { top: 10, right: 150, bottom: 30, left: 250 };
     let width = 1200 - margin.left - margin.right;
     let height = 600 - margin.top - margin.bottom;
 
     d3.select("#cfn-chart")
         .append("h2")
-        .attr("id","cfn-title")
+        .attr("id", "cfn-title")
         .text("Comparaison charge fiscale nette selon situation familiale");
 
-        
+
     let svg = d3.select("#cfn-chart")
         .append("svg")
-            .attr("id","cfn-svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+        .attr("id", "cfn-svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
         .append("g")
-            .attr("id","cfn-g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top +")");   
+        .attr("id", "cfn-g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     let tips = createTips(svg);
 
-    d3.csv("./Charge_fiscale_nette_2020.csv").then( function(data){
+    d3.csv("./Charge_fiscale_nette_2020.csv").then(function (data) {
         // Preprocessing data
         data = removeOtherStates(data);
         data = transformValues(data);
         data = regroupBySituation(data);
-        
+
 
         // Creating scales and axis
         let xScale = createXAxis(svg, data, width, height);
         let yScale = createYScale(data, height);
-        
+
         let groups = createGroups(data, tips, yScale, xScale)
         createYAxis(groups, yScale);
 
         // Creating viz
-        let colorScale = createColorScale() 
+        let colorScale = createColorScale()
 
         createLines(groups, xScale);
         createCircles(groups, xScale, colorScale);
         drawLegend(colorScale, width + margin.left)
     })
+
+    d3.select("#cfn-chart")
+        .style("position", "absolute")
+        .style("left", "50%")
+        .style("margin-left", String(-width / 2 - margin.left / 2) + "px")
+        .style("top", "4400px")
 }
 
 
@@ -59,24 +65,24 @@ export function load() {
  * 
  * @param {*} svg Selection of group element of the chart.
  */
-function createTips(svg){
-    let minTip = d3Tip().attr("class","d3-tip")
+function createTips(svg) {
+    let minTip = d3Tip().attr("class", "d3-tip")
         .direction("w")
-        .html(function(d){
+        .html(function (d) {
             return getMinContents(d);
         });
 
-    let meanTip = d3Tip().attr("class","d3-tip")
-        .html(function(d){
+    let meanTip = d3Tip().attr("class", "d3-tip")
+        .html(function (d) {
             return getMiddleContents(d);
         });
-    
-    let maxTip = d3Tip().attr("class","d3-tip")
+
+    let maxTip = d3Tip().attr("class", "d3-tip")
         .direction("e")
-        .html(function(d){
+        .html(function (d) {
             return getMaxContents(d);
         });
-    
+
     let tips = [minTip, meanTip, maxTip];
     tips.forEach((tip) => svg.call(tip));
 
@@ -86,10 +92,10 @@ function createTips(svg){
 /**
  * Creates a color scale for the countries used.
  */
-function createColorScale(){
+function createColorScale() {
     return d3.scaleOrdinal()
-        .domain(["Québec","Suède","Moyenne OCDE"])
-        .range(["#001F97","#FFCD00","#95C71B"]);
+        .domain(["Québec", "Suède", "Moyenne OCDE"])
+        .range(["#001F97", "#FFCD00", "#95C71B"]);
 }
 
 /**
@@ -97,14 +103,14 @@ function createColorScale(){
  *
  * @param {object[]} data The data to be used
  */
-function removeOtherStates(data){
-    var filtered = data.filter(function(d){
-        if (d.Pays == 'Suede' || d.Pays =='Quebec' || d.pays == ''){
+function removeOtherStates(data) {
+    var filtered = data.filter(function (d) {
+        if (d.Pays == 'Suede' || d.Pays == 'Quebec' || d.pays == '') {
             return true;
         }
-      return false;
+        return false;
     })
-  
+
     return filtered;
 }
 
@@ -113,10 +119,10 @@ function removeOtherStates(data){
  *
  * @param {object[]} data The data to be used
  */
-function transformValues(data){
-    data.forEach((d)=>{
+function transformValues(data) {
+    data.forEach((d) => {
         d.Valeur = parseFloat(d3.format(".2f")(d.Valeur * 100));
-        d["Moyenne OCDE"] = parseFloat(d3.format(".2f")(parseFloat(d["Moyenne OCDE"])*100));
+        d["Moyenne OCDE"] = parseFloat(d3.format(".2f")(parseFloat(d["Moyenne OCDE"]) * 100));
     })
 
     return data;
@@ -127,14 +133,14 @@ function transformValues(data){
  *
  * @param {object[]} data The data to be used
  */
-function regroupBySituation(data){
+function regroupBySituation(data) {
     let groupedData = {}
 
     // Group by family situation
-    data.forEach((entry,index)=>{
+    data.forEach((entry, index) => {
         let situation = data[index].Situation_familiale;
 
-        if (!groupedData[situation]){
+        if (!groupedData[situation]) {
             groupedData[situation] = [];
         }
         groupedData[situation].push(data[index]);
@@ -142,7 +148,7 @@ function regroupBySituation(data){
 
     let formattedData = []
     // Format into array of data (easier to use)
-    for (const situation in groupedData){
+    for (const situation in groupedData) {
         let group = groupedData[situation]
 
         let tmp = group[0]
@@ -167,24 +173,24 @@ function regroupBySituation(data){
  * @param {*} yScale The graph's y scale
  * @param {*} xScale The graph's x scale
  */
- function createGroups (data, tips, yScale, xScale) {
+function createGroups(data, tips, yScale, xScale) {
     return d3.select("#cfn-g").selectAll('g.situation_familiale')
         .data(data)
         .enter()
         .append('g')
-        .attr('transform',function(d){return 'translate(0,'+ (yScale.bandwidth()/2 + yScale(d.Situation_familiale)) +')';})
-        .attr('class','situation_familiale')
-        .attr("id",function(d){return d.Situation_familiale})
-        .on("mouseover", function(d){showTips(tips, this, d, xScale); selectGroup(this.id);})
-        .on("mouseout", function(d){hideTips(tips, d); unselectGroup();})  
+        .attr('transform', function (d) { return 'translate(0,' + (yScale.bandwidth() / 2 + yScale(d.Situation_familiale)) + ')'; })
+        .attr('class', 'situation_familiale')
+        .attr("id", function (d) { return d.Situation_familiale })
+        .on("mouseover", function (d) { showTips(tips, this, d, xScale); selectGroup(this.id); })
+        .on("mouseout", function (d) { hideTips(tips, d); unselectGroup(); })
 }
 
 /**
  * Removes highlights.
  */
-function unselectGroup(){
-d3.selectAll('g.situation_familiale')
-    .style('fill', "black")
+function unselectGroup() {
+    d3.selectAll('g.situation_familiale')
+        .style('fill', "black")
 }
 
 /**
@@ -192,11 +198,12 @@ d3.selectAll('g.situation_familiale')
  *
  * @param {*} group Selection of group element to highlight.
  */
-function selectGroup(group){
-d3.selectAll('g.situation_familiale')
-    .style('fill', function(d){
-        if(d.Situation_familiale == group) return "black";
-        return 'grey';})
+function selectGroup(group) {
+    d3.selectAll('g.situation_familiale')
+        .style('fill', function (d) {
+            if (d.Situation_familiale == group) return "black";
+            return 'grey';
+        })
 }
 
 /**
@@ -207,34 +214,34 @@ d3.selectAll('g.situation_familiale')
  * @param {number} width Max width of the scale
  * @param {number} height Height of the graph used to place the axis
  */
-function createXAxis(svg, data, width, height){
-    let minValue = d3.min(data, (d)=>{
-            return d3.min([
-                d.Quebec, 
-                d.Suede, 
-                d["Moyenne OCDE"]]);
-        });
+function createXAxis(svg, data, width, height) {
+    let minValue = d3.min(data, (d) => {
+        return d3.min([
+            d.Quebec,
+            d.Suede,
+            d["Moyenne OCDE"]]);
+    });
 
-    let maxValue = d3.max(data, (d)=>{
-            return d3.max([
-                d.Quebec, 
-                d.Suede,
-                d["Moyenne OCDE"]]);
-        });
+    let maxValue = d3.max(data, (d) => {
+        return d3.max([
+            d.Quebec,
+            d.Suede,
+            d["Moyenne OCDE"]]);
+    });
 
     let xScale = d3.scaleLinear()
         .domain([minValue, maxValue])
         .range([0, width])
 
     let xAxis = d3.axisBottom(xScale)
-        .tickFormat(function(d){
-            return d+'%';
+        .tickFormat(function (d) {
+            return d + '%';
         })
-    
+
     svg.append("g")
-        .attr("transform","translate(0," + height + ")")
+        .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
-        .attr("class","cfn-axis")
+        .attr("class", "cfn-axis")
 
     return xScale;
 }
@@ -245,9 +252,9 @@ function createXAxis(svg, data, width, height){
  * @param {Object[]} data Data of differents groups used to build y scale.
  * @param {number} height Max height of the scale
  */
-function createYScale(data, height){
+function createYScale(data, height) {
     let yScale = d3.scaleBand()
-        .domain(data.map(function(d){
+        .domain(data.map(function (d) {
             return d.Situation_familiale;
         }))
         .range([0, height])
@@ -261,11 +268,11 @@ function createYScale(data, height){
  * @param {*} groups Selection of group elements to which append the labels.
  * @param {*} yScale X scale to place the circles
  */
-function createYAxis(groups, yScale){
+function createYAxis(groups, yScale) {
     groups.append("text")
         .attr("transform", "translate(-240,0)")
-        .text(function(d){return d.Situation_familiale;})
-        .attr("class","cfn-axis")
+        .text(function (d) { return d.Situation_familiale; })
+        .attr("class", "cfn-axis")
 
     return yScale;
 }
@@ -276,18 +283,18 @@ function createYAxis(groups, yScale){
  * @param {*} groups Selection of group elements to which append the lines.
  * @param {*} xScale X scale to place the lines
  */
-function createLines(groups, xScale){
+function createLines(groups, xScale) {
     groups.append("line")
-            .attr("x1", function(d){
-                return xScale(getMin(d))
-            })
-            .attr("x2", function(d){
-                return xScale(getMax(d))
-            })
-            .attr("y1", 0)
-            .attr("y2", 0)
-            .attr("stroke","grey")
-            .attr("stroke-width","5px")
+        .attr("x1", function (d) {
+            return xScale(getMin(d))
+        })
+        .attr("x2", function (d) {
+            return xScale(getMax(d))
+        })
+        .attr("y1", 0)
+        .attr("y2", 0)
+        .attr("stroke", "grey")
+        .attr("stroke-width", "5px")
 }
 
 /**
@@ -297,10 +304,10 @@ function createLines(groups, xScale){
  * @param {*} xScale X scale to place the circles
  * @param {*} colorScale Color scale to assign fill color.
  */
-function createCircles(groups, xScale, colorScale){
+function createCircles(groups, xScale, colorScale) {
     // Circles for mean
     groups.append("circle")
-        .attr("cx", function(d){
+        .attr("cx", function (d) {
             return xScale(d["Moyenne OCDE"])
         })
         .attr("cy", 0)
@@ -310,19 +317,19 @@ function createCircles(groups, xScale, colorScale){
 
     // Circles for québec
     groups.append("circle")
-            .attr("cx", function(d){return xScale(d.Quebec)})
-            .attr("cy", 0)
-            .attr("r",radius)
-            .attr("opacity", 0.7)
-            .attr("fill", colorScale("Québec"))
+        .attr("cx", function (d) { return xScale(d.Quebec) })
+        .attr("cy", 0)
+        .attr("r", radius)
+        .attr("opacity", 0.7)
+        .attr("fill", colorScale("Québec"))
 
     // Circles for sweden
     groups.append("circle")
-            .attr("cx", function(d){return xScale(d.Suede)})
-            .attr("cy", 0)
-            .attr("r",radius)
-            .attr("opacity", 0.7)
-            .attr("fill", colorScale("Suède"))       
+        .attr("cx", function (d) { return xScale(d.Suede) })
+        .attr("cy", 0)
+        .attr("r", radius)
+        .attr("opacity", 0.7)
+        .attr("fill", colorScale("Suède"))
 }
 
 /**
@@ -330,7 +337,7 @@ function createCircles(groups, xScale, colorScale){
  *
  * @param {object[]} data Containing the different values to evaluate.
  */
-function getMinContents(data){
+function getMinContents(data) {
     let value = getMin(data);
     return getContentString(value);
 }
@@ -340,7 +347,7 @@ function getMinContents(data){
  *
  * @param {object[]} data Containing the different values to evaluate.
  */
-function getMiddleContents(data){
+function getMiddleContents(data) {
     let value = getMiddle(data)
     return getContentString(value);
 }
@@ -350,7 +357,7 @@ function getMiddleContents(data){
  *
  * @param {object[]} data Containing the different values to evaluate.
  */
-function getMaxContents(data){
+function getMaxContents(data) {
     let value = getMax(data);
     return getContentString(value);
 }
@@ -360,8 +367,8 @@ function getMaxContents(data){
  *
  * @param {object[]} data Containing the different values to evaluate.
  */
-function getMin(data){
-    return d3.min([data.Quebec,data.Suede,data["Moyenne OCDE"]]);
+function getMin(data) {
+    return d3.min([data.Quebec, data.Suede, data["Moyenne OCDE"]]);
 }
 
 /**
@@ -369,8 +376,8 @@ function getMin(data){
  *
  * @param {object[]} data Containing the different values to evaluate.
  */
-function getMax(data){
-    return d3.max([data.Quebec,data.Suede,data["Moyenne OCDE"]]);
+function getMax(data) {
+    return d3.max([data.Quebec, data.Suede, data["Moyenne OCDE"]]);
 }
 
 
@@ -379,12 +386,12 @@ function getMax(data){
  *
  * @param {object[]} data Containing the different values to evaluate.
  */
-function getMiddle(data){
+function getMiddle(data) {
     let minValue = getMin(data);
     let maxValue = getMax(data);
-    let value = [data.Quebec,data.Suede,data["Moyenne OCDE"]]
-        .filter((value) => {return (value != minValue && value != maxValue)})[0];
-    
+    let value = [data.Quebec, data.Suede, data["Moyenne OCDE"]]
+        .filter((value) => { return (value != minValue && value != maxValue) })[0];
+
     return value;
 }
 
@@ -393,10 +400,10 @@ function getMiddle(data){
  *
  * @param {number} value Value to be shown.
  */
-function getContentString(value){        
-    return "<span>"+
-                value + "%" +
-            "</span><br>";
+function getContentString(value) {
+    return "<span>" +
+        value + "%" +
+        "</span><br>";
 }
 
 /**
@@ -407,20 +414,20 @@ function getContentString(value){
  * @param {*} data Data used in the group element.
  * @param {*} xScale X scale used to position tips.
  */
-function showTips(tips, object, data, xScale){
+function showTips(tips, object, data, xScale) {
     //Min tip
     let lineLength = xScale(getMax(data)) - xScale(getMin(data))
-    tips[0].offset([0,object.getBBox().width - lineLength - 3*radius])
+    tips[0].offset([0, object.getBBox().width - lineLength - 3 * radius])
 
     //Middle tip
     let distance_max_middle = xScale(getMax(data)) - xScale(getMiddle(data))
-    let offset = object.getBBox().width/2 - distance_max_middle
-    tips[1].offset([-radius, offset-radius])
+    let offset = object.getBBox().width / 2 - distance_max_middle
+    tips[1].offset([-radius, offset - radius])
 
     //Max tip
-    tips[2].offset([0,radius])
+    tips[2].offset([0, radius])
 
-    tips.forEach((tip)=>{
+    tips.forEach((tip) => {
         tip.show(data, object)
     })
 }
@@ -430,8 +437,8 @@ function showTips(tips, object, data, xScale){
  *
  * @param {*} tips Array of selection of the tips div element.
  */
-function hideTips(tips){
-    tips.forEach((tip)=>{
+function hideTips(tips) {
+    tips.forEach((tip) => {
         tip.hide()
     })
 }
@@ -444,16 +451,16 @@ function hideTips(tips){
  * @param {*} colorScale The color scale to use
  * @param {*} offset The x value of the legend box
  */
-function drawLegend (colorScale, offset) {  
+function drawLegend(colorScale, offset) {
     let legend = d3Legend.legendColor()
-                    .orient("vertical")
-                    .title("Légende")
-                    .shape("circle")
-                    .scale(colorScale)
-  
+        .orient("vertical")
+        .title("Légende")
+        .shape("circle")
+        .scale(colorScale)
+
     d3.select("#cfn-svg")
         .append("g")
-        .attr("class","cfn-legend")
-        .attr("transform",'translate(' + offset + ',20)')
+        .attr("class", "cfn-legend")
+        .attr("transform", 'translate(' + offset + ',20)')
         .call(legend)
 }
