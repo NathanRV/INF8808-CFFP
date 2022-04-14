@@ -218,11 +218,13 @@ function getFilteredData(data, country) {
 
 
 function showLegend(graph, width) {  
-  graph.append("circle").attr("cx",width + 30).attr("cy",0).attr("r", 6).style("fill", "#001F97")
-  graph.append("circle").attr("cx",width + 30).attr("cy",30).attr("r", 6).style("fill", "#FFCD00")
-  graph.append("circle").attr("cx",width + 30).attr("cy",60).attr("r", 6).style("fill", "#95C71B")
-  graph.append("text").attr("x", width + 50).attr("y", 0).text("Quebec").style("font-size", "15px").attr("alignment-baseline","middle")
-  graph.append("text").attr("x", width + 50).attr("y", 30).text("Sweden").style("font-size", "15px").attr("alignment-baseline","middle")
-  graph.append("text").attr("x", width + 50).attr("y", 60).text("OECD").style("font-size", "15px").attr("alignment-baseline","middle")
+  let offsetText = 50
+  let offsetGraph = 30
+  graph.append("circle").attr("cx",width + offsetGraph).attr("cy",0).attr("r", 6).style("fill", "#001F97")
+  graph.append("circle").attr("cx",width + offsetGraph).attr("cy",30).attr("r", 6).style("fill", "#FFCD00")
+  graph.append("circle").attr("cx",width + offsetGraph).attr("cy",60).attr("r", 6).style("fill", "#95C71B")
+  graph.append("text").attr("x", width + offsetText).attr("y", 0).text("Quebec").style("font-size", "15px").attr("alignment-baseline","middle")
+  graph.append("text").attr("x", width + offsetText).attr("y", 30).text("Sweden").style("font-size", "15px").attr("alignment-baseline","middle")
+  graph.append("text").attr("x", width + offsetText).attr("y", 60).text("OECD").style("font-size", "15px").attr("alignment-baseline","middle")
 }
 
