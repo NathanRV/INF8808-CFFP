@@ -1,6 +1,8 @@
+import d3Legend from 'd3-svg-legend';
+
 export function load() {
 
-  var margin = {top: 10, right: 30, bottom: 30, left: 60},
+  var margin = {top: 10, right: 100, bottom: 30, left: 60},
   width = 600 - margin.left - margin.right,
   height = 400 - margin.top - margin.bottom;
 
@@ -93,7 +95,7 @@ export function load() {
       .datum(oecdData)
       .attr("fill", "none")
       .attr("class", "line")
-      .attr("stroke", "#FF0000")
+      .attr("stroke", "#95C71B")
       .attr("stroke-width", 2)
       .attr("opacity", 0.5)  
       .attr("d", d3.line()
@@ -182,13 +184,16 @@ export function load() {
               else if (pos.x < mouse[0]) beginning = target;
               else break;
             }
-            d3.select(this).select('text')
-            .text(function(){
-              return yScale.invert(pos.y).toFixed(2)
-            });
-            return "translate(" + mouse[0] + "," + pos.y +")";
+        d3.select(this).select('text')
+          .text(function(){
+            return yScale.invert(pos.y).toFixed(2)
           });
-      });
+            return "translate(" + mouse[0] + "," + pos.y +")";
+        });
+    });
+
+    showLegend(graph, width, height)
+
       
   });
 }
@@ -209,5 +214,15 @@ function getFilteredData(data, country) {
     element.time = d3.timeParse("%Y")(element.time);
   })
   return filtered;
+}
+
+
+function showLegend(graph, width) {  
+  graph.append("circle").attr("cx",width + 30).attr("cy",0).attr("r", 6).style("fill", "#001F97")
+  graph.append("circle").attr("cx",width + 30).attr("cy",30).attr("r", 6).style("fill", "#FFCD00")
+  graph.append("circle").attr("cx",width + 30).attr("cy",60).attr("r", 6).style("fill", "#95C71B")
+  graph.append("text").attr("x", width + 50).attr("y", 0).text("Quebec").style("font-size", "15px").attr("alignment-baseline","middle")
+  graph.append("text").attr("x", width + 50).attr("y", 30).text("Sweden").style("font-size", "15px").attr("alignment-baseline","middle")
+  graph.append("text").attr("x", width + 50).attr("y", 60).text("OECD").style("font-size", "15px").attr("alignment-baseline","middle")
 }
 
