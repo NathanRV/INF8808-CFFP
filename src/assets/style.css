@@ -80,3 +80,8 @@ body {
     position: absolute;
     top: 7250px;
 }
+.treemapVisualisation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
