@@ -159,7 +159,7 @@ function regroupByState(data) {
     let groupedData = {}
 
     // Group by state
-    for (entry in data) {
+    for (const entry in data) {
         let state = data[entry].État;
 
         if (!groupedData[state]) {
@@ -170,7 +170,7 @@ function regroupByState(data) {
 
     formattedData = []
     // Format into array of data (easier to use)
-    for (state in groupedData) {
+    for (const state in groupedData) {
         let tmp = []
         groupedData[state].forEach(indicator => {
             tmp["État"] = indicator["État"]
