@@ -19,9 +19,9 @@ export function load() {
     const bisectDate = d3.bisector(function (d) {
       return d.time;
     }).left;
-    swedenData = getFilteredData(data, 'SWE');
-    quebecData = getFilteredData(data, 'CAN');
-    oecdData = getFilteredData(data, 'OECD')
+    var swedenData = getFilteredData(data, 'SWE');
+    var quebecData = getFilteredData(data, 'CAN');
+    var oecdData = getFilteredData(data, 'OECD')
     let xScale = d3.scaleTime()
       .domain(d3.extent(swedenData, function (d) {
         return d.time;
