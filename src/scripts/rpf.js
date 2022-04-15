@@ -8,7 +8,7 @@ const CATEGORIES = {
     'Taux de prélèvements fiscaux pour l’administration provinciale': 'Administration provinciale',
     'Taux de prélèvements fiscaux pour l’administration locale et autochtones': 'Administration locale et autochtone',
     'Taux de prélèvements fiscaux pour les régimes de pension': 'Sécurité sociale'
-  }
+}
 
 /*
 * Functions used to draw the viz related to RPF (Répartition prélèvements fiscaux)
@@ -20,28 +20,29 @@ import d3Legend from "d3-svg-legend";
 export function load() {
 
     // set the dimensions and margins of the graph
-    let margin = {top: 10, right: 100, bottom: 20, left: 100},
+    let margin = { top: 10, right: 100, bottom: 20, left: 100 },
         width = 1300 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
 
     d3.select("#rpf-chart")
         .append("h2")
-        .attr("id","rpf-title")
+        .attr("id", "rpf-title")
         .text("Comparaison de la répartition des prélèvements fiscaux")
         .style("font-family", "sans-serif")
+        .style("margin", "0px auto")
 
     // append the svg object to the body of the page
     let svg = d3.select("#rpf-chart")
         .append("svg")
-            .attr("id","rpf-svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-                .attr("id","rpf-g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");   
-    
+        .attr("id", "rpf-svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("id", "rpf-g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
     let svgGraph = svg.append("g")
-        .attr("id","rpf-graph")
+        .attr("id", "rpf-graph")
 
     let legend = svg.append("g")
         .attr("id", "rpf-legend")
@@ -50,22 +51,22 @@ export function load() {
     let tips = createTips(svg);
 
     // Parse the Data
-    d3.csv("./Tab6-Repartition_prelevements_fiscaux_2020.csv").then( function(data) {
+    d3.csv("./Tab6-Repartition_prelevements_fiscaux_2020.csv").then(function (data) {
 
         data = removeOtherStates(data);
 
         data = formatData(data)
 
         // X axis
-        let subgroups = d3.map(data, function(d) {
-            return(d.Indicateur)
+        let subgroups = d3.map(data, function (d) {
+            return (d.Indicateur)
         }).keys()
 
         data = regroupByState(data)
 
         // Y axis
-        let groups = d3.map(data, function(d) {
-            return(d.État)
+        let groups = d3.map(data, function (d) {
+            return (d.État)
         }).keys()
 
         // Transform data for stacked bar chart
@@ -82,6 +83,13 @@ export function load() {
 
         showLegend(colorScale, legend)
     })
+
+    d3.select("#rpf-chart")
+        .style("position", "absolute")
+        .style("left", "50%")
+        .style("margin-left", String(-width / 2 - margin.left / 2) + "px")
+        .style("top", "4400px")
+
 }
 
 /**
@@ -89,22 +97,22 @@ export function load() {
  * 
  * @param {*} svg Selection of group element of the chart.
  */
- function createTips(svg) {
+function createTips(svg) {
     let firstBarTip = d3Tip()
         .attr("class", "d3-tip")
         .style("font-family", "sans-serif")
-        .html(function(d) {
+        .html(function (d) {
             return d;
         })
 
     let secondBarTip = d3Tip()
         .attr("class", "d3-tip")
         .style("font-family", "sans-serif")
-        .html(function(d){
+        .html(function (d) {
             return d;
         });
 
-    
+
     let tips = [firstBarTip, secondBarTip];
     tips.forEach((tip) => svg.call(tip));
 
@@ -116,14 +124,14 @@ export function load() {
  *
  * @param {object[]} data The data to be used
  */
- function removeOtherStates(data){
-    var filtered = data.filter(function(d){
-        if (d.État == 'Suède' || d.État =='Québec' || d.État == ''){
+function removeOtherStates(data) {
+    var filtered = data.filter(function (d) {
+        if (d.État == 'Suède' || d.État == 'Québec' || d.État == '') {
             return true;
         }
-      return false;
+        return false;
     })
-  
+
     return filtered;
 }
 
@@ -132,13 +140,13 @@ export function load() {
  *
  * @param {object[]} data The data to be used
  */
- function formatData(data) {
+function formatData(data) {
 
     data.forEach(value => {
         value.Indicateur = CATEGORIES[value.Indicateur]
         value.Valeur = (value.Valeur * 100)
-      });
-  
+    });
+
     return data;
 }
 
@@ -147,11 +155,11 @@ export function load() {
  *
  * @param {object[]} data The data to be used
  */
- function regroupByState(data) {
+function regroupByState(data) {
     let groupedData = {}
 
     // Group by state
-    for (entry in data){
+    for (entry in data) {
         let state = data[entry].État;
 
         if (!groupedData[state]) {
@@ -179,7 +187,7 @@ export function load() {
  *
  * @param {number} width Max width of the scale
  */
- function createXScale(width) {
+function createXScale(width) {
     return d3.scaleLinear()
         .domain([0, 100])
         .range([0, width]);;
@@ -192,7 +200,7 @@ export function load() {
  * @param {number} height Max height of the scale
  * @param {number} svg The d3 Selection of the graph's g SVG element
  */
-function createYScale(groups, height, svg){
+function createYScale(groups, height, svg) {
     let y = d3.scaleBand()
         .domain(groups)
         .range([0, height])
@@ -214,10 +222,10 @@ function createYScale(groups, height, svg){
  *
  * @param {*} subgroups The categories in the scale
  */
- function createColorScale(subgroups){
+function createColorScale(subgroups) {
     return d3.scaleOrdinal()
         .domain(subgroups)
-        .range(["#031F4B","#265889","#5598C6", "#95C1D8", "#95C71B"])
+        .range(["#031F4B", "#265889", "#5598C6", "#95C1D8", "#95C71B"])
 }
 
 /**
@@ -231,7 +239,7 @@ function createYScale(groups, height, svg){
  * @param {*} tips Array of selection of the tips div element.
  */
 function showBars(svgGraph, stackedData, xScale, yScale, colorScale, tips) {
-    let categories =  showCategories(svgGraph, stackedData, xScale, colorScale, tips)
+    let categories = showCategories(svgGraph, stackedData, xScale, colorScale, tips)
 
     showCategoryRectangles(categories, xScale, yScale)
 
@@ -254,17 +262,17 @@ function showCategories(svgGraph, stackedData, xScale, colorScale, tips) {
         .enter()
         .append("g")
         .attr("class", "category")
-        .attr("fill", function(d) { 
-            return colorScale(d.key); 
+        .attr("fill", function (d) {
+            return colorScale(d.key);
         })
-        .on("mouseover", function(d) {
+        .on("mouseover", function (d) {
             showTips(tips, this, d, xScale);
             selectGroup(d3.select(this).datum().key);
         })
-        .on("mouseout", function(d){
+        .on("mouseout", function (d) {
             hideTips(tips, d);
             unselectGroup();
-            }) 
+        })
     return categories
 }
 
@@ -278,16 +286,16 @@ function showCategories(svgGraph, stackedData, xScale, colorScale, tips) {
 function showCategoryRectangles(categories, xScale, yScale) {
     categories
         .selectAll("rect")
-        .data(function(d) {
-            return d; 
+        .data(function (d) {
+            return d;
         })
         .enter()
         .append("rect")
-            .attr("x", function(d) { return xScale(d[0]); })
-            .attr("y", function(d) { return yScale(d.data.État); })
-            .attr("height", yScale.bandwidth())
-            .attr("width", function(d) { return xScale(d[1]) - xScale(d[0]); })
-            .attr("stroke", "white")
+        .attr("x", function (d) { return xScale(d[0]); })
+        .attr("y", function (d) { return yScale(d.data.État); })
+        .attr("height", yScale.bandwidth())
+        .attr("width", function (d) { return xScale(d[1]) - xScale(d[0]); })
+        .attr("stroke", "white")
 }
 
 /**
@@ -299,22 +307,22 @@ function showCategoryRectangles(categories, xScale, yScale) {
  */
 function showRectanglesText(categories, xScale, yScale) {
     categories
-            .selectAll("text")
-            .data(function(d) {
-                return d; 
-            })
-            .enter()
-            .append("text")
-                .text(function(d) {
-                    if (d[1] - d[0] < 3) return ""
-                    return Math.round((d[1] - d[0] + Number.EPSILON) * 100) / 100 + " %"
-                })
-                .attr("x", function(d) { return xScale(d[0]) + (xScale(d[1]) - xScale(d[0])) / 2; })
-                .attr("y", function(d) { return yScale(d.data.État) + yScale.bandwidth() / 2 + 6; })
-                .attr("text-anchor", "middle")
-                .attr("font-family", "sans-serif")
-                .style("fill", "white")
-                .attr("pointer-events", "none")
+        .selectAll("text")
+        .data(function (d) {
+            return d;
+        })
+        .enter()
+        .append("text")
+        .text(function (d) {
+            if (d[1] - d[0] < 3) return ""
+            return Math.round((d[1] - d[0] + Number.EPSILON) * 100) / 100 + " %"
+        })
+        .attr("x", function (d) { return xScale(d[0]) + (xScale(d[1]) - xScale(d[0])) / 2; })
+        .attr("y", function (d) { return yScale(d.data.État) + yScale.bandwidth() / 2 + 6; })
+        .attr("text-anchor", "middle")
+        .attr("font-family", "sans-serif")
+        .style("fill", "white")
+        .attr("pointer-events", "none")
 }
 
 /**
@@ -325,24 +333,24 @@ function showRectanglesText(categories, xScale, yScale) {
  * @param {*} data Data used in the group element.
  * @param {*} xScale X scale used to position tips.
  */
- function showTips(tips, object, data, xScale) {
-     firstTipValue = Math.round(((data[0][1] - data[0][0]) + Number.EPSILON) * 100) / 100;
-     secondTipValue = Math.round(((data[1][1] - data[1][0]) + Number.EPSILON) * 100) / 100;
+function showTips(tips, object, data, xScale) {
+    firstTipValue = Math.round(((data[0][1] - data[0][0]) + Number.EPSILON) * 100) / 100;
+    secondTipValue = Math.round(((data[1][1] - data[1][0]) + Number.EPSILON) * 100) / 100;
 
-    if(secondTipValue != 0.0) {
-        tips[0].offset([-5, xScale(firstTipValue/2 + data[0][0] - (secondTipValue/2 + data[1][0]))])
+    if (secondTipValue != 0.0) {
+        tips[0].offset([-5, xScale(firstTipValue / 2 + data[0][0] - (secondTipValue / 2 + data[1][0]))])
     }
     else tips[0].offset([-5, 0])
 
-    if(firstTipValue != 0) {
+    if (firstTipValue != 0) {
         tips[1].offset([100, 0])
     }
     else tips[1].offset([0, 0])
 
-    if(firstTipValue != 0.0) {
+    if (firstTipValue != 0.0) {
         tips[0].show(data.key + " : " + firstTipValue + " %", object)
     }
-    if(secondTipValue != 0.0) {
+    if (secondTipValue != 0.0) {
         tips[1].show(data.key + " : " + secondTipValue + " %", object)
     }
 }
@@ -352,8 +360,8 @@ function showRectanglesText(categories, xScale, yScale) {
  *
  * @param {*} tips Array of selection of the tips div element.
  */
- function hideTips(tips){
-    tips.forEach((tip)=>{
+function hideTips(tips) {
+    tips.forEach((tip) => {
         tip.hide()
     })
 }
@@ -363,35 +371,35 @@ function showRectanglesText(categories, xScale, yScale) {
  *
  * @param {*} subgroupName group element key to highlight.
  */
- function selectGroup(subgroupName) {
+function selectGroup(subgroupName) {
     d3.selectAll("g.category")
-        .style("opacity", function(d) {
-            if(d.key == subgroupName) {
+        .style("opacity", function (d) {
+            if (d.key == subgroupName) {
                 return 1
             }
             return 0.5;
         })
     d3.selectAll(".cell")
-        .style("opacity", function(d) {
-            if(d == subgroupName) {
+        .style("opacity", function (d) {
+            if (d == subgroupName) {
                 return 1
             }
             return 0.5;
         })
-        
+
 }
 
 /**
  * Removes highlights.
  */
- function unselectGroup() {
+function unselectGroup() {
     d3.selectAll("g.category")
         .style("opacity", 1)
 
     d3.selectAll(".cell")
         .style("opacity", 1);
 }
-    
+
 /**
  * Draws the legend. Using d3-svg-legend library
  * https://d3-legend.susielu.com/
@@ -399,14 +407,14 @@ function showRectanglesText(categories, xScale, yScale) {
  * @param {*} colorScale The color scale to use
  * @param {*} legendSVG The d3 Selection of the graph's g SVG legend element
  */
-function showLegend (colorScale, legendSVG) {  
+function showLegend(colorScale, legendSVG) {
     let legend = d3Legend.legendColor()
-                    .orient("horizontal")
-                    .shapePadding("220")
-                    .labelAlign("start")
-                    .labelWrap("200")
-                    .scale(colorScale)
-  
+        .orient("horizontal")
+        .shapePadding("220")
+        .labelAlign("start")
+        .labelWrap("200")
+        .scale(colorScale)
+
     legendSVG.call(legend)
 
     legendSVG.selectAll(".label")
