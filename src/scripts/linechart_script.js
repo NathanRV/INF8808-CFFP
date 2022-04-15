@@ -194,9 +194,9 @@ export function load() {
               else break;
             }
             graph.select("#timeLegendVal").text(mouseDate.getUTCFullYear())
-            if(i == 0)
+            if(i == 1)
               graph.select("#quebecLegendVal").text(Math.round(yScale.invert(pos.y)) + " USD")
-            else if (i == 1)
+            else if (i == 0)
               graph.select("#swedenLegendVal").text(Math.round(yScale.invert(pos.y)) + " USD")
             else if (i == 2)
               graph.select("#oecdLegendVal").text(Math.round(yScale.invert(pos.y)) + " USD")
