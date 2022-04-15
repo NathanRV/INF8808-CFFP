@@ -322,7 +322,7 @@ export function load() {
             .attr("d", personIconPath)
             .attr("transform", "translate(0, 0) scale(3)")
 
-        data = d3.range(1)
+        var data = d3.range(1)
 
         var container = svg.append("g")
 
@@ -391,7 +391,7 @@ export function load() {
             .range([0, 50])
             .domain(d3.range(2));
 
-        data = d3.range(nbPerson);
+        var data = d3.range(nbPerson);
 
         var container = svg.append("g")
             .attr("class", "picto-country")
