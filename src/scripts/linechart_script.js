@@ -174,10 +174,11 @@ export function load() {
             let beginning = 0;
             let end = lines[i].getTotalLength();
             let target = null;
+            let pos;
 
             while (true) {
               target = Math.floor((beginning + end) / 2);
-              let pos = lines[i].getPointAtLength(target);
+              pos = lines[i].getPointAtLength(target);
               if ((target === end || target === beginning) && pos.x !== mouse[0]) {
                 break;
               }
