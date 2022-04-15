@@ -66,7 +66,8 @@ export function load() {
           .style("left", d3.mouse(this)[0] + 70 + "px")
           .style("top", d3.mouse(this)[1] + "px")
       }
-      d3.selectAll("rect").style('opacity', function (data) { return d.id === data.id ? 1 : 0.5 });
+      d3.selectAll(".treemap-tile").style('opacity', function (data) { 
+        return d.id === data.id ? 1 : 0.5 });
     }
     var mousemove = function (d) {
       if (d.parent.id === 'Sweden')
@@ -107,6 +108,7 @@ export function load() {
       .data(swedenRoot.children)
       .enter()
       .append("rect")
+      .attr("class", "treemap-tile")
       .attr('x', function (d) { return d.x0; })
       .attr('y', function (d) { return d.y0; })
       .attr('width', function (d) { return d.x1 - d.x0; })
@@ -154,6 +156,7 @@ export function load() {
       .data(quebecRoot.children)
       .enter()
       .append("rect")
+      .attr("class", "treemap-tile")
       .attr('x', function (d) { return d.x0; })
       .attr('y', function (d) { return d.y0; })
       .attr('width', function (d) { return d.x1 - d.x0; })
