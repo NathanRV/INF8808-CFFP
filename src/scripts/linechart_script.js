@@ -174,6 +174,7 @@ export function load() {
             let beginning = 0;
             let end = lines[i].getTotalLength();
             let target = null;
+            let pos;
 
             while (true) {
               target = Math.floor((beginning + end) / 2);

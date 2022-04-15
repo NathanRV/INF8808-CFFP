@@ -206,7 +206,7 @@ function createYScale(groups, height, svg) {
         .range([0, height])
         .padding([0.6])
 
-    yAxis = svg
+    let yAxis = svg
         .append("g")
         .style("font-size", 14)
         .call(d3.axisLeft(y))

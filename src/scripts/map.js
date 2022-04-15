@@ -161,7 +161,7 @@ export function load() {
     window.addEventListener('scroll', function (e) {
 
         const windowWidth = this.window.innerWidth
-        const posScroll = this.document.documentElement.scrollTop
+        const posScroll = document.documentElement.scrollTop
 
         if (posScroll > 0 && posScroll < 875) {
 
