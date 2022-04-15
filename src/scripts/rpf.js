@@ -168,7 +168,7 @@ function regroupByState(data) {
         groupedData[state].push(data[entry]);
     }
 
-    formattedData = []
+    let formattedData = []
     // Format into array of data (easier to use)
     for (const state in groupedData) {
         let tmp = []
@@ -256,7 +256,7 @@ function showBars(svgGraph, stackedData, xScale, yScale, colorScale, tips) {
  * @param {*} tips Array of selection of the tips div element.
  */
 function showCategories(svgGraph, stackedData, xScale, colorScale, tips) {
-    categories = svgGraph
+    let categories = svgGraph
         .selectAll("g.category")
         .data(stackedData)
         .enter()
@@ -334,8 +334,8 @@ function showRectanglesText(categories, xScale, yScale) {
  * @param {*} xScale X scale used to position tips.
  */
 function showTips(tips, object, data, xScale) {
-    firstTipValue = Math.round(((data[0][1] - data[0][0]) + Number.EPSILON) * 100) / 100;
-    secondTipValue = Math.round(((data[1][1] - data[1][0]) + Number.EPSILON) * 100) / 100;
+    var firstTipValue = Math.round(((data[0][1] - data[0][0]) + Number.EPSILON) * 100) / 100;
+    var secondTipValue = Math.round(((data[1][1] - data[1][0]) + Number.EPSILON) * 100) / 100;
 
     if (secondTipValue != 0.0) {
         tips[0].offset([-5, xScale(firstTipValue / 2 + data[0][0] - (secondTipValue / 2 + data[1][0]))])
