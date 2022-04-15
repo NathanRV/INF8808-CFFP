@@ -42,26 +42,26 @@ export function load() {
     var mouseover = function (d) {
       if (d.parent.id === 'Suede') {
         tooltipSweden
-          .html(d.id + ' : ' + Math.round(100 * d.value) + ' % <br>' + 999 + ' G $')
+          .html(d.id + ' : ' + Math.round(100 * d.value) + ' % ')
           .style("opacity", 1)
           .style("left", d3.mouse(this)[0] + 70 + "px")
           .style("top", d3.mouse(this)[1] + "px")
         let data = quebecData.filter((element) => { return d.id === element.Name });
         tooltipQuebec
-          .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % <br>' + 999 + ' G $')
+          .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % ')
           .style("opacity", 1)
           .style("left", d3.mouse(this)[0] + 70 + "px")
           .style("top", d3.mouse(this)[1] + "px")
       }
       if (d.parent.id === 'Quebec') {
         tooltipQuebec
-          .html(d.id + ' : ' + Math.round(100 * d.value) + ' % <br>' + 999 + ' G $')
+          .html(d.id + ' : ' + Math.round(100 * d.value) + ' % ')
           .style("opacity", 1)
           .style("left", d3.mouse(this)[0] + 70 + "px")
           .style("top", d3.mouse(this)[1] + "px")
         let data = swedenData.filter((element) => { return d.id === element.Name });
         tooltipSweden
-          .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % <br>' + 999 + ' G $')
+          .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % ')
           .style("opacity", 1)
           .style("left", d3.mouse(this)[0] + 70 + "px")
           .style("top", d3.mouse(this)[1] + "px")
@@ -130,7 +130,8 @@ export function load() {
       .attr("x", function (d) { return d.x0 + 5 })
       .attr("y", function (d) { return d.y0 + 20 })
       .text(function (d) {
-        return outputText(d.id, d.x1 - d.x0, d.y1 - d.y0)
+        if (outputText(d.id, d.x1 - d.x0, d.y1 - d.y0))
+          return d.id;
       })
       .attr("font-size", "14px")
       .attr("fill", "white")
@@ -146,7 +147,8 @@ export function load() {
       .attr("x", function (d) { return d.x0 + 5 })
       .attr("y", function (d) { return d.y0 + 35 })
       .text(function (d) {
-        return outputText(Math.round(d.value * 100) + '%', d.x1 - d.x0, d.y1 - d.y0)
+        if(outputText(d.id, d.x1 - d.x0, d.y1 - d.y0))
+        return Math.round(d.value * 100) + '%';
       })
       .attr("font-size", "16px")
       .attr("fill", "white")
@@ -178,7 +180,8 @@ export function load() {
       .attr("x", function (d) { return d.x0 + 5 })
       .attr("y", function (d) { return d.y0 + 20 })
       .text(function (d) {
-        return outputText(d.id, d.x1 - d.x0, d.y1 - d.y0);
+        if (outputText(d.id, d.x1 - d.x0, d.y1 - d.y0))
+          return d.id;
       })
       .attr("font-size", "14px")
       .attr("fill", "white")
@@ -194,7 +197,8 @@ export function load() {
       .attr("x", function (d) { return d.x0 + 5 })    // +10 to adjust position (more right)
       .attr("y", function (d) { return d.y0 + 35 })    // +20 to adjust position (lower)
       .text(function (d) {
-        return outputText(Math.round(d.value * 100) + '%', d.x1 - d.x0, d.y1 - d.y0);
+        if (outputText(d.id, d.x1 - d.x0, d.y1 - d.y0))
+          return Math.round(d.value * 100) + '%';
       })
       .attr("font-size", "16px")
       .attr("fill", "white")
@@ -250,8 +254,8 @@ function outputText(text, width, height) {
   const metrics = context.measureText(text);
   let actualHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
   if (width > metrics.width && height > actualHeight)
-    return text;
-  return '';
+    return true;
+  return false;
 }
 
 /** Create a color scale to be used to create treemap elements.
