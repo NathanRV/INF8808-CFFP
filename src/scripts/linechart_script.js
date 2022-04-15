@@ -170,7 +170,7 @@ export function load() {
         d3.selectAll(".mouse-per-line")
           .attr("transform", function (d, i) {
             let mouseDate = xScale.invert(mouse[0]);
-            idx = bisectDate(swedenData, mouseDate);
+            let idx = bisectDate(swedenData, mouseDate);
             let beginning = 0;
             let end = lines[i].getTotalLength();
             let target = null;
