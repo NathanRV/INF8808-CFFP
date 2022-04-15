@@ -161,7 +161,7 @@ export function load() {
     window.addEventListener('scroll', function (e) {
 
         const windowWidth = this.window.innerWidth
-        const posScroll = this.document.documentElement.scrollTop
+        const posScroll = document.documentElement.scrollTop
 
         if (posScroll > 0 && posScroll < 875) {
 
@@ -285,18 +285,18 @@ export function load() {
             .selectAll("path")
             .attr("transform", "translate(" + String(swedenMapX) + ", 0)")
 
-        var line1 = this.document.getElementById("sweden-line-map1")
+        var line1 = document.getElementById("sweden-line-map1")
         line1.setAttribute("x1", swedenLine1X1)
         line1.setAttribute("x2", swedenLine1X2)
 
-        var line2 = this.document.getElementById("sweden-line-map2")
+        var line2 = document.getElementById("sweden-line-map2")
         line2.setAttribute("x1", swedenLine2X1)
         line2.setAttribute("x2", swedenLine2X2)
 
-        this.document.getElementById("sweden-size-text").setAttribute("x", textSwedenX)
+        document.getElementById("sweden-size-text").setAttribute("x", textSwedenX)
 
-        this.document.getElementById("quebec-map-svg").setAttribute("width", dimensionQuebecX)
-        this.document.getElementById("sweden-map-svg").setAttribute("width", dimensionSwedenX)
+        document.getElementById("quebec-map-svg").setAttribute("width", dimensionQuebecX)
+        document.getElementById("sweden-map-svg").setAttribute("width", dimensionSwedenX)
     }
 
     function createCountrySvg(place, dimension) {
