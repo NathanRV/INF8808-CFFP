@@ -1,8 +1,7 @@
-import d3Legend from 'd3-svg-legend';
 
 export function load() {
 
-  var margin = { top: 10, right: 100, bottom: 30, left: 60 },
+  var margin = { top: 70, right: 110, bottom: 30, left: 60 },
     width = 700 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -19,9 +18,12 @@ export function load() {
     const bisectDate = d3.bisector(function (d) {
       return d.time;
     }).left;
-    swedenData = getFilteredData(data, 'SWE');
-    quebecData = getFilteredData(data, 'CAN');
-    oecdData = getFilteredData(data, 'OECD')
+
+    const colorScale = createColorScale();
+    let swedenData = getFilteredData(data, 'SWE');
+    let quebecData = getFilteredData(data, 'CAN');
+    let oecdData = getFilteredData(data, 'OECD'); 
+    
     let xScale = d3.scaleTime()
       .domain(d3.extent(swedenData, function (d) {
         return d.time;
@@ -44,7 +46,7 @@ export function load() {
     graph.append("text")
       .attr("class", "x label")
       .attr("text-anchor", "end")
-      .attr("font-size", "13px")
+      .attr("font-size", "14px")
       .attr("padding-bottom", "20px")
       .attr("font-weight", "bold")
       .attr("x", width)
@@ -56,10 +58,10 @@ export function load() {
       .attr("text-anchor", "end")
       .attr("y", 6)
       .attr("dy", "-4em")
-      .attr("font-size", "13px")
+      .attr("font-size", "14px")
       .attr("font-weight", "bold")
       .attr("transform", "rotate(-90)")
-      .text("GDP per capita")
+      .text("USD")
 
     // Add the line
     graph.append("path")
@@ -106,8 +108,17 @@ export function load() {
         .y(function (d) {
           return yScale(Math.round(d.value))
         })
-      )
-
+    )
+    // graph title
+    graph.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle") 
+        .attr("font-weight", "bold")
+        .style("font-size", "16px")  
+        .text("PIB par habitant (USD)");
+    
+    showLegend(graph, width, height)
     let mouseG = graph.append("g")
       .attr("class", "mouse-over-effects");
 
@@ -118,7 +129,7 @@ export function load() {
       .style("opacity", "0");
 
     let lines = document.getElementsByClassName('line');
-    console.log("LINES", lines);
+
     var mousePerLine = graph.selectAll('.mouse-per-line')
       .data(data)
       .enter()
@@ -128,15 +139,12 @@ export function load() {
     mousePerLine.append("circle")
       .attr("r", 7)
       .style("stroke", function (d) {
-        return "#FF0000";
+        return colorScale(d.location)
       })
       .style("fill", "none")
       .style("stroke-width", "1px")
       .style("opacity", "0");
-
-    mousePerLine.append("text")
-      .attr("transform", "translate(10,3)");
-
+    
     mouseG.append('svg:rect')
       .attr('width', width)
       .attr('height', height)
@@ -169,12 +177,12 @@ export function load() {
 
         d3.selectAll(".mouse-per-line")
           .attr("transform", function (d, i) {
+            if (d === undefined) return;
             let mouseDate = xScale.invert(mouse[0]);
             idx = bisectDate(swedenData, mouseDate);
             let beginning = 0;
             let end = lines[i].getTotalLength();
             let target = null;
-
             while (true) {
               target = Math.floor((beginning + end) / 2);
               pos = lines[i].getPointAtLength(target);
@@ -185,6 +193,14 @@ export function load() {
               else if (pos.x < mouse[0]) beginning = target;
               else break;
             }
+            graph.select("#timeLegendVal").text(mouseDate.getUTCFullYear())
+            if(i == 0)
+              graph.select("#quebecLegendVal").text(Math.round(yScale.invert(pos.y)) + " USD")
+            else if (i == 1)
+              graph.select("#swedenLegendVal").text(Math.round(yScale.invert(pos.y)) + " USD")
+            else if (i == 2)
+              graph.select("#oecdLegendVal").text(Math.round(yScale.invert(pos.y)) + " USD")
+
             d3.select(this).select('text')
               .text(function () {
                 return yScale.invert(pos.y).toFixed(2)
@@ -192,10 +208,6 @@ export function load() {
             return "translate(" + mouse[0] + "," + pos.y + ")";
           });
       });
-
-    showLegend(graph, width, height)
-
-
   });
 
   d3.select("#line-chart")
@@ -223,15 +235,54 @@ function getFilteredData(data, country) {
   return filtered;
 }
 
+function createColorScale() {
+    return d3.scaleOrdinal()
+        .domain(["CAN", "SWE", "OECD"])
+        .range(["#001F97", "#FFCD00", "#95C71B"]);
+}
 
 function showLegend(graph, width) {
-  let offsetText = 50
+  let offsetText = 40
   let offsetGraph = 30
-  graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 0).attr("r", 6).style("fill", "#001F97")
-  graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 30).attr("r", 6).style("fill", "#FFCD00")
-  graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 60).attr("r", 6).style("fill", "#95C71B")
-  graph.append("text").attr("x", width + offsetText).attr("y", 0).text("Quebec").style("font-size", "15px").attr("alignment-baseline", "middle")
-  graph.append("text").attr("x", width + offsetText).attr("y", 30).text("Sweden").style("font-size", "15px").attr("alignment-baseline", "middle")
-  graph.append("text").attr("x", width + offsetText).attr("y", 60).text("OECD").style("font-size", "15px").attr("alignment-baseline", "middle")
+  
+  graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 30).attr("r", 6).style("fill", "#001F97")
+  graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 70).attr("r", 6).style("fill", "#FFCD00")
+  graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 110).attr("r", 6).style("fill", "#95C71B")
+  
+  graph.append("text").attr("x", width + offsetText).attr("y", 30).text("Quebec").style("font-size", "15px").attr("alignment-baseline", "middle")
+  graph.append("text").attr("x", width + offsetText).attr("y", 70).text("Sweden").style("font-size", "15px").attr("alignment-baseline", "middle")
+  graph.append("text").attr("x", width + offsetText).attr("y", 110).text("OECD").style("font-size", "15px").attr("alignment-baseline", "middle")
+  graph.append("text").attr("x", width + offsetGraph).attr("y", 0).text("Time").style("font-size", "15px").attr("alignment-baseline", "middle")
+
+  graph.append("text")
+    .attr("x", width + offsetGraph)
+    .attr("y", 130).style("font-size", "15px")
+    .attr("alignment-baseline", "middle")
+    .attr("id", "oecdLegendVal")
+    .attr("font-weight", "bold")
+    
+  graph.append("text")
+    .attr("x", width + offsetGraph)
+    .attr("y", 90)
+    .style("font-size", "15px")
+    .attr("alignment-baseline", "middle")
+    .attr("id", "swedenLegendVal")
+    .attr("font-weight", "bold")
+
+  graph.append("text")
+    .attr("x", width + offsetGraph)
+    .attr("y", 50)
+    .style("font-size", "15px")
+    .attr("alignment-baseline", "middle")
+    .attr("id", "quebecLegendVal")
+    .attr("font-weight", "bold")
+
+  graph.append("text")
+    .attr("x", width + offsetGraph)
+    .attr("y", 15)
+    .style("font-size", "15px")
+    .attr("alignment-baseline", "middle")
+    .attr("id", "timeLegendVal")
+    .attr("font-weight", "bold")
 }
 
