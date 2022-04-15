@@ -43,34 +43,40 @@ h2 {
 }
 
 body {
-    height: 10000px;
+    height: 7300px;
 }
+
 .treemapContainer {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
 }
 
 .treemap {
-        height: fit-content;
-        width: fit-content;
+    height: fit-content;
+    width: fit-content;
 }
 
 .treemapLabel {
-        font-weight: bold;
-        width: fit-content;
-        font-size: 40px;
-        margin: 0px auto;
-        }
-        
-        #labelDiv {
-                align-items: center;
-                display: flex;
+    font-weight: bold;
+    width: fit-content;
+    font-size: 40px;
+    margin: 0px auto;
+}
+
+#labelDiv {
+    align-items: center;
+    display: flex;
 }
 
 .y-axis-label {
-        fill: black;
-        font-size: 1.4em;
-        text-anchor: middle;
-        transform: rotate(-90deg);
+    fill: black;
+    font-size: 1.4em;
+    text-anchor: middle;
+    transform: rotate(-90deg);
+}
+
+.panel {
+    position: absolute;
+    top: 7250px;
 }
