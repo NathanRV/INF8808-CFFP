@@ -2,11 +2,12 @@
 
 // import * as helper from './scripts/helper.js'
 import * as cfn from './scripts/cfn.js'
-import * as treemap from './scripts/treemap_script.js'
 
 import * as rpf from './scripts/rpf.js'
 
 import * as caca from './scripts/treemap_script.js'
+
+import * as justin from './scripts/linechart_script'
 
 import d3 from 'd3';
 import * as map from './scripts/map.js'
@@ -21,6 +22,7 @@ import * as map from './scripts/map.js'
   const margin = { top: 80, right: 0, bottom: 80, left: 55 };
 
   map.load();
+  justin.load();
   rpf.load();
   cfn.load();
   caca.load();
