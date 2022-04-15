@@ -9,7 +9,6 @@ import * as caca from './scripts/treemap_script.js'
 
 import * as justin from './scripts/linechart_script'
 
-import d3 from 'd3';
 import * as map from './scripts/map.js'
 
 /**
