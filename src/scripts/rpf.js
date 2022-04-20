@@ -28,7 +28,6 @@ export function load() {
         .append("h2")
         .attr("id", "rpf-title")
         .text("Comparaison de la répartition des prélèvements fiscaux")
-        .style("font-family", "sans-serif")
         .style("margin", "0px auto")
 
     // append the svg object to the body of the page
@@ -100,14 +99,12 @@ export function load() {
 function createTips(svg) {
     let firstBarTip = d3Tip()
         .attr("class", "d3-tip")
-        .style("font-family", "sans-serif")
         .html(function (d) {
             return d;
         })
 
     let secondBarTip = d3Tip()
         .attr("class", "d3-tip")
-        .style("font-family", "sans-serif")
         .html(function (d) {
             return d;
         });
@@ -320,7 +317,6 @@ function showRectanglesText(categories, xScale, yScale) {
         .attr("x", function (d) { return xScale(d[0]) + (xScale(d[1]) - xScale(d[0])) / 2; })
         .attr("y", function (d) { return yScale(d.data.État) + yScale.bandwidth() / 2 + 6; })
         .attr("text-anchor", "middle")
-        .attr("font-family", "sans-serif")
         .style("fill", "white")
         .attr("pointer-events", "none")
 }
@@ -418,7 +414,6 @@ function showLegend(colorScale, legendSVG) {
     legendSVG.call(legend)
 
     legendSVG.selectAll(".label")
-        .attr("font-family", "sans-serif")
         .attr("transform", "translate(20, 13)")
         .attr("font-size", 16)
 }
