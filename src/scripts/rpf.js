@@ -20,7 +20,7 @@ import d3Legend from "d3-svg-legend";
 export function load() {
 
     // set the dimensions and margins of the graph
-    let margin = { top: 10, right: 100, bottom: 20, left: 100 },
+    let margin = { top: 10, right: 150, bottom: 20, left: 150 },
         width = 1300 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
 
@@ -65,7 +65,7 @@ export function load() {
 
         // Y axis
         let groups = d3.map(data, function (d) {
-            return (d.État)
+            return (d.Etat)
         }).keys()
 
         // Transform data for stacked bar chart
@@ -73,7 +73,7 @@ export function load() {
             .keys(subgroups)
             (data)
 
-        // // Creating scales
+        // Creating scales
         let xScale = createXScale(width)
         let yScale = createYScale(groups, height, svgGraph)
         let colorScale = createColorScale(subgroups)
@@ -84,10 +84,7 @@ export function load() {
     })
 
     d3.select("#rpf-chart")
-        .style("position", "absolute")
-        .style("left", "50%")
         .style("margin-left", String(-width / 2 - margin.left / 2) + "px")
-        .style("top", "4400px")
 
 }
 
@@ -123,7 +120,7 @@ function createTips(svg) {
  */
 function removeOtherStates(data) {
     var filtered = data.filter(function (d) {
-        if (d.État == 'Suède' || d.État == 'Québec' || d.État == '') {
+        if (d.Etat == 'Suède' || d.Etat == 'Québec' || d.Etat == '') {
             return true;
         }
         return false;
@@ -157,7 +154,7 @@ function regroupByState(data) {
 
     // Group by state
     for (const entry in data) {
-        let state = data[entry].État;
+        let state = data[entry].Etat;
 
         if (!groupedData[state]) {
             groupedData[state] = [];
@@ -170,7 +167,7 @@ function regroupByState(data) {
     for (const state in groupedData) {
         let tmp = []
         groupedData[state].forEach(indicator => {
-            tmp["État"] = indicator["État"]
+            tmp["Etat"] = indicator["Etat"]
             tmp[indicator["Indicateur"]] = indicator["Valeur"]
         })
         formattedData.push(tmp)
@@ -205,7 +202,7 @@ function createYScale(groups, height, svg) {
 
     let yAxis = svg
         .append("g")
-        .style("font-size", 14)
+        .attr("class", "y-axis")
         .call(d3.axisLeft(y))
 
     yAxis.select(".domain")
@@ -288,11 +285,11 @@ function showCategoryRectangles(categories, xScale, yScale) {
         })
         .enter()
         .append("rect")
+        .attr("class", "category-rectangle")
         .attr("x", function (d) { return xScale(d[0]); })
-        .attr("y", function (d) { return yScale(d.data.État); })
+        .attr("y", function (d) { return yScale(d.data.Etat); })
         .attr("height", yScale.bandwidth())
         .attr("width", function (d) { return xScale(d[1]) - xScale(d[0]); })
-        .attr("stroke", "white")
 }
 
 /**
@@ -310,15 +307,13 @@ function showRectanglesText(categories, xScale, yScale) {
         })
         .enter()
         .append("text")
+        .attr("class", "rectangle-text")
         .text(function (d) {
             if (d[1] - d[0] < 3) return ""
             return Math.round((d[1] - d[0] + Number.EPSILON) * 100) / 100 + " %"
         })
         .attr("x", function (d) { return xScale(d[0]) + (xScale(d[1]) - xScale(d[0])) / 2; })
-        .attr("y", function (d) { return yScale(d.data.État) + yScale.bandwidth() / 2 + 6; })
-        .attr("text-anchor", "middle")
-        .style("fill", "white")
-        .attr("pointer-events", "none")
+        .attr("y", function (d) { return yScale(d.data.Etat) + yScale.bandwidth() / 2 + 6; })
 }
 
 /**
@@ -406,14 +401,10 @@ function unselectGroup() {
 function showLegend(colorScale, legendSVG) {
     let legend = d3Legend.legendColor()
         .orient("horizontal")
-        .shapePadding("220")
+        .shapePadding("205")
         .labelAlign("start")
-        .labelWrap("200")
+        .labelWrap("190")
         .scale(colorScale)
 
     legendSVG.call(legend)
-
-    legendSVG.selectAll(".label")
-        .attr("transform", "translate(20, 13)")
-        .attr("font-size", 16)
 }

@@ -1,0 +1,24 @@
+#rpf-chart {
+    position: absolute;
+    left: 50%;
+    top: 4400px;
+}
+
+.rectangle-text {
+    text-anchor: middle;
+    fill: white;
+    pointer-events: none;
+}
+
+.label {
+    font-size: 16;
+    transform: translate(20, 13);
+}
+
+.y-axis {
+    font-size: 14;
+}
+
+.category-rectangle {
+    stroke-width: 0;
+}
