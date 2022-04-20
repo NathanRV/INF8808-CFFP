@@ -28,7 +28,6 @@ export function load() {
         .append("h2")
         .attr("id", "rpf-title")
         .text("Comparaison de la répartition des prélèvements fiscaux")
-        .style("margin", "0px auto")
 
     // append the svg object to the body of the page
     let svg = d3.select("#rpf-chart")
