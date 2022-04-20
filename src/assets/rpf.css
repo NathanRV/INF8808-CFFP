@@ -20,5 +20,9 @@
 }
 
 .category-rectangle {
+    stroke: white;
+}
+
+.domain {
     stroke-width: 0;
 }

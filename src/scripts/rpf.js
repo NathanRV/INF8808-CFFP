@@ -199,13 +199,9 @@ function createYScale(groups, height, svg) {
         .range([0, height])
         .padding([0.6])
 
-    let yAxis = svg
-        .append("g")
+    svg.append("g")
         .attr("class", "y-axis")
         .call(d3.axisLeft(y))
-
-    yAxis.select(".domain")
-        .attr("stroke-width", 0)
 
     return y;
 }
