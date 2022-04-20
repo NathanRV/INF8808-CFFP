@@ -1,5 +1,6 @@
 #cfn-title {
     text-align: center;
+    margin: auto;
 }
 
 .cfn-axis {
@@ -8,6 +9,7 @@
 }
 
 .cfn-legend {
+    padding-left: 15px;
     font-size: 15px;
     opacity: 0.8;
     font-weight: bold;

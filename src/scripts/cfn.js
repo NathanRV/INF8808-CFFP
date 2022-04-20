@@ -6,12 +6,13 @@ import d3Tip from 'd3-tip';
 import d3Legend from 'd3-svg-legend';
 
 // Global variables used in many functions
-let radius = 10
+let radius = 10;
+let tooltip_size = 80;
+let margin = { top: 30, right: 200, bottom: 30, left: 250 };
+let width = 1200 - margin.left - margin.right;
+let height = 600 - margin.top - margin.bottom;
 
 export function load() {
-    let margin = { top: 10, right: 150, bottom: 30, left: 250 };
-    let width = 1200 - margin.left - margin.right;
-    let height = 600 - margin.top - margin.bottom;
 
     d3.select("#cfn-chart")
         .append("h2")
@@ -270,7 +271,7 @@ function createYScale(data, height) {
  */
 function createYAxis(groups, yScale) {
     groups.append("text")
-        .attr("transform", "translate(-240,0)")
+        .attr("transform", "translate(-" + margin.left + ",0)")
         .text(function (d) { return d.Situation_familiale; })
         .attr("class", "cfn-axis")
 
@@ -449,7 +450,7 @@ function hideTips(tips) {
  * https://d3-legend.susielu.com/
  *
  * @param {*} colorScale The color scale to use
- * @param {*} offset The x value of the legend box
+ * @param {*} offset The x value of the end of the chart 
  */
 function drawLegend(colorScale, offset) {
     let legend = d3Legend.legendColor()
@@ -461,6 +462,6 @@ function drawLegend(colorScale, offset) {
     d3.select("#cfn-svg")
         .append("g")
         .attr("class", "cfn-legend")
-        .attr("transform", 'translate(' + offset + ',20)')
+        .attr("transform", 'translate(' + (margin.left + width + 2*radius) + ',20)')
         .call(legend)
 }
