@@ -222,7 +222,7 @@ function createYScale(groups, height, svg) {
 function createColorScale(subgroups) {
     return d3.scaleOrdinal()
         .domain(subgroups)
-        .range(["#031F4B", "#265889", "#5598C6", "#95C1D8", "#95C71B"])
+        .range(["#031F4B", "#265889", "#5598C6", "#85bfde", "#95C71B"])
 }
 
 /**
