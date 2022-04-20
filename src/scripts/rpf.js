@@ -27,7 +27,7 @@ export function load() {
     d3.select("#rpf-chart")
         .append("h2")
         .attr("id", "rpf-title")
-        .text("Comparaison de la répartition des prélèvements fiscaux")
+        .text("Comparaison de la répartition des prélèvements fiscaux en 2020")
 
     // append the svg object to the body of the page
     let svg = d3.select("#rpf-chart")
