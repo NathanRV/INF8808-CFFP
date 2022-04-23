@@ -17,9 +17,8 @@ const treeMapText = ""
 
 export function load() {
     var div = d3.select(".text-container")
-        .style("width", String(width) + "px")
-        .style("height", String(height) + "px")
-        .style("background", "red")
+        .style("width", "530px")
+        .style("height", "400px")
         .style("position", "fixed")
         .style("right", String(window.innerWidth / 2 + 45) + "px")
         .style("top", "250px")
@@ -30,73 +29,72 @@ export function load() {
 
     window.addEventListener('scroll', function (e) {
 
-        const windowWidth = this.window.innerWidth
         const posScroll = document.documentElement.scrollTop
-        console.log(posScroll)
 
+        // viz 2
         if (posScroll > 2700 && posScroll < 3100) {
 
-            div.style("display", "block")
+            textUpdaterViz2()
             div.style("opacity", String((posScroll - 2700) / 4) + "%")
 
 
         } else if (posScroll >= 3100 && posScroll < 3300) {
 
-            div.style("display", "block")
+            textUpdaterViz2()
+            div.style("opacity", "100%")
 
         } else if (posScroll >= 3300 && posScroll < 3600) {
 
-            div.style("display", "block")
+            textUpdaterViz2()
             div.style("opacity", String(-(posScroll - 3600) / 3) + "%")
 
         } else if (posScroll >= 3600 && posScroll < 3650) {
 
             div.style("display", "none")
 
+            // viz 3
         } else if (posScroll >= 3650 && posScroll < 3950) {
 
-            div.style("display", "block")
-            div.style("height", "300px")
-            div.style("width", "1100px")
-            div.style("left", "50%")
-            div.style("margin-left", "-525px")
-            div.style("position", "absolute")
-            div.style("top", "4615px")
+            textUpdaterViz3()
             div.style("opacity", String((posScroll - 3650) / 3) + "%")
-            div.html(rpfText)
 
         } else if (posScroll >= 3950 && posScroll < 4200) {
 
-            div.style("display", "block")
+            textUpdaterViz3()
+            div.style("opacity", "100%")
 
         } else if (posScroll >= 4200 && posScroll < 4900) {
 
-            div.style("display", "block")
+            textUpdaterViz3()
             div.style("opacity", String(-(posScroll - 4900) / 7) + "%")
 
+
+            // viz 4
         } else if (posScroll >= 5100 && posScroll < 5400) {
 
-            div.style("display", "block")
-            div.style("top", "6100px")
+            textUpdaterViz4()
             div.style("opacity", String((posScroll - 5100) / 3) + "%")
-            div.html(cfnText)
 
         } else if (posScroll >= 5400 && posScroll < 5700) {
 
-            div.style("display", "block")
+            textUpdaterViz4()
+            div.style("opacity", "100%")
 
         } else if (posScroll >= 5700 && posScroll < 6300) {
 
+            textUpdaterViz4()
             div.style("opacity", String(-(posScroll - 6300) / 6) + "%")
 
+            // viz 5
         } else if (posScroll >= 6300 && posScroll < 6600) {
 
-            div.style("top", "7265px")
-            div.style("width", "1080px")
+            textUpdaterViz5()
             div.style("opacity", String((posScroll - 6300) / 3) + "%")
 
         } else if (posScroll >= 6600) {
 
+            textUpdaterViz5()
+            div.style("opacity", "100%")
 
         } else {
             div.style("display", "none")
@@ -110,4 +108,40 @@ export function load() {
 
         ticking = true;
     });
+
+    function textUpdaterViz2() {
+        div.style("display", "block")
+        div.style("position", "fixed")
+        div.style("right", String(window.innerWidth / 2 + 45) + "px")
+        div.style("margin-right", "0px")
+        div.style("top", "250px")
+        div.style("width", "530px")
+        div.style("height", "400px")
+        div.html(lineChartText)
+    }
+
+    function textUpdaterViz3() {
+        div.style("display", "block")
+        div.style("height", "300px")
+        div.style("width", "1100px")
+        div.style("right", "50%")
+        div.style("margin-right", "-575px")
+        div.style("position", "absolute")
+        div.style("top", "4615px")
+        div.html(rpfText)
+    }
+
+    function textUpdaterViz4() {
+        div.style("display", "block")
+        div.style("top", "6100px")
+        div.html(cfnText)
+    }
+
+    function textUpdaterViz5() {
+        div.style("display", "block")
+        div.style("top", "7265px")
+        div.style("width", "1080px")
+        div.style("margin-right", "-552px")
+        div.html(treeMapText)
+    }
 }
