@@ -6,12 +6,13 @@ import d3Tip from 'd3-tip';
 import d3Legend from 'd3-svg-legend';
 
 // Global variables used in many functions
-let radius = 10
+let radius = 10;
+let tooltip_size = 80;
+let margin = { top: 30, right: 200, bottom: 30, left: 250 };
+let width = 1200 - margin.left - margin.right;
+let height = 600 - margin.top - margin.bottom;
 
 export function load() {
-    let margin = { top: 10, right: 150, bottom: 30, left: 250 };
-    let width = 1200 - margin.left - margin.right;
-    let height = 600 - margin.top - margin.bottom;
 
     d3.select("#cfn-chart")
         .append("h2")
@@ -36,7 +37,6 @@ export function load() {
         data = transformValues(data);
         data = regroupBySituation(data);
 
-
         // Creating scales and axis
         let xScale = createXAxis(svg, data, width, height);
         let yScale = createYScale(data, height);
@@ -53,10 +53,7 @@ export function load() {
     })
 
     d3.select("#cfn-chart")
-        .style("position", "absolute")
-        .style("left", "50%")
-        .style("margin-left", String(-width / 2 - margin.left / 2) + "px")
-        .style("top", "5400px")
+        .style("margin-left", String(-width / 2 - margin.left / 2) + "px");
 }
 
 
@@ -138,7 +135,7 @@ function regroupBySituation(data) {
 
     // Group by family situation
     data.forEach((entry, index) => {
-        let situation = data[index].Situation_familiale;
+        let situation = data[index]["Situation familiale"];
 
         if (!groupedData[situation]) {
             groupedData[situation] = [];
@@ -174,13 +171,13 @@ function regroupBySituation(data) {
  * @param {*} xScale The graph's x scale
  */
 function createGroups(data, tips, yScale, xScale) {
-    return d3.select("#cfn-g").selectAll('g.situation_familiale')
+    return d3.select("#cfn-g").selectAll('g.situation-familiale')
         .data(data)
         .enter()
         .append('g')
-        .attr('transform', function (d) { return 'translate(0,' + (yScale.bandwidth() / 2 + yScale(d.Situation_familiale)) + ')'; })
-        .attr('class', 'situation_familiale')
-        .attr("id", function (d) { return d.Situation_familiale })
+        .attr('transform', function (d) { return 'translate(0,' + (yScale.bandwidth() / 2 + yScale(d["Situation familiale"])) + ')'; })
+        .attr('class', 'situation-familiale')
+        .attr("id", function (d) { return d["Situation familiale"] })
         .on("mouseover", function (d) { showTips(tips, this, d, xScale); selectGroup(this.id); })
         .on("mouseout", function (d) { hideTips(tips, d); unselectGroup(); })
 }
@@ -189,7 +186,7 @@ function createGroups(data, tips, yScale, xScale) {
  * Removes highlights.
  */
 function unselectGroup() {
-    d3.selectAll('g.situation_familiale')
+    d3.selectAll('g.situation-familiale')
         .style('fill', "black")
 }
 
@@ -199,9 +196,9 @@ function unselectGroup() {
  * @param {*} group Selection of group element to highlight.
  */
 function selectGroup(group) {
-    d3.selectAll('g.situation_familiale')
+    d3.selectAll('g.situation-familiale')
         .style('fill', function (d) {
-            if (d.Situation_familiale == group) return "black";
+            if (d["Situation familiale"] == group) return "black";
             return 'grey';
         })
 }
@@ -255,7 +252,7 @@ function createXAxis(svg, data, width, height) {
 function createYScale(data, height) {
     let yScale = d3.scaleBand()
         .domain(data.map(function (d) {
-            return d.Situation_familiale;
+            return d["Situation familiale"];
         }))
         .range([0, height])
 
@@ -270,8 +267,8 @@ function createYScale(data, height) {
  */
 function createYAxis(groups, yScale) {
     groups.append("text")
-        .attr("transform", "translate(-240,0)")
-        .text(function (d) { return d.Situation_familiale; })
+        .attr("transform", "translate(-" + margin.left + ",0)")
+        .text(function (d) { return d["Situation familiale"]; })
         .attr("class", "cfn-axis")
 
     return yScale;
@@ -315,7 +312,7 @@ function createCircles(groups, xScale, colorScale) {
         .attr("opacity", 0.7)
         .attr("fill", colorScale("Moyenne OCDE"))
 
-    // Circles for québec
+    // Circles for Quebec
     groups.append("circle")
         .attr("cx", function (d) { return xScale(d.Quebec) })
         .attr("cy", 0)
@@ -449,7 +446,7 @@ function hideTips(tips) {
  * https://d3-legend.susielu.com/
  *
  * @param {*} colorScale The color scale to use
- * @param {*} offset The x value of the legend box
+ * @param {*} offset The x value of the end of the chart 
  */
 function drawLegend(colorScale, offset) {
     let legend = d3Legend.legendColor()
@@ -461,6 +458,6 @@ function drawLegend(colorScale, offset) {
     d3.select("#cfn-svg")
         .append("g")
         .attr("class", "cfn-legend")
-        .attr("transform", 'translate(' + offset + ',20)')
+        .attr("transform", 'translate(' + (margin.left + width + 2*radius) + ',20)')
         .call(legend)
 }

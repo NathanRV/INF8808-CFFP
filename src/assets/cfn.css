@@ -1,14 +1,17 @@
-#cfn-title {
-    text-align: center;
-}
-
 .cfn-axis {
     font-size: 15px;
     font-weight: bold;
 }
 
 .cfn-legend {
+    padding-left: 15px;
     font-size: 15px;
     opacity: 0.8;
     font-weight: bold;
+}
+
+#cfn-chart {
+    position: absolute;
+    left: 50%;
+    top: 5400px;
 }
