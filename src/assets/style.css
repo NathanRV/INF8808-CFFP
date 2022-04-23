@@ -24,8 +24,7 @@ h2 {
 }
 
 body {
-        height: 7700;
-        font-family: sans-serif;
+        height: 7500px;
 }
 
 .treemapContainer {
@@ -60,9 +59,7 @@ body {
 
 .panel {
         position: absolute;
-        top: 7600px;
-        position: absolute;
-        top: 7600px;
+        top: 7480px;
 }
 
 .treemapVisualisation {

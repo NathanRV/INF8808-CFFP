@@ -70,28 +70,28 @@ export function load() {
 
 
             // viz 4
-        } else if (posScroll >= 5100 && posScroll < 5400) {
+        } else if (posScroll >= 4900 && posScroll < 5200) {
 
             textUpdaterViz4()
-            div.style("opacity", String((posScroll - 5100) / 3) + "%")
+            div.style("opacity", String((posScroll - 4900) / 3) + "%")
 
-        } else if (posScroll >= 5400 && posScroll < 5700) {
+        } else if (posScroll >= 5200 && posScroll < 5500) {
 
             textUpdaterViz4()
             div.style("opacity", "100%")
 
-        } else if (posScroll >= 5700 && posScroll < 6300) {
+        } else if (posScroll >= 5500 && posScroll < 6100) {
 
             textUpdaterViz4()
-            div.style("opacity", String(-(posScroll - 6300) / 6) + "%")
+            div.style("opacity", String(-(posScroll - 6100) / 6) + "%")
 
             // viz 5
-        } else if (posScroll >= 6300 && posScroll < 6600) {
+        } else if (posScroll >= 6100 && posScroll < 6400) {
 
             textUpdaterViz5()
-            div.style("opacity", String((posScroll - 6300) / 3) + "%")
+            div.style("opacity", String((posScroll - 6100) / 3) + "%")
 
-        } else if (posScroll >= 6600) {
+        } else if (posScroll >= 6400) {
 
             textUpdaterViz5()
             div.style("opacity", "100%")
@@ -133,13 +133,13 @@ export function load() {
 
     function textUpdaterViz4() {
         div.style("display", "block")
-        div.style("top", "6100px")
+        div.style("top", "5900px")
         div.html(cfnText)
     }
 
     function textUpdaterViz5() {
         div.style("display", "block")
-        div.style("top", "7265px")
+        div.style("top", "7065px")
         div.style("width", "1080px")
         div.style("margin-right", "-552px")
         div.html(treeMapText)

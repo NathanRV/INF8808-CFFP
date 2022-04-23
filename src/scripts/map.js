@@ -132,7 +132,6 @@ const textCoordLegend = {
 }
 
 const coordSwedenInit = [50, 61.0]
-const coordSwedenFinal = [45, 61.0]
 
 const populationQuebec = 8.485
 const populationSweden = 10.35

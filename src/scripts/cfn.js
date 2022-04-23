@@ -53,7 +53,10 @@ export function load() {
     })
 
     d3.select("#cfn-chart")
-        .style("margin-left", String(-width / 2 - margin.left / 2) + "px");
+        .style("position", "absolute")
+        .style("left", "50%")
+        .style("margin-left", String(-width / 2 - margin.left / 2) + "px")
+        .style("top", "5200px")
 }
 
 
