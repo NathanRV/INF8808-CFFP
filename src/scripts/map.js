@@ -377,20 +377,20 @@ export function load() {
             .append("g")
             .attr("id", place + "personIcon")
 
-
         person.append("path")
             .attr("d", personIconPath)
-            .attr("transform", "translate(" + String(coordPicto.x) + ", " + String(coordPicto.y) + ") scale(3)")
+            .attr("transform", "translate(" + String(coordPicto.x) + ", " + String(coordPicto.y) + ") scale(" + String(2.3 + 4.2 / Math.round(nbPerson / 2)) + ")")
+
 
         var y = d3.scaleBand()
-            .range([0, 150])
-            .domain(d3.range(Math.round(nbPerson / 2)));
+            .range([0, Math.round(nbPerson / 2) * 25])
+            .domain(d3.range(Math.round(nbPerson / 2)))
 
         var x = d3.scaleBand()
             .range([0, 50])
-            .domain(d3.range(2));
+            .domain(d3.range(2))
 
-        var data = d3.range(nbPerson);
+        var data = d3.range(nbPerson)
 
         var container = svg.append("g")
             .attr("class", "picto-country")
@@ -403,7 +403,6 @@ export function load() {
             .attr("id", function (d) { return "id" + d; })
             .attr('x', function (d) { return x(d % 2); })
             .attr('y', function (d) { return y(Math.floor(d / 2)); })
-            .attr('fill', "black")
 
         drawLine(svg, coordLine1, "picto-country", "")
         drawLine(svg, coordLine2, "picto-country", "")
@@ -411,6 +410,14 @@ export function load() {
         var g = svg.append('g')
             .attr("class", "picto-country")
 
+        const hiddingAdjustment = Math.round(nbPerson / 2) - 5
+
+        svg.append("rect")
+            .attr("x", 427.8 - 423 * hiddingAdjustment)
+            .attr("y", 280 + 25 * hiddingAdjustment)
+            .attr("width", 10)
+            .attr("height", 32)
+            .attr("fill", "white")
 
         drawText(g, textCoord, size, "")
     }

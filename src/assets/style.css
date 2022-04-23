@@ -79,12 +79,12 @@ body {
 .panel {
         position: absolute;
         top: 7250px;
-    position: absolute;
-    top: 7250px;
+        position: absolute;
+        top: 7250px;
 }
 
 .treemapVisualisation {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 }
