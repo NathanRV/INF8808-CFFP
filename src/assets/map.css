@@ -1,0 +1,19 @@
+#flag {
+    width: 20px;
+}
+
+.sweden-graph {
+    display: none;
+}
+
+.quebec-graph {
+    position: fixed;
+}
+
+.legend-picto {
+    display: none;
+}
+
+.picto-country {
+    display: none;
+}
