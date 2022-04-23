@@ -22,8 +22,8 @@ export function load() {
     const colorScale = createColorScale();
     let swedenData = getFilteredData(data, 'SWE');
     let quebecData = getFilteredData(data, 'CAN');
-    let oecdData = getFilteredData(data, 'OECD'); 
-    
+    let oecdData = getFilteredData(data, 'OECD');
+
     let xScale = d3.scaleTime()
       .domain(d3.extent(swedenData, function (d) {
         return d.time;
@@ -108,16 +108,16 @@ export function load() {
         .y(function (d) {
           return yScale(Math.round(d.value))
         })
-    )
+      )
     // graph title
     graph.append("text")
-        .attr("x", (width / 2))             
-        .attr("y", 0 - (margin.top / 2))
-        .attr("text-anchor", "middle") 
-        .attr("font-weight", "bold")
-        .style("font-size", "16px")  
-        .text("PIB par habitant (USD)");
-    
+      .attr("x", (width / 2))
+      .attr("y", 0 - (margin.top / 2))
+      .attr("text-anchor", "middle")
+      .attr("font-weight", "bold")
+      .style("font-size", "16px")
+      .text("PIB par habitant (USD)");
+
     showLegend(graph, width, height)
     let mouseG = graph.append("g")
       .attr("class", "mouse-over-effects");
@@ -144,7 +144,7 @@ export function load() {
       .style("fill", "none")
       .style("stroke-width", "1px")
       .style("opacity", "0");
-    
+
     mouseG.append('svg:rect')
       .attr('width', width)
       .attr('height', height)
@@ -196,7 +196,7 @@ export function load() {
               else break;
             }
             graph.select("#timeLegendVal").text(mouseDate.getUTCFullYear())
-            if(i == 1)
+            if (i == 1)
               graph.select("#quebecLegendVal").text(Math.round(yScale.invert(pos.y)) + " USD")
             else if (i == 0)
               graph.select("#swedenLegendVal").text(Math.round(yScale.invert(pos.y)) + " USD")
@@ -214,7 +214,7 @@ export function load() {
 
   d3.select("#line-chart")
     .style("position", "absolute")
-    .style("left", "50%")
+    .style("left", String(window.innerWidth / 2 + width / 2) + "px")
     .style("margin-left", String(-width / 2 - margin.left / 2) + "px")
     .style("top", "3400px")
 }
@@ -238,19 +238,19 @@ function getFilteredData(data, country) {
 }
 
 function createColorScale() {
-    return d3.scaleOrdinal()
-        .domain(["CAN", "SWE", "OECD"])
-        .range(["#001F97", "#FFCD00", "#95C71B"]);
+  return d3.scaleOrdinal()
+    .domain(["CAN", "SWE", "OECD"])
+    .range(["#001F97", "#FFCD00", "#95C71B"]);
 }
 
 function showLegend(graph, width) {
   let offsetText = 40
   let offsetGraph = 30
-  
+
   graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 30).attr("r", 6).style("fill", "#001F97")
   graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 70).attr("r", 6).style("fill", "#FFCD00")
   graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 110).attr("r", 6).style("fill", "#95C71B")
-  
+
   graph.append("text").attr("x", width + offsetText).attr("y", 30).text("Quebec").style("font-size", "15px").attr("alignment-baseline", "middle")
   graph.append("text").attr("x", width + offsetText).attr("y", 70).text("Sweden").style("font-size", "15px").attr("alignment-baseline", "middle")
   graph.append("text").attr("x", width + offsetText).attr("y", 110).text("OECD").style("font-size", "15px").attr("alignment-baseline", "middle")
@@ -262,7 +262,7 @@ function showLegend(graph, width) {
     .attr("alignment-baseline", "middle")
     .attr("id", "oecdLegendVal")
     .attr("font-weight", "bold")
-    
+
   graph.append("text")
     .attr("x", width + offsetGraph)
     .attr("y", 90)
