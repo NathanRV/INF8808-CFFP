@@ -1,19 +1,18 @@
 import { geoPath } from "d3-geo"
 import { geoMercator } from "d3-geo"
-import line from "d3-geo/src/clip/line"
 
 const coordLineQuebec1 = {
-    x1: 100,
-    x2: 130,
-    y1: 410,
-    y2: 410
+    x1: 105,
+    x2: 134,
+    y1: 10,
+    y2: 10
 }
 
 const coordLineQuebec2 = {
-    x1: 130,
-    x2: 140,
-    y1: 410,
-    y2: 350
+    x1: 134,
+    x2: 144,
+    y1: 10,
+    y2: 70
 }
 
 const coordLineSwedenInit1 = {
@@ -48,28 +47,28 @@ const coordLineSwedenPicto1 = {
     x1: 19,
     x2: 30,
     y1: 340,
-    y2: 410
+    y2: 445
 }
 
 const coordLineSwedenPicto2 = {
     x1: 30,
     x2: 80,
-    y1: 410,
-    y2: 410
+    y1: 445,
+    y2: 445
 }
 
 const coordLineQuebecPicto1 = {
-    x1: 430,
-    x2: 440,
-    y1: 20,
-    y2: 80
+    x1: 440,
+    x2: 430,
+    y1: 340,
+    y2: 445
 }
 
 const coordLineQuebecPicto2 = {
     x1: 430,
     x2: 390,
-    y1: 20,
-    y2: 20
+    y1: 445,
+    y2: 445
 }
 
 const coordPictoSweden = {
@@ -79,32 +78,32 @@ const coordPictoSweden = {
 
 const coordPictoQuebec = {
     x: 420,
-    y: 90,
+    y: 180,
 }
 
 const dimensionQuebecInit = {
     width: 395,
-    height: 420
+    height: 460
 }
 
 const dimensionQuebecFinal = {
     width: 460,
-    height: 420
+    height: 460
 }
 
 const dimensionSwedenInit = {
     width: 280,
-    height: 420
+    height: 460
 }
 
 const dimensionSwedenFinal = {
     width: 340,
-    height: 420
+    height: 460
 }
 
 const textCoordQuebec = {
     x: 0,
-    y: 415
+    y: 15.5
 }
 
 const textCoordSwedenInit = {
@@ -119,12 +118,12 @@ const textCoordSwedenFinal = {
 
 const textCoordPictoQuebec = {
     x: 230,
-    y: 22.5
+    y: 450
 }
 
 const textCoordPictoSweden = {
     x: 87.5,
-    y: 415
+    y: 450
 }
 
 const textCoordLegend = {
@@ -225,7 +224,7 @@ export function load() {
 
             transitionViz("fixed", 0)
             d3.select(".legend-picto")
-                .style("left", "47%")
+                .style("left", "49%")
                 .style("opacity", "0%")
 
 
@@ -269,7 +268,7 @@ export function load() {
         d3.select(".sweden-graph").style("position", position)
         d3.select(".sweden-graph").style("top", String(adjustment + 80) + "px")
         d3.select(".legend-picto").style("position", position)
-        d3.select(".legend-picto").style("top", String(adjustment + 575) + "px")
+        d3.select(".legend-picto").style("top", String(adjustment + 615) + "px")
     }
 
     function statePicto(state) {
@@ -378,20 +377,20 @@ export function load() {
             .append("g")
             .attr("id", place + "personIcon")
 
-
         person.append("path")
             .attr("d", personIconPath)
-            .attr("transform", "translate(" + String(coordPicto.x) + ", " + String(coordPicto.y) + ") scale(3)")
+            .attr("transform", "translate(" + String(coordPicto.x) + ", " + String(coordPicto.y) + ") scale(" + String(2.3 + 4.2 / Math.round(nbPerson / 2)) + ")")
+
 
         var y = d3.scaleBand()
-            .range([0, 150])
-            .domain(d3.range(Math.round(nbPerson / 2)));
+            .range([0, Math.round(nbPerson / 2) * 25])
+            .domain(d3.range(Math.round(nbPerson / 2)))
 
         var x = d3.scaleBand()
             .range([0, 50])
-            .domain(d3.range(2));
+            .domain(d3.range(2))
 
-        var data = d3.range(nbPerson);
+        var data = d3.range(nbPerson)
 
         var container = svg.append("g")
             .attr("class", "picto-country")
@@ -404,7 +403,6 @@ export function load() {
             .attr("id", function (d) { return "id" + d; })
             .attr('x', function (d) { return x(d % 2); })
             .attr('y', function (d) { return y(Math.floor(d / 2)); })
-            .attr('fill', "black")
 
         drawLine(svg, coordLine1, "picto-country", "")
         drawLine(svg, coordLine2, "picto-country", "")
@@ -412,6 +410,14 @@ export function load() {
         var g = svg.append('g')
             .attr("class", "picto-country")
 
+        const hiddingAdjustment = Math.round(nbPerson / 2) - 5
+
+        svg.append("rect")
+            .attr("x", 427.8 - 423 * hiddingAdjustment)
+            .attr("y", 280 + 25 * hiddingAdjustment)
+            .attr("width", 10)
+            .attr("height", 32)
+            .attr("fill", "white")
 
         drawText(g, textCoord, size, "")
     }

@@ -66,8 +66,9 @@ export function load() {
           .style("left", d3.mouse(this)[0] + 70 + "px")
           .style("top", d3.mouse(this)[1] + "px")
       }
-      d3.selectAll(".treemap-tile").style('opacity', function (data) { 
-        return d.id === data.id ? 1 : 0.5 });
+      d3.selectAll(".treemap-tile").style('opacity', function (data) {
+        return d.id === data.id ? 1 : 0.5
+      });
     }
     var mousemove = function (d) {
       if (d.parent.id === 'Sweden')
@@ -147,8 +148,8 @@ export function load() {
       .attr("x", function (d) { return d.x0 + 5 })
       .attr("y", function (d) { return d.y0 + 35 })
       .text(function (d) {
-        if(outputText(d.id, d.x1 - d.x0, d.y1 - d.y0))
-        return Math.round(d.value * 100) + '%';
+        if (outputText(d.id, d.x1 - d.x0, d.y1 - d.y0))
+          return Math.round(d.value * 100) + '%';
       })
       .attr("font-size", "16px")
       .attr("fill", "white")
@@ -208,7 +209,7 @@ export function load() {
     .style("position", "absolute")
     .style("left", "50%")
     .style("margin-left", String(-width - margin.left) + "px")
-    .style("top", "6400px")
+    .style("top", "6700px")
 }
 
 

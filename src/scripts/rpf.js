@@ -84,7 +84,6 @@ export function load() {
 
     d3.select("#rpf-chart")
         .style("margin-left", String(-width / 2 - margin.left / 2) + "px")
-
 }
 
 /**
