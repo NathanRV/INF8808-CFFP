@@ -1,13 +1,12 @@
 'use strict'
 
-// import * as helper from './scripts/helper.js'
 import * as cfn from './scripts/cfn.js'
 
 import * as rpf from './scripts/rpf.js'
 
-import * as caca from './scripts/treemap_script.js'
+import * as treemap from './scripts/treemap.js'
 
-import * as justin from './scripts/linechart_script'
+import * as linechart from './scripts/linechart.js'
 
 import * as map from './scripts/map.js'
 
@@ -24,8 +23,8 @@ import * as text from './scripts/text.js'
 
   text.load();
   map.load();
-  justin.load();
+  linechart.load();
   rpf.load();
   cfn.load();
-  caca.load();
+  treemap.load();
 })(d3)

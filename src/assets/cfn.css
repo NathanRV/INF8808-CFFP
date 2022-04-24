@@ -13,5 +13,9 @@
 #cfn-chart {
     position: absolute;
     left: 50%;
-    top: 5400px;
+    top: 5200px;
+}
+
+#cfn-title {
+    margin: auto;
 }

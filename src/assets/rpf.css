@@ -1,7 +1,11 @@
 #rpf-chart {
     position: absolute;
     left: 50%;
-    top: 4400px;
+    top: 4265px;
+}
+
+#rpf-title {
+    margin: auto;
 }
 
 .rectangle-text {
