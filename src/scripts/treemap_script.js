@@ -1,3 +1,5 @@
+import d3Tip from 'd3-tip';
+
 export function load() {
 
   // set the dimensions and margins of the graph
@@ -288,4 +290,41 @@ function createTooltip(elementId) {
     .append("div")
     .style("opacity", 0)
     .attr("class", "d3-tip")
+}
+
+/**
+ * Shows the tips.
+ *
+ * @param {*} tips Array of selection of the tips div element.
+ * @param {*} object Selection of group element hovered.
+ * @param {*} data Data used in the group element.
+ * @param {*} xScale X scale used to position tips.
+ */
+function showTips(tips, object, data, xScale) {
+    //Min tip
+    let lineLength = xScale(getMax(data)) - xScale(getMin(data))
+    tips[0].offset([0, object.getBBox().width - lineLength - 3 * radius])
+
+    //Middle tip
+    let distance_max_middle = xScale(getMax(data)) - xScale(getMiddle(data))
+    let offset = object.getBBox().width / 2 - distance_max_middle
+    tips[1].offset([-radius, offset - radius])
+
+    //Max tip
+    tips[2].offset([0, radius])
+
+    tips.forEach((tip) => {
+        tip.show(data, object)
+    })
+}
+
+/**
+ * Hides the tips.
+ *
+ * @param {*} tips Array of selection of the tips div element.
+ */
+function hideTips(tips) {
+    tips.forEach((tip) => {
+        tip.hide()
+    })
 }

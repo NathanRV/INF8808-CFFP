@@ -1,3 +1,4 @@
+import d3Legend from 'd3-svg-legend';
 
 export function load() {
 
@@ -51,7 +52,7 @@ export function load() {
       .attr("font-weight", "bold")
       .attr("x", width)
       .attr("y", height + 30)
-      .text("Year");
+      .text("Année");
 
     graph.append("text")
       .attr("class", "y label")
@@ -108,7 +109,8 @@ export function load() {
         .y(function (d) {
           return yScale(Math.round(d.value))
         })
-      )
+    )
+    
     // graph title
     graph.append("text")
       .attr("x", (width / 2))
@@ -118,7 +120,7 @@ export function load() {
       .style("font-size", "16px")
       .text("PIB par habitant (USD)");
 
-    showLegend(graph, width, height)
+    showLegend(graph, width)
     let mouseG = graph.append("g")
       .attr("class", "mouse-over-effects");
 
@@ -129,8 +131,9 @@ export function load() {
       .style("opacity", "0");
 
     let lines = document.getElementsByClassName('line');
+    
     newData = [data[0], data[50], data[86]]
-    console.log(newData)
+
     var mousePerLine = graph.selectAll('.mouse-per-line')
       .data(newData)
       .enter()
@@ -254,25 +257,25 @@ function showLegend(graph, width) {
   let offsetText = 40
   let offsetGraph = 30
 
-  graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 30).attr("r", 6).style("fill", "#001F97")
-  graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 70).attr("r", 6).style("fill", "#FFCD00")
-  graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 110).attr("r", 6).style("fill", "#95C71B")
+  graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 50).attr("r", 6).style("fill", "#001F97")
+  graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 100).attr("r", 6).style("fill", "#FFCD00")
+  graph.append("circle").attr("cx", width + offsetGraph).attr("cy", 150).attr("r", 6).style("fill", "#95C71B")
 
-  graph.append("text").attr("x", width + offsetText).attr("y", 30).text("Quebec").style("font-size", "15px").attr("alignment-baseline", "middle")
-  graph.append("text").attr("x", width + offsetText).attr("y", 70).text("Sweden").style("font-size", "15px").attr("alignment-baseline", "middle")
-  graph.append("text").attr("x", width + offsetText).attr("y", 110).text("OECD").style("font-size", "15px").attr("alignment-baseline", "middle")
+  graph.append("text").attr("x", width + offsetText).attr("y", 50).text("Quebec").style("font-size", "15px").attr("alignment-baseline", "middle")
+  graph.append("text").attr("x", width + offsetText).attr("y", 100).text("Sweden").style("font-size", "15px").attr("alignment-baseline", "middle")
+  graph.append("text").attr("x", width + offsetText).attr("y", 150).text("OECD").style("font-size", "15px").attr("alignment-baseline", "middle")
   graph.append("text").attr("x", width + offsetGraph).attr("y", 0).text("Time").style("font-size", "15px").attr("alignment-baseline", "middle")
 
   graph.append("text")
     .attr("x", width + offsetGraph)
-    .attr("y", 130).style("font-size", "15px")
+    .attr("y", 170).style("font-size", "15px")
     .attr("alignment-baseline", "middle")
     .attr("id", "oecdLegendVal")
     .attr("font-weight", "bold")
 
   graph.append("text")
     .attr("x", width + offsetGraph)
-    .attr("y", 90)
+    .attr("y", 120)
     .style("font-size", "15px")
     .attr("alignment-baseline", "middle")
     .attr("id", "swedenLegendVal")
@@ -280,7 +283,7 @@ function showLegend(graph, width) {
 
   graph.append("text")
     .attr("x", width + offsetGraph)
-    .attr("y", 50)
+    .attr("y", 70)
     .style("font-size", "15px")
     .attr("alignment-baseline", "middle")
     .attr("id", "quebecLegendVal")
@@ -294,4 +297,3 @@ function showLegend(graph, width) {
     .attr("id", "timeLegendVal")
     .attr("font-weight", "bold")
 }
-
