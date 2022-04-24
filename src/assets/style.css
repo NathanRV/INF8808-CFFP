@@ -14,13 +14,12 @@ a:hover {
 
 h2 {
         width: fit-content;
-        margin: auto;
 }
 
 .title {
+        justify-content: center;
         display: flex;
         flex-direction: row;
-        justify-content: center;
 }
 
 body {
