@@ -184,7 +184,10 @@ export function load() {
             let end = lines[i].getTotalLength();
             let target = null;
             let pos;
-
+            let d0 = swedenData[idx - 1];
+            let d1 = swedenData[idx];
+            // work out which date value is closest to the mouse
+            let index = mouseDate - d0.time > d1.time - mouseDate ? idx: idx -1;
             while (true) {
               target = Math.floor((beginning + end) / 2);
               pos = lines[i].getPointAtLength(target);
@@ -195,13 +198,14 @@ export function load() {
               else if (pos.x < mouse[0]) beginning = target;
               else break;
             }
-            graph.select("#timeLegendVal").text(mouseDate.getUTCFullYear())
+            console.log(quebecData[index])
+            graph.select("#timeLegendVal").text(quebecData[index].time.getUTCFullYear())
             if (i == 1)
-              graph.select("#quebecLegendVal").text(Math.round(yScale.invert(pos.y)) + " USD")
+              graph.select("#quebecLegendVal").text(Math.round(quebecData[index].value) + " USD")
             else if (i == 0)
-              graph.select("#swedenLegendVal").text(Math.round(yScale.invert(pos.y)) + " USD")
+              graph.select("#swedenLegendVal").text(Math.round(swedenData[index].value) + " USD")
             else if (i == 2)
-              graph.select("#oecdLegendVal").text(Math.round(yScale.invert(pos.y)) + " USD")
+              graph.select("#oecdLegendVal").text(Math.round(oecdData[index].value) + " USD")
 
             d3.select(this).select('text')
               .text(function () {
