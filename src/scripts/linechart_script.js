@@ -129,16 +129,20 @@ export function load() {
       .style("opacity", "0");
 
     let lines = document.getElementsByClassName('line');
-
+    newData = [data[0], data[50], data[86]]
+    console.log(newData)
     var mousePerLine = graph.selectAll('.mouse-per-line')
-      .data(data)
+      .data(newData)
       .enter()
       .append("g")
       .attr("class", "mouse-per-line");
-
+    
+    console.log(mousePerLine)
     mousePerLine.append("circle")
       .attr("r", 7)
       .style("stroke", function (d) {
+        console.log(d.location)
+        console.log(colorScale(d.location))
         return colorScale(d.location)
       })
       .style("fill", "none")
@@ -198,7 +202,6 @@ export function load() {
               else if (pos.x < mouse[0]) beginning = target;
               else break;
             }
-            console.log(quebecData[index])
             graph.select("#timeLegendVal").text(quebecData[index].time.getUTCFullYear())
             if (i == 1)
               graph.select("#quebecLegendVal").text(Math.round(quebecData[index].value) + " USD")
@@ -244,7 +247,7 @@ function getFilteredData(data, country) {
 function createColorScale() {
   return d3.scaleOrdinal()
     .domain(["CAN", "SWE", "OECD"])
-    .range(["#001F97", "#FFCD00", "#95C71B"]);
+    .range(["#FFCD00","#001F97", "#95C71B"]);
 }
 
 function showLegend(graph, width) {
