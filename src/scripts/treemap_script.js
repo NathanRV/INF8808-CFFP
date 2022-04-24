@@ -211,7 +211,7 @@ export function load() {
     .style("position", "absolute")
     .style("left", "50%")
     .style("margin-left", String(-width - margin.left) + "px")
-    .style("top", "6700px")
+    .style("top", "6500px")
 }
 
 

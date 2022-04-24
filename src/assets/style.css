@@ -14,38 +14,16 @@ a:hover {
 
 h2 {
         width: fit-content;
-        margin: auto;
 }
 
 .title {
+        justify-content: center;
         display: flex;
         flex-direction: row;
-        justify-content: center;
-}
-
-#flag {
-        width: 20px;
-}
-
-.sweden-graph {
-        display: none;
-}
-
-.quebec-graph {
-        position: fixed;
-}
-
-.legend-picto {
-        display: none;
-}
-
-.picto-country {
-        display: none;
 }
 
 body {
-        height: 7700;
-        font-family: sans-serif;
+        height: 7500px;
 }
 
 .treemapContainer {
@@ -80,9 +58,7 @@ body {
 
 .panel {
         position: absolute;
-        top: 7600px;
-        position: absolute;
-        top: 7600px;
+        top: 7480px;
 }
 
 .treemapVisualisation {

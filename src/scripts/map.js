@@ -131,8 +131,17 @@ const textCoordLegend = {
     y: 17.5
 }
 
+const hideCoordSweden = {
+    x: 4.8,
+    y: 305
+}
+
+const hideCoordQuebec = {
+    x: 427.8,
+    y: 280
+}
+
 const coordSwedenInit = [50, 61.0]
-const coordSwedenFinal = [45, 61.0]
 
 const populationQuebec = 8.485
 const populationSweden = 10.35
@@ -146,11 +155,12 @@ export function load() {
 
     d3.select(".quebec-graph").style("left", String(window.innerWidth / 2 - dimensionQuebecInit.width / 2) + "px")
 
-    drawPictogram(svgQuebec, populationQuebec, coordPictoQuebec, "quebec", coordLineQuebecPicto1, coordLineQuebecPicto2, "8,485 millions habitants", textCoordPictoQuebec)
+    d3.select(".quebec-text").html("Québec&nbsp&nbsp")
+    drawPictogram(svgQuebec, populationQuebec, coordPictoQuebec, "quebec", coordLineQuebecPicto1, coordLineQuebecPicto2, "8,485 millions habitants", textCoordPictoQuebec, hideCoordQuebec)
     drawMap(svgQuebec, "quebec", "1 542 056 km2", textCoordQuebec, [-49.708879, 53.75], require('./quebec.json'), "#001F97", coordLineQuebec1, coordLineQuebec2, dimensionQuebecInit.width)
 
-
-    drawPictogram(svgSweden, populationSweden, coordPictoSweden, "sweden", coordLineSwedenPicto1, coordLineSwedenPicto2, "10,35 millions habitants", textCoordPictoSweden)
+    d3.select(".sweden-text").html("Sweden&nbsp&nbsp")
+    drawPictogram(svgSweden, populationSweden, coordPictoSweden, "sweden", coordLineSwedenPicto1, coordLineSwedenPicto2, "10,35 millions habitants", textCoordPictoSweden, hideCoordSweden)
     drawMap(svgSweden, "sweden", "450 295 km2", textCoordSwedenInit, coordSwedenInit, require('./sweden.json'), "#FFCD00", coordLineSwedenInit1, coordLineSwedenInit2, dimensionSwedenInit.width)
 
     drawLegend()
@@ -369,7 +379,7 @@ export function load() {
         drawLine(svg, coordLine2, "", place + "-line-map2")
     }
 
-    function drawPictogram(svg, population, coordPicto, place, coordLine1, coordLine2, size, textCoord) {
+    function drawPictogram(svg, population, coordPicto, place, coordLine1, coordLine2, size, textCoord, hideCoord) {
 
         const nbPerson = Math.floor(population) + 1
 
@@ -413,8 +423,8 @@ export function load() {
         const hiddingAdjustment = Math.round(nbPerson / 2) - 5
 
         svg.append("rect")
-            .attr("x", 427.8 - 423 * hiddingAdjustment)
-            .attr("y", 280 + 25 * hiddingAdjustment)
+            .attr("x", hideCoord.x)
+            .attr("y", hideCoord.y)
             .attr("width", 10)
             .attr("height", 32)
             .attr("fill", "white")
