@@ -129,7 +129,7 @@ export function load() {
       .style("opacity", "0");
 
     let lines = document.getElementsByClassName('line');
-    newData = [data[0], data[50], data[86]]
+    let newData = [data[0], data[50], data[86]]
     console.log(newData)
     var mousePerLine = graph.selectAll('.mouse-per-line')
       .data(newData)
