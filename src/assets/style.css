@@ -12,6 +12,10 @@ a:hover {
         opacity: 60%;
 }
 
+h1 {
+        text-align: center;
+}
+
 h2 {
         width: fit-content;
 }
@@ -24,6 +28,7 @@ h2 {
 
 body {
         height: 7500px;
+        font-family: sans-serif;
 }
 
 .treemapContainer {
