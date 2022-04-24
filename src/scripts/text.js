@@ -6,7 +6,9 @@ const rpfText = "La répartition des prélèvements fiscaux montre où les impô
     + "<br><br>" + "Bref, on observe des différences intéressantes lorsqu'on compare les proportions des prélèvements fiscaux de ces 2 états."
     + "<br><br>" + '<a href="https://cffp.recherche.usherbrooke.ca/wp-content/uploads/2022/01/Bilan2022.pdf" target="_blank"> Source </a>'
 
-const cfnText = "La charge fiscale nette (CFN) est un indicateur servant à décrire le fardeau fiscale d'un particulier selon la situation de son ménage. Sa situation est décrite par la composition familiale:célibataire, couple sans enfants, famille monoparentale et famille biparentale; et le niveau des revenus tirés de salaires en pourcentage du salaire moyen."
+const cfnText = "La charge fiscale nette (CFN) est un indicateur servant à décrire le fardeau fiscale d'un particulier selon la situation de son ménage. Sa situation est décrite par la composition familiale, c'est-à-dire : "
+    + "<br>&nbsp&nbsp&nbsp&nbsp&nbspcélibataire, couple sans enfants, famille monoparentale et famille biparentale; "
+    + "<br>&nbsp&nbsp&nbsp&nbsp&nbspainsi que le niveau des revenus tirés de salaires en pourcentage du salaire moyen."
     + "<br><br>" + "Elle est calculée de la manière suivante :" + "<br>" + "CFN = [IR + CSP - PRP]/(R)" + "<br>" + "où R&nbsp&nbsp&nbsp&nbsp&nbspreprésente le revenu du particulier;"
     + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspIR&nbsp&nbsp&nbsp&nbspreprésente la somme des impôts sur le revenu des particuliers;" + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspCSP représente la somme des cotisations de sécurité sociale à la charge du particulier;"
     + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspPRP représente les prestations reçues par le particulier." + "<br><br>" + '<a href="https://cffp.recherche.usherbrooke.ca/wp-content/uploads/2018/12/cr_2016-04_charge_fiscale_nette.pdf" target="_blank"> Source </a>'
