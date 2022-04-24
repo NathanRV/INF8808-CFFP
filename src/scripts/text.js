@@ -32,33 +32,33 @@ export function load() {
         const posScroll = document.documentElement.scrollTop
 
         // viz 2
-        if (posScroll > 2700 && posScroll < 3100) {
+        if (posScroll > 2700 && posScroll < 3150) {
 
             textUpdaterViz2()
-            div.style("opacity", String((posScroll - 2700) / 4) + "%")
+            div.style("opacity", String((posScroll - 2700) / 4.5) + "%")
 
 
-        } else if (posScroll >= 3100 && posScroll < 3300) {
+        } else if (posScroll >= 3150 && posScroll < 3250) {
 
             textUpdaterViz2()
             div.style("opacity", "100%")
 
-        } else if (posScroll >= 3300 && posScroll < 3600) {
+        } else if (posScroll >= 3250 && posScroll < 3600) {
 
             textUpdaterViz2()
-            div.style("opacity", String(-(posScroll - 3600) / 3) + "%")
+            div.style("opacity", String(-(posScroll - 3600) / 3.5) + "%")
 
         } else if (posScroll >= 3600 && posScroll < 3650) {
 
             div.style("display", "none")
 
             // viz 3
-        } else if (posScroll >= 3650 && posScroll < 3950) {
+        } else if (posScroll >= 3650 && posScroll < 4000) {
 
             textUpdaterViz3()
-            div.style("opacity", String((posScroll - 3650) / 3) + "%")
+            div.style("opacity", String((posScroll - 3650) / 3.5) + "%")
 
-        } else if (posScroll >= 3950 && posScroll < 4200) {
+        } else if (posScroll >= 4000 && posScroll < 4200) {
 
             textUpdaterViz3()
             div.style("opacity", "100%")
@@ -70,20 +70,20 @@ export function load() {
 
 
             // viz 4
-        } else if (posScroll >= 4900 && posScroll < 5200) {
+        } else if (posScroll >= 4900 && posScroll < 5250) {
 
             textUpdaterViz4()
-            div.style("opacity", String((posScroll - 4900) / 3) + "%")
+            div.style("opacity", String((posScroll - 4900) / 3.5) + "%")
 
-        } else if (posScroll >= 5200 && posScroll < 5500) {
+        } else if (posScroll >= 5250 && posScroll < 5450) {
 
             textUpdaterViz4()
             div.style("opacity", "100%")
 
-        } else if (posScroll >= 5500 && posScroll < 6100) {
+        } else if (posScroll >= 5450 && posScroll < 6100) {
 
             textUpdaterViz4()
-            div.style("opacity", String(-(posScroll - 6100) / 6) + "%")
+            div.style("opacity", String(-(posScroll - 6100) / 6.5) + "%")
 
             // viz 5
         } else if (posScroll >= 6100 && posScroll < 6400) {
