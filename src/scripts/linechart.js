@@ -15,11 +15,6 @@ export function load() {
       "translate(" + margin.left + "," + margin.top + ")");
 
   d3.csv('./PIB_habitant_1980-2021_sw_can_ocde.csv').then(function (data) {
-    const bisectDate = d3.bisector(function (d) {
-      return d.time;
-    }).left;
-
-    const colorScale = createColorScale();
     let swedenData = getFilteredData(data, 'SWE');
     let quebecData = getFilteredData(data, 'CAN');
     let oecdData = getFilteredData(data, 'OECD');
@@ -119,101 +114,7 @@ export function load() {
       .text("PIB par habitant (USD)");
 
     showLegend(graph, width)
-    let mouseG = graph.append("g")
-      .attr("class", "mouse-over-effects");
-
-    mouseG.append("path") // this is the black vertical line to follow mouse
-      .attr("class", "mouse-line")
-      .style("stroke", "black")
-      .style("stroke-width", "1px")
-      .style("opacity", "0");
-
-    let lines = document.getElementsByClassName('line');
-    let newData = [data[0], data[50], data[86]]
-
-    var mousePerLine = graph.selectAll('.mouse-per-line')
-      .data(newData)
-      .enter()
-      .append("g")
-      .attr("class", "mouse-per-line");
-
-    mousePerLine.append("circle")
-      .attr("r", 7)
-      .style("stroke", function (d) {
-        return colorScale(d.location)
-      })
-      .style("fill", "none")
-      .style("stroke-width", "1px")
-      .style("opacity", "0");
-
-    mouseG.append('svg:rect')
-      .attr('width', width)
-      .attr('height', height)
-      .attr('fill', 'none')
-      .attr('pointer-events', 'all')
-      .on('mouseout', function () {
-        d3.select(".mouse-line")
-          .style("opacity", "0");
-        d3.selectAll(".mouse-per-line circle")
-          .style("opacity", "0");
-        d3.selectAll(".mouse-per-line text")
-          .style("opacity", "0");
-      })
-      .on('mouseover', function () {
-        d3.select(".mouse-line")
-          .style("opacity", "1");
-        d3.selectAll(".mouse-per-line circle")
-          .style("opacity", "1");
-        d3.selectAll(".mouse-per-line text")
-          .style("opacity", "1");
-      })
-      .on('mousemove', function () {
-        let mouse = d3.mouse(this);
-        d3.select(".mouse-line")
-          .attr("d", function () {
-            var d = "M" + mouse[0] + "," + height;
-            d += " " + mouse[0] + "," + 0;
-            return d;
-          });
-
-        d3.selectAll(".mouse-per-line")
-          .attr("transform", function (d, i) {
-            if (d === undefined) return;
-            let mouseDate = xScale.invert(mouse[0]);
-            let idx = bisectDate(swedenData, mouseDate);
-            let beginning = 0;
-            let end = lines[i].getTotalLength();
-            let target = null;
-            let pos;
-            let d0 = swedenData[idx - 1];
-            let d1 = swedenData[idx];
-            // work out which date value is closest to the mouse
-            let index = mouseDate - d0.time > d1.time - mouseDate ? idx: idx -1;
-            while (true) {
-              target = Math.floor((beginning + end) / 2);
-              pos = lines[i].getPointAtLength(target);
-              if ((target === end || target === beginning) && pos.x !== mouse[0]) {
-                break;
-              }
-              if (pos.x > mouse[0]) end = target;
-              else if (pos.x < mouse[0]) beginning = target;
-              else break;
-            }
-            graph.select("#timeLegendVal").text(quebecData[index].time.getUTCFullYear())
-            if (i == 1)
-              graph.select("#quebecLegendVal").text(Math.round(quebecData[index].value) + " USD")
-            else if (i == 0)
-              graph.select("#swedenLegendVal").text(Math.round(swedenData[index].value) + " USD")
-            else if (i == 2)
-              graph.select("#oecdLegendVal").text(Math.round(oecdData[index].value) + " USD")
-
-            d3.select(this).select('text')
-              .text(function () {
-                return yScale.invert(pos.y).toFixed(2)
-              });
-            return "translate(" + mouse[0] + "," + pos.y + ")";
-          });
-      });
+    createLine(graph, data, xScale, yScale, quebecData, swedenData, oecdData,width,height)
   });
 
   d3.select("#line-chart")
@@ -293,3 +194,110 @@ function showLegend(graph, width) {
 }
 
 
+function createLine(graph, data, xScale, yScale, quebecData, swedenData, oecdData, width, height) {
+   let mouseG = graph.append("g")
+    .attr("class", "mouse-over-effects");
+    createCircles(graph, mouseG, data)
+    createMouseBehaviour(graph,mouseG,width, height,swedenData,  quebecData,oecdData,xScale,yScale)
+
+}
+
+function createMouseBehaviour(graph , mouseG, width, height, swedenData, quebecData, oecdData, xScale, yScale) {
+   let lines = document.getElementsByClassName('line');
+   const bisectDate = d3.bisector(function (d) {
+          return d.time;
+        }).left;
+   mouseG.append('svg:rect')
+      .attr('width', width)
+      .attr('height', height)
+      .attr('fill', 'none')
+      .attr('pointer-events', 'all')
+      .on('mouseout', function () {
+        d3.select(".mouse-line")
+          .style("opacity", "0");
+        d3.selectAll(".mouse-per-line circle")
+          .style("opacity", "0");
+        d3.selectAll(".mouse-per-line text")
+          .style("opacity", "0");
+      })
+      .on('mouseover', function () {
+        d3.select(".mouse-line")
+          .style("opacity", "1");
+        d3.selectAll(".mouse-per-line circle")
+          .style("opacity", "1");
+        d3.selectAll(".mouse-per-line text")
+          .style("opacity", "1");
+      })
+      .on('mousemove', function () {
+        let mouse = d3.mouse(this);
+        d3.select(".mouse-line")
+          .attr("d", function () {
+            var d = "M" + mouse[0] + "," + height;
+            d += " " + mouse[0] + "," + 0;
+            return d;
+          });
+
+        d3.selectAll(".mouse-per-line")
+          .attr("transform", function (d, i) {
+            if (d === undefined) return;
+            let mouseDate = xScale.invert(mouse[0]);
+            let idx = bisectDate(swedenData, mouseDate);
+            let beginning = 0;
+            let end = lines[i].getTotalLength();
+            let target = null;
+            let pos;
+            let d0 = swedenData[idx - 1];
+            let d1 = swedenData[idx];
+            // work out which date value is closest to the mouse
+            let index = mouseDate - d0.time > d1.time - mouseDate ? idx: idx -1;
+            while (true) {
+              target = Math.floor((beginning + end) / 2);
+              pos = lines[i].getPointAtLength(target);
+              if ((target === end || target === beginning) && pos.x !== mouse[0]) {
+                break;
+              }
+              if (pos.x > mouse[0]) end = target;
+              else if (pos.x < mouse[0]) beginning = target;
+              else break;
+            }
+            graph.select("#timeLegendVal").text(quebecData[index].time.getUTCFullYear())
+            if (i == 1)
+              graph.select("#quebecLegendVal").text(Math.round(quebecData[index].value) + " USD")
+            else if (i == 0)
+              graph.select("#swedenLegendVal").text(Math.round(swedenData[index].value) + " USD")
+            else if (i == 2)
+              graph.select("#oecdLegendVal").text(Math.round(oecdData[index].value) + " USD")
+
+            d3.select(this).select('text')
+              .text(function () {
+                return yScale.invert(pos.y).toFixed(2)
+              });
+            return "translate(" + mouse[0] + "," + pos.y + ")";
+          });
+      });
+}
+
+function createCircles(graph, mouseG, data) {
+    mouseG.append("path") // this is the black vertical line to follow mouse
+      .attr("class", "mouse-line")
+      .style("stroke", "black")
+      .style("stroke-width", "1px")
+      .style("opacity", "0");
+    const colorScale = createColorScale();
+    let newData = [data[0], data[50], data[86]]
+
+    var mousePerLine = graph.selectAll('.mouse-per-line')
+      .data(newData)
+      .enter()
+      .append("g")
+      .attr("class", "mouse-per-line");
+
+    mousePerLine.append("circle")
+      .attr("r", 7)
+      .style("stroke", function (d) {
+        return colorScale(d.location)
+      })
+      .style("fill", "none")
+      .style("stroke-width", "1px")
+      .style("opacity", "0");
+}
