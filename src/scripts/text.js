@@ -11,20 +11,17 @@ const cfnText = "La charge fiscale nette (CFN) est un indicateur servant à déc
     + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspIR&nbsp&nbsp&nbsp&nbspreprésente la somme des impôts sur le revenu des particuliers;" + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspCSP représente la somme des cotisations de sécurité sociale à la charge du particulier;"
     + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspPRP représente les prestations reçues par le particulier." + "<br><br>" + '<a href="https://cffp.recherche.usherbrooke.ca/wp-content/uploads/2018/12/cr_2016-04_charge_fiscale_nette.pdf" target="_blank"> Source </a>'
 
-const lineChartText = "La charge fiscale nette (CFN) est un indicateur servant à décrire le fardeau fiscale d'un particulier selon la situation de son ménage. Sa situation est décrite par la composition familiale, c'est-à-dire : "
-    + "<br>&nbsp&nbsp&nbsp&nbsp&nbspcélibataire, couple sans enfants, famille monoparentale et famille biparentale; "
-    + "<br>&nbsp&nbsp&nbsp&nbsp&nbspainsi que le niveau des revenus tirés de salaires en pourcentage du salaire moyen."
-    + "<br><br>" + "Elle est calculée de la manière suivante :" + "<br>" + "CFN = [IR + CSP - PRP]/(R)" + "<br>" + "où R&nbsp&nbsp&nbsp&nbsp&nbspreprésente le revenu du particulier;"
-    + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspIR&nbsp&nbsp&nbsp&nbspreprésente la somme des impôts sur le revenu des particuliers;" + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspCSP représente la somme des cotisations de sécurité sociale à la charge du particulier;"
-    + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspPRP représente les prestations reçues par le particulier." + "<br><br>" + '<a href="https://cffp.recherche.usherbrooke.ca/wp-content/uploads/2018/12/cr_2016-04_charge_fiscale_nette.pdf" target="_blank"> Source </a>'
+const lineChartText = "Le produit intérieur brute (PIB) par habitant est un indicateur servant à décrire le pouvoir d'achat d'un habitant. Le produit intérieur brute par habitant peut augmenter lorsque la main d'oeuvre devient plus effiace. "
+    + "<br> Avec l'avènement de la technologie, la productivité d'un individu a significativement augmenter."
+    + "<br><br>" + "Ainsi, on s'attend à avoir une croissance dans cet indicateur tant qu'il a des avancements technologiques."
+    + "Les industries au sein de l'économie d'un pays vont affecter le produit intérieur brute si les tendances mondiales commencent à changer. Par exemple, si un pays exploite beaucoup de pétrole, une transition vers l'énergie renouvelable va diminuer les revenus pétroliers et par association le PIB par habitant. "
+    + "<br><br>" + '<a href="https://www.thebalance.com/gdp-per-capita-formula-u-s-compared-to-highest-and-lowest-3305848" target="_blank"> Source </a>'
 
-const treeMapText = "La charge fiscale nette (CFN) est un indicateur servant à décrire le fardeau fiscale d'un particulier selon la situation de son ménage. Sa situation est décrite par la composition familiale, c'est-à-dire : "
-    + "<br>&nbsp&nbsp&nbsp&nbsp&nbspcélibataire, couple sans enfants, famille monoparentale et famille biparentale; "
-    + "<br>&nbsp&nbsp&nbsp&nbsp&nbspainsi que le niveau des revenus tirés de salaires en pourcentage du salaire moyen."
-    + "<br><br>" + "Elle est calculée de la manière suivante :" + "<br>" + "CFN = [IR + CSP - PRP]/(R)" + "<br>" + "où R&nbsp&nbsp&nbsp&nbsp&nbspreprésente le revenu du particulier;"
-    + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspIR&nbsp&nbsp&nbsp&nbspreprésente la somme des impôts sur le revenu des particuliers;" + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspCSP représente la somme des cotisations de sécurité sociale à la charge du particulier;"
-    + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspPRP représente les prestations reçues par le particulier." + "<br><br>" + '<a href="https://cffp.recherche.usherbrooke.ca/wp-content/uploads/2018/12/cr_2016-04_charge_fiscale_nette.pdf" target="_blank"> Source </a>'
+const treeMapText = "Les structures fiscales d'un pays vont décrire comment les impots sont collectés par le gouvernement. "
+    + "Chaque pays va définir un manière différente de collecter les impots selon les jurisdictions. La Suède et le Québec ont des répartitions très similaires l'une à l'autre. Cela peut être un indicateur de la mentalité de la population pour l'investissement publique ou la collecte des impots. "
+    '<a href="https://cffp.recherche.usherbrooke.ca/wp-content/uploads/2022/01/Bilan2022.pdf" target="_blank"> Source </a>'
 
+const treeMapTitle = "Structure Fiscale"
 export function load() {
     var div = d3.select(".text-container")
         .style("width", "530px")
@@ -99,10 +96,10 @@ export function load() {
         } else if (posScroll >= 6100 && posScroll < 6400) {
 
             textUpdaterViz5()
+            titleUpdaterViz5()
             div.style("opacity", String((posScroll - 6100) / 3) + "%")
 
         } else if (posScroll >= 6400) {
-
             textUpdaterViz5()
             div.style("opacity", "100%")
 

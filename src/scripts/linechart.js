@@ -1,4 +1,3 @@
-import d3Legend from 'd3-svg-legend';
 
 export function load() {
 
