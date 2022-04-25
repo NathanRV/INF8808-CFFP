@@ -2,8 +2,8 @@ import d3Legend from 'd3-svg-legend';
 
 export function load() {
 
-  var margin = { top: 70, right: 110, bottom: 30, left: 60 },
-    width = 700 - margin.left - margin.right,
+  var margin = { top: 70, right: 110, bottom: 60, left: 60 },
+    width = 600 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
   // append the svg object to the body of the page
@@ -45,9 +45,8 @@ export function load() {
       .call(d3.axisLeft(yScale));
 
     graph.append("text")
-      .attr("class", "x label")
       .attr("text-anchor", "end")
-      .attr("font-size", "14px")
+      .attr("font-size", "12px")
       .attr("padding-bottom", "20px")
       .attr("font-weight", "bold")
       .attr("x", width)
@@ -55,11 +54,11 @@ export function load() {
       .text("Année");
 
     graph.append("text")
-      .attr("class", "y label")
       .attr("text-anchor", "end")
-      .attr("y", 6)
-      .attr("dy", "-4em")
-      .attr("font-size", "14px")
+      .attr("y", 16)
+      .attr("x", -20)
+      .attr("dy", "-5em")
+      .attr("font-size", "12px")
       .attr("font-weight", "bold")
       .attr("transform", "rotate(-90)")
       .text("USD")
@@ -138,13 +137,10 @@ export function load() {
       .enter()
       .append("g")
       .attr("class", "mouse-per-line");
-    
-    console.log(mousePerLine)
+
     mousePerLine.append("circle")
       .attr("r", 7)
       .style("stroke", function (d) {
-        console.log(d.location)
-        console.log(colorScale(d.location))
         return colorScale(d.location)
       })
       .style("fill", "none")
@@ -173,7 +169,7 @@ export function load() {
           .style("opacity", "1");
       })
       .on('mousemove', function () {
-        var mouse = d3.mouse(this);
+        let mouse = d3.mouse(this);
         d3.select(".mouse-line")
           .attr("d", function () {
             var d = "M" + mouse[0] + "," + height;
@@ -263,7 +259,7 @@ function showLegend(graph, width) {
   graph.append("text").attr("x", width + offsetText).attr("y", 50).text("Quebec").style("font-size", "15px").attr("alignment-baseline", "middle")
   graph.append("text").attr("x", width + offsetText).attr("y", 100).text("Sweden").style("font-size", "15px").attr("alignment-baseline", "middle")
   graph.append("text").attr("x", width + offsetText).attr("y", 150).text("OECD").style("font-size", "15px").attr("alignment-baseline", "middle")
-  graph.append("text").attr("x", width + offsetGraph).attr("y", 0).text("Time").style("font-size", "15px").attr("alignment-baseline", "middle")
+  graph.append("text").attr("x", width + offsetGraph + 15).attr("y", 0).text("Time").style("font-size", "15px").attr("alignment-baseline", "middle")
 
   graph.append("text")
     .attr("x", width + offsetGraph)
@@ -289,10 +285,12 @@ function showLegend(graph, width) {
     .attr("font-weight", "bold")
 
   graph.append("text")
-    .attr("x", width + offsetGraph)
-    .attr("y", 15)
+    .attr("x", width + offsetGraph + 15)
+    .attr("y", 20)
     .style("font-size", "15px")
     .attr("alignment-baseline", "middle")
     .attr("id", "timeLegendVal")
     .attr("font-weight", "bold")
 }
+
+

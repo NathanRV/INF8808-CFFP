@@ -1,4 +1,4 @@
-import d3Tip from 'd3-tip';
+import d3Legend from 'd3-svg-legend';
 
 export function load() {
 
@@ -32,8 +32,6 @@ export function load() {
     var tooltipSweden = createTooltip("#swedenTreeMap")
     var tooltipQuebec = createTooltip("#quebecTreeMap")
 
-
-
     let quebecRoot = d3.stratify().id(function (d) { return d.Name }).parentId(function (d) { return d.parentId })(quebecData);
     quebecRoot.sum(function (d) { return d.Value; });
 
@@ -44,29 +42,37 @@ export function load() {
     var mouseover = function (d) {
       if (d.parent.id === 'Suede') {
         tooltipSweden
-          .html(d.id + ' : ' + Math.round(100 * d.value) + ' % ')
-          .style("opacity", 1)
-          .style("left", d3.mouse(this)[0] + 70 + "px")
-          .style("top", d3.mouse(this)[1] + "px")
+        .style("opacity", 1)
+        .style("left", d3.mouse(this)[0]+"px") 
+        .style("top", d3.mouse(this)[1]+"px")
+        .attr("transform",
+        "translate(" + d3.mouse(this)[0] + "," + d3.mouse(this)[1] - 70 + ")")
+        .html(d.id + ' : ' + Math.round(100 * d.value) + ' % ')
         let data = quebecData.filter((element) => { return d.id === element.Name });
         tooltipQuebec
-          .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % ')
-          .style("opacity", 1)
-          .style("left", d3.mouse(this)[0] + 70 + "px")
-          .style("top", d3.mouse(this)[1] + "px")
+        .style("opacity", 1)
+        .style("left", d3.mouse(this)[0]+"px") 
+        .style("top", d3.mouse(this)[1]+"px")
+        .attr("transform",
+        "translate(" + d3.mouse(this)[0] + "," + d3.mouse(this)[1] - 70 + ")")
+        .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % ')
       }
       if (d.parent.id === 'Quebec') {
         tooltipQuebec
-          .html(d.id + ' : ' + Math.round(100 * d.value) + ' % ')
-          .style("opacity", 1)
-          .style("left", d3.mouse(this)[0] + 70 + "px")
-          .style("top", d3.mouse(this)[1] + "px")
+        .style("opacity", 1)
+        .style("left", d3.mouse(this)[0]+"px") 
+        .style("top", d3.mouse(this)[1]+"px")
+        .attr("transform",
+        "translate(" + d3.mouse(this)[0] + "," + d3.mouse(this)[1] - 70 + ")")
+        .html(d.id + ' : ' + Math.round(100 * d.value) + ' % ')
         let data = swedenData.filter((element) => { return d.id === element.Name });
         tooltipSweden
-          .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % ')
-          .style("opacity", 1)
-          .style("left", d3.mouse(this)[0] + 70 + "px")
-          .style("top", d3.mouse(this)[1] + "px")
+        .style("opacity", 1)
+        .style("left", d3.mouse(this)[0]+"px") 
+        .style("top", d3.mouse(this)[1]+"px")
+        .attr("transform",
+        "translate(" + d3.mouse(this)[0] + "," + d3.mouse(this)[1] - 70 + ")")
+        .html(data[0].Name + ' : ' + Math.round(100 * data[0].Value) + ' % ')
       }
       d3.selectAll(".treemap-tile").style('opacity', function (data) {
         return d.id === data.id ? 1 : 0.5
@@ -75,12 +81,12 @@ export function load() {
     var mousemove = function (d) {
       if (d.parent.id === 'Sweden')
         tooltipSweden
-          .style("left", d3.mouse(this)[0] + 70 + "px")
-          .style("top", d3.mouse(this)[1] + "px")
+          .attr("transform",
+          "translate(" + d3.mouse(this)[0] + "," + d3.mouse(this)[1] - 70 + ")");
       if (d.parent.id === 'Quebec')
         tooltipQuebec
-          .style("left", d3.mouse(this)[0] + 70 + "px")
-          .style("top", d3.mouse(this)[1] + "px")
+          .attr("transform",
+          "translate(" + d3.mouse(this)[0] + "," + d3.mouse(this)[1] - 70 + ")");
     }
 
     var mouseleave = function (d) {
@@ -105,7 +111,7 @@ export function load() {
       (quebecRoot)
 
     const color = createColorScale();
-
+    drawLegend(quebecSVG,color, width + margin.left)
     swedenSVG
       .selectAll("rect")
       .data(swedenRoot.children)
@@ -293,38 +299,24 @@ function createTooltip(elementId) {
 }
 
 /**
- * Shows the tips.
+ * Draws the legend. Using d3-svg-legend library
+ * https://d3-legend.susielu.com/
  *
- * @param {*} tips Array of selection of the tips div element.
- * @param {*} object Selection of group element hovered.
- * @param {*} data Data used in the group element.
- * @param {*} xScale X scale used to position tips.
+ * @param {*} colorScale The color scale to use
+ * @param {*} offset The x value of the end of the chart 
  */
-function showTips(tips, object, data, xScale) {
-    //Min tip
-    let lineLength = xScale(getMax(data)) - xScale(getMin(data))
-    tips[0].offset([0, object.getBBox().width - lineLength - 3 * radius])
+function drawLegend(svg,colorScale, offset) {
+    let legend = d3Legend.legendColor()
+        .orient("horizontal")
+        .title("Légende")
+        .shape("circle")
+        .scale(colorScale)
 
-    //Middle tip
-    let distance_max_middle = xScale(getMax(data)) - xScale(getMiddle(data))
-    let offset = object.getBBox().width / 2 - distance_max_middle
-    tips[1].offset([-radius, offset - radius])
-
-    //Max tip
-    tips[2].offset([0, radius])
-
-    tips.forEach((tip) => {
-        tip.show(data, object)
-    })
+    d3.select("#treemapContainer").append("g")
+        .attr("class", "cfn-legend")
+        .attr("transform", 'translate(10,20)')
+        .call(legend)
 }
 
-/**
- * Hides the tips.
- *
- * @param {*} tips Array of selection of the tips div element.
- */
-function hideTips(tips) {
-    tips.forEach((tip) => {
-        tip.hide()
-    })
-}
+
+

@@ -11,9 +11,19 @@ const cfnText = "La charge fiscale nette (CFN) est un indicateur servant à déc
     + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspIR&nbsp&nbsp&nbsp&nbspreprésente la somme des impôts sur le revenu des particuliers;" + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspCSP représente la somme des cotisations de sécurité sociale à la charge du particulier;"
     + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspPRP représente les prestations reçues par le particulier." + "<br><br>" + '<a href="https://cffp.recherche.usherbrooke.ca/wp-content/uploads/2018/12/cr_2016-04_charge_fiscale_nette.pdf" target="_blank"> Source </a>'
 
-const lineChartText = ""
+const lineChartText = "La charge fiscale nette (CFN) est un indicateur servant à décrire le fardeau fiscale d'un particulier selon la situation de son ménage. Sa situation est décrite par la composition familiale, c'est-à-dire : "
+    + "<br>&nbsp&nbsp&nbsp&nbsp&nbspcélibataire, couple sans enfants, famille monoparentale et famille biparentale; "
+    + "<br>&nbsp&nbsp&nbsp&nbsp&nbspainsi que le niveau des revenus tirés de salaires en pourcentage du salaire moyen."
+    + "<br><br>" + "Elle est calculée de la manière suivante :" + "<br>" + "CFN = [IR + CSP - PRP]/(R)" + "<br>" + "où R&nbsp&nbsp&nbsp&nbsp&nbspreprésente le revenu du particulier;"
+    + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspIR&nbsp&nbsp&nbsp&nbspreprésente la somme des impôts sur le revenu des particuliers;" + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspCSP représente la somme des cotisations de sécurité sociale à la charge du particulier;"
+    + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspPRP représente les prestations reçues par le particulier." + "<br><br>" + '<a href="https://cffp.recherche.usherbrooke.ca/wp-content/uploads/2018/12/cr_2016-04_charge_fiscale_nette.pdf" target="_blank"> Source </a>'
 
-const treeMapText = ""
+const treeMapText = "La charge fiscale nette (CFN) est un indicateur servant à décrire le fardeau fiscale d'un particulier selon la situation de son ménage. Sa situation est décrite par la composition familiale, c'est-à-dire : "
+    + "<br>&nbsp&nbsp&nbsp&nbsp&nbspcélibataire, couple sans enfants, famille monoparentale et famille biparentale; "
+    + "<br>&nbsp&nbsp&nbsp&nbsp&nbspainsi que le niveau des revenus tirés de salaires en pourcentage du salaire moyen."
+    + "<br><br>" + "Elle est calculée de la manière suivante :" + "<br>" + "CFN = [IR + CSP - PRP]/(R)" + "<br>" + "où R&nbsp&nbsp&nbsp&nbsp&nbspreprésente le revenu du particulier;"
+    + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspIR&nbsp&nbsp&nbsp&nbspreprésente la somme des impôts sur le revenu des particuliers;" + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspCSP représente la somme des cotisations de sécurité sociale à la charge du particulier;"
+    + "<br>" + "&nbsp&nbsp&nbsp&nbsp&nbspPRP représente les prestations reçues par le particulier." + "<br><br>" + '<a href="https://cffp.recherche.usherbrooke.ca/wp-content/uploads/2018/12/cr_2016-04_charge_fiscale_nette.pdf" target="_blank"> Source </a>'
 
 export function load() {
     var div = d3.select(".text-container")
@@ -139,7 +149,7 @@ export function load() {
 
     function textUpdaterViz5() {
         div.style("display", "block")
-        div.style("top", "7065px")
+        div.style("top", "7100px")
         div.style("width", "1080px")
         div.style("margin-right", "-552px")
         div.html(treeMapText)
